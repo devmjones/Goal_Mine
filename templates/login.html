@@ -1,0 +1,24 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}Login{% endblock %}
+{% block body %}
+    <form method="POST">
+        <div>
+            <label for="inputEmail1">Email</label>
+            <div>
+                <input type="email" name="inputEmail1" placeholder="Email">
+            </div>
+        </div>
+        <div>
+            <label for="inputPassword1">Password</label>
+            <div>
+                <input type="password" name="inputPassword1" placeholder="Password">
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <button type="submit">Sign in</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
