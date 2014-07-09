@@ -1,9 +1,13 @@
+{% extends "bootstrap/base.html" %}
+<title>Sign Up</title>
+{% block body %}
+
 <form class="form-signin" method="POST">
     <h2 class="form-signin-heading">Please Sign Up</h2>
   
-    <input type="first name" name="first name" class="form-control" placeholder="First Name" required autofocus />
+    <input type="text" name="first_name" class="form-control" placeholder="First Name" required autofocus />
   
-    <input type="last name" name="last name" class="form-control" placeholder="Last Name" required />
+    <input type="text" name="last_name" class="form-control" placeholder="Last Name" required />
 
     <input type= "email" name= "email" class= "form-control" placeholder= "Email" required />
     
@@ -13,3 +17,5 @@
   
     <button type="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
 </form>
+
+{% endblock %}

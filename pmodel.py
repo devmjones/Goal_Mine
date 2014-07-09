@@ -15,9 +15,10 @@ Base.query = session.query_property()
 class Teacher(Base):
     __tablename__= "teachers"
 
+    id = Column (Integer, primary_key= True)
     first_name = Column (String (64), nullable = False)
     last_name = Column (String (64), nullable = False)
-    email = Column (String(64), primary_key = True, nullable = False)
+    email = Column (String(64), nullable = False)
     password = Column (String(64), nullable = False)
 
 
