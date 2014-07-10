@@ -18,13 +18,11 @@
 
     <ul>
            {% for student in students %}
-        <li>{{ student.first_name }} {{ student.last_name }}</li>
+        <li><a href="/student/{{student.id}}">{{student.first_name}} {{student.last_name }}</a></li>
            {% else %}
         <li> You have no students entered into your class.</li>
            {% endfor %}
     </ul>
-
-
 
 
 {% endblock %}

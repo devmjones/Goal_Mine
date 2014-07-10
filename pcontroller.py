@@ -69,7 +69,7 @@ def process_login():
 
 @app.route("/class", methods= ["GET"])
 def view_class():
-    students = pmodel.Student.query.all()
+    students = pmodel.Student.query.filter_by(teacher_id = session["id"]).all()
     return render_template("class.html",  students=students)
 
 @app.route("/class", methods= ["POST"])
