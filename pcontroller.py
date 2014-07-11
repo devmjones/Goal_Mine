@@ -1,8 +1,7 @@
-from flask import Flask, render_template, redirect, request, flash, session
+from flask import Flask, render_template, redirect, request, flash, session,g
 from pmodel import session as db_session
 import pmodel
 from flask.ext.bootstrap3 import Bootstrap
-import uuid
 
 app = Flask(__name__)
 app.secret_key = "blahblah"
@@ -11,6 +10,21 @@ app.secret_key = "blahblah"
 
 bootstrap = Bootstrap()
 bootstrap.init_app(app)
+
+#TODO- use this type of stuff or Flask Login package
+# @app.teardown_request
+# def shutdown_session(exception = None):
+#     db_session.remove()
+
+# @app.before_request
+# def load_user_id():
+#     g.user_id = session.get('user_id')
+
+# @app.route("/")
+# def index():
+#     if g.user_id:
+#         return redirect(url_for("display_search"))
+#     return render_template("index.html")
 
 @app.route("/")
 def index():
@@ -44,6 +58,7 @@ def process_signup():
 
 #TODO- check to see if email already exists
 #TODO- Add log out
+#TODO- Clear session when user logs out
 
 @app.route("/login", methods=["GET"])
 def login():
@@ -67,10 +82,14 @@ def process_login():
         flash("Login information incorrect, please try again.")
         return redirect("/login")
 
+#TODO- add "remove student"
+
 @app.route("/class", methods= ["GET"])
 def view_class():
     students = pmodel.Student.query.filter_by(teacher_id = session["id"]).all()
     return render_template("class.html",  students=students)
+
+#TODO- add optional nickname field
 
 @app.route("/class", methods= ["POST"])
 def add_student():
@@ -87,11 +106,12 @@ def add_student():
     flash("You have sucessfully added " + "%s %s to your class!" %(student.first_name, student.last_name))
     return redirect("/class")
 
-
-
-
-
-
+@app.route("/student/<int:student_id>", methods= ["GET"])
+def view_student(student_id):
+    student= pmodel.Student.query.filter_by(id=student_id).one()
+    print student
+    goals= pmodel.Goal.query.filter_by(student_id=student_id).all()
+    return render_template("student.html", student= student, goals=goals)
 
 
 

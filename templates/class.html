@@ -1,28 +1,37 @@
 {% extends 'bootstrap/base.html' %}
 {% block title %}Class Roster{% endblock %}
 {% block body %}
+
+<head> <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/static/css/style.css" /></head>
+
+<body>
     <h1> Welcome Teacher!</h1>
 
+       <h2> Please use the form below to add students to your class.</h2>
 
-    <form class="form-signin" method="POST">
+          <div class="form"
+            <form class="form-signin" method="POST">
 
-    <input type="text" name="first_name" class="form-control" placeholder="Student First Name" required autofocus />
+                <input type="text" name="first_name" class="form-control" placeholder="Student First Name" required autofocus />
 
-    <input type="text" name="last_name" class="form-control" placeholder="Student Last Name" required />
+                <input type="text" name="last_name" class="form-control" placeholder="Student Last Name" required />
 
-    <button type="btn btn-lg btn-primary btn-block" type="submit">Enter Student</button>
+                 <button type="btn btn-lg btn-primary btn-block" type="submit">Enter Student</button>
 
-    </form>
+            </form>
+          </div>
 
-    <h2> Your Class</h2>
-
-    <ul>
-           {% for student in students %}
-        <li><a href="/student/{{student.id}}">{{student.first_name}} {{student.last_name }}</a></li>
-           {% else %}
-        <li> You have no students entered into your class.</li>
-           {% endfor %}
-    </ul>
-
+     <h2> Your Class</h2>
+          <div class="list_block"
+             <ul>
+                 {% for student in students %}
+                <li><a href="/student/{{student.id}}">{{student.first_name}} {{student.last_name }}</a></li>
+                 {% else %}
+                <li> You have no students entered into your class.</li>
+                 {% endfor %}
+            </ul>
+          </div>
+</body>
 
 {% endblock %}

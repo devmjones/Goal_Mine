@@ -2,25 +2,24 @@
 {% block title %}Login{% endblock %}
 {% block body %}
 
-    <h1> Please Log In to Create and/or View Your Class</h1>
-    <form method="POST">
-        <div>
-            <label for="inputEmail1">Email</label>
-            <div>
-                <input type="email" name="inputEmail1" placeholder="Email">
-            </div>
-        </div>
-        <div>
-            <label for="inputPassword1">Password</label>
-            <div>
-                <input type="password" name="inputPassword1" placeholder="Password">
-            </div>
-        </div>
+<head> <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/static/css/style.css" /></head>
 
-        <div>
-            <div>
+<body>
+
+  <h1> Please Log In to Create and/or View Your Class</h1>
+    <form method="POST">
+        <div class="form">
+           <div>
+                <label for="inputEmail1">Email</label>
+                <input type="email" name="inputEmail1" placeholder="Email">
+           </div>
+           <div>
+                <label for="inputPassword1">Password</label>
+                <input type="password" name="inputPassword1" placeholder="Password">
+           </div>
                 <button type="submit">Sign in</button>
-            </div>
         </div>
     </form>
+</body>
 {% endblock %}

@@ -1,25 +1,30 @@
-<html>
+
 {% extends 'bootstrap/base.html' %}
 {% block title %}Class Roster{% endblock %}
 {% block body %}
-    <h1> Welcome Teacher!</h1>
+
+<head> <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/static/css/style.css" /></head>
+
 <body>
-<p>
-    Welcome to IEPAT, or "Individualized Education Plan & Activity Tracker". <br>
-    Created by a teacher, for teachers!<br>
-    Allows for quick and easy data collection and progress reporting, <br>
-    all in an easy to use interface.
+    <h1> Welcome Teacher!</h1>
 
-</p>
-</body>
+        <p>
+           <div class="text">
+                 Welcome to IEPAT, or "Individualized Education Plan & Activity Tracker".
+                 Created by a teacher, for teachers!
+                 Allows for quick and easy data collection and progress reporting,
+                 all in an easy to use interface.
+           </div>
 
+            <div class="form">
+                 <a href= "/signup"><button>Sign Up</button></a>
 
+                 <a href= "/login"><button>Log In</button></a>
+            </div>
+        </p>
 
-<a href= "/signup"><button>Sign Up</button></a>
-
-
-
-<a href= "/login"><button>Log In</button></a>
+</body
 
 {% endblock %}
 

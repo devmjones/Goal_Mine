@@ -31,7 +31,6 @@ class Student(Base):
     teacher_id = Column (Integer, ForeignKey ('teachers.email'))
 
     teacher = relationship("Teacher", backref = "students")
-    #teacher = relationship("Teacher")
 
 class Goal(Base):
     __tablename__ = "goals"
@@ -54,23 +53,16 @@ class Markers(Base):
 
     student= relationship("Student",  backref= backref ("markers", order_by= id))
 
-class RawData(Base):
-    __tablename__= "raw_data"
+class SubGoalRawData(Base):
+    __tablename__= "sub_goal_raw_data"
 
     id = Column (Integer, primary_key = True)
     date = Column (DateTime, nullable = False)
-    goal_id = Column (Integer, ForeignKey ('goals.id'))
     sub_goal_id = Column (Integer, ForeignKey ('sub_goals.id'))
-    #sub_goal_name = Column (String(64), ForeignKey ('sub_goals.sub_goal_name'))
     sub_goal_notes = Column (Text, nullable = True)
-    #sub_goal_type = Column (String(64), ForeignKey ('sub_goals.sub_goal_type'))
-    sg_type_tally = Column (Integer, nullable = True)
-    sg_type_tf = Column (Boolean, nullable = True)
-    sg_type_range = Column (Integer, nullable = True)
-    sg_type_narrative = Column (Text, nullable = True)
+    sub_goal_data_value= Column (String, nullable = False)
 
-    goal = relationship("Goal", backref= backref ("raw_data", order_by= id))
-    sub_goal = relationship("SubGoal", backref = backref ("raw_data", order_by= id))
+    sub_goal = relationship("SubGoal", backref = backref ("sub_goal_raw_data", order_by= id))
 
 
 class SubGoal(Base):

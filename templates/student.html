@@ -1,1 +1,38 @@
+{% extends 'bootstrap/base.html' %}
+{% block title %} {{ student.first_name }} {{ student.last_name }}{% endblock %}
+{% block body %}
 
+<head> <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/static/css/style.css" /></head>
+
+<body>
+
+<form action="/goals" method="POST">
+    <p>
+        <h1>IEP Goals for {{ student.first_name }} {{ student.last_name }}</h1>
+
+         <div class="form">
+            <ul>
+                {% if goals %}
+                    {% for goal in goals %}
+
+                          <li>{{goal.name}}</li>
+                    {% endfor %}
+
+                {% else %}
+
+                     <h2>{{ student.first_name }} {{ student.last_name }} has no IEP goals at this time.</h2>
+
+                {% endif %}
+
+            </ul>
+         </div>
+   </p>
+<p>
+ <input type="submit" value="Add New Goal">
+
+</p>
+</body>
+
+
+{% endblock %}
