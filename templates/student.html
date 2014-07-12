@@ -1,15 +1,9 @@
-{% extends 'bootstrap/base.html' %}
+{% extends 'base.html' %}
 {% block title %} {{ student.first_name }} {{ student.last_name }}{% endblock %}
 {% block body %}
 
-<head> <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="/static/css/style.css" /></head>
 
-<body>
-
-<form action="/goals" method="POST">
-    <p>
-        <h1>IEP Goals for {{ student.first_name }} {{ student.last_name }}</h1>
+       <h1>IEP Goals for {{ student.first_name }} {{ student.last_name }}</h1>
 
          <div class="form">
             <ul>
@@ -27,12 +21,48 @@
 
             </ul>
          </div>
-   </p>
-<p>
- <input type="submit" value="Add New Goal">
 
-</p>
-</body>
+<form action="/goals/{{ student.id }}" method="post">
+ <input type="submit" value="Add New Goal">
+    </form>
+
+
+
+   <h3>To enter a marker for a student, please select a date and enter your note in the field provided.</h3>
+<form id="add-marker">
+        <textarea name="marker_text" rows="3" cols="50">Enter note here></textarea>
+                 <input type="submit">
+</form>
+
+<script type="text/javascript">
+$(document).ready(function()
+{
+    $("#add-marker").submit(function(event)
+    {
+        event.preventDefault();
+
+        var self = this
+        $.ajax(
+        {
+            "url": "/student/{{ student.id }}",
+            "type": "POST",
+            "data": {
+                "marker_text": $(self).find("textarea[name=marker_text]").val()
+            }
+        });
+    });
+});
+</script>
+
+
+{% for marker in markers %}
+<ul>
+    <li> {{marker.marker_date}} {{ marker.marker_text }} </li>
+
+</ul>
+{% endfor %}
+
+
 
 
 {% endblock %}

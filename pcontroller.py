@@ -1,6 +1,7 @@
-from flask import Flask, render_template, redirect, request, flash, session,g
+from flask import Flask, render_template, redirect, request, flash, session, g
 from pmodel import session as db_session
 import pmodel
+import time
 from flask.ext.bootstrap3 import Bootstrap
 
 app = Flask(__name__)
@@ -67,9 +68,12 @@ def login():
 @app.route("/login", methods=["POST"])
 def process_login():
     email = request.form["inputEmail1"]
+    print email
     password = request.form["inputPassword1"]
+    print password
 
     user = db_session.query(pmodel.Teacher).filter_by(email=email, password=password).first()
+    print user
 
     if user:
         session["email"] = user.email
@@ -84,34 +88,59 @@ def process_login():
 
 #TODO- add "remove student"
 
-@app.route("/class", methods= ["GET"])
+@app.route("/class", methods=["GET"])
 def view_class():
-    students = pmodel.Student.query.filter_by(teacher_id = session["id"]).all()
+    students = pmodel.Student.query.filter_by(teacher_id=session["id"]).all()
     return render_template("class.html",  students=students)
 
 #TODO- add optional nickname field
 
-@app.route("/class", methods= ["POST"])
+@app.route("/class", methods=["POST"])
 def add_student():
 
     first_name = request.form["first_name"]
     last_name = request.form["last_name"]
-    teacher_id=session["id"]
+    teacher_id = session["id"]
 
-    student = pmodel.Student(first_name = first_name, last_name = last_name, teacher_id = teacher_id)
+    student = pmodel.Student(first_name=first_name, last_name=last_name, teacher_id=teacher_id)
 
     pmodel.session.add(student)
     pmodel.session.commit()
 
-    flash("You have sucessfully added " + "%s %s to your class!" %(student.first_name, student.last_name))
+    flash("You have successfully added " + "%s %s to your class!" % (student.first_name, student.last_name))
     return redirect("/class")
 
 @app.route("/student/<int:student_id>", methods= ["GET"])
 def view_student(student_id):
+    #TODO= add option to remove student
     student= pmodel.Student.query.filter_by(id=student_id).one()
-    print student
     goals= pmodel.Goal.query.filter_by(student_id=student_id).all()
     return render_template("student.html", student= student, goals=goals)
+
+
+@app.route("/student/<int:student_id>", methods= ["POST"])
+def add_marker(student_id):
+    #TODO- add calendar
+    #TODO- add option to remove markers
+    #TODO- limit visible markers to 5
+
+    marker_text= request.form["marker_text"]
+
+    now= int(round(time.time()))
+    marker= pmodel.Marker (marker_date= now, marker_text= marker_text, student_id= student_id)
+
+
+    pmodel.session.add(marker)
+    pmodel.session.commit()
+
+    flash("You have successfully added a marker for this student")
+    return redirect("/student/<int:student_id>")
+
+
+@app.route("/goals/<int:student_id>", methods=["POST"])
+def add_goals(student_id):
+    student = pmodel.Student(id=student_id)
+    return render_template("goals.html", student=student)
 
 
 

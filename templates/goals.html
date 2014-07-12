@@ -1,25 +1,38 @@
-{% extends 'bootstrap/base.html' %}
+{% extends 'base.html' %}
 {% block title %}Goal Creation{% endblock %}
 {% block body %}
 
-<head> <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="/static/css/style.css" /></head>
+<h1>IEP Goal Generation for {{ student.first_name }}{{ student.last_name }}</h1>
 
-<h1>IEP Goal Generation</h1>
 
-<body>
+       <form>
+   <h2>Please enter the Goal Nickname</h2> <input type="text" name="Goal Nickname">
 
-   <p>Please enter the Goal Nickname</p> <input type="text" name="Goal Nickname"
+
+
+   <h2>What method of data collection would you like for this goal?</h2> <br>
+
+   <input type="radio" name="goal_type" value="tally"> Tally <br>
+   <input type="radio" name="goal_type" value="tf"> True/False <br>
+   <input type="radio" name="goal_type" value="range"> Range 1-6 <br>
+   <input type="radio" name="goal_type" value="narrative"> Narrative
+
+    <p>
+   </p>
 
          <div id="subgoals">
 
-   <p>Enter the items being tracked for this goal. Use the button to add more fields. <input type="text" name="Subgoal"
+   <h2>Enter the items being tracked for this goal. Use the button to add more fields. <input type="text" name="Subgoal"></h2>
+             <input type="submit" value="+">
+             <input type="submit" value="-">
+
 
         </div>
 
-</body>
+
+       <input type="submit"  value="Preview Goal">
+    </form>
 
 
 
-
-{% end block %}
+{% endblock %}

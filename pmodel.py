@@ -1,6 +1,6 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine, ForeignKey
-from sqlalchemy import Column, Integer, String, DateTime, Date, Boolean, Text
+from sqlalchemy import Column, Integer, String, Boolean, Text
 from sqlalchemy.orm import sessionmaker, scoped_session, relationship, backref
 
 engine = create_engine("sqlite:///iepdata.db", echo = False)
@@ -39,16 +39,16 @@ class Goal(Base):
     student_id = Column (Integer, ForeignKey ('students.id'))
     goal_name = Column (String, nullable = False)
     goal_type = Column (String(64), nullable = False)
-    date_created = Column (DateTime, nullable = False)
+    date_created = Column (Integer, nullable = False)
 
     student = relationship("Student", backref= backref ("goals", order_by= id))
 
-class Markers(Base):
+class Marker(Base):
     __tablename__ = "markers"
 
     id = Column (Integer, primary_key = True)
-    date_created = Column (DateTime, nullable = True)
-    text = Column (Text, nullable = True)
+    marker_date = Column (Integer, nullable = True)
+    marker_text = Column (Text, nullable = True)
     student_id = Column (Integer, ForeignKey ('students.id'))
 
     student= relationship("Student",  backref= backref ("markers", order_by= id))
@@ -57,7 +57,7 @@ class SubGoalRawData(Base):
     __tablename__= "sub_goal_raw_data"
 
     id = Column (Integer, primary_key = True)
-    date = Column (DateTime, nullable = False)
+    date = Column (Integer, nullable = False)
     sub_goal_id = Column (Integer, ForeignKey ('sub_goals.id'))
     sub_goal_notes = Column (Text, nullable = True)
     sub_goal_data_value= Column (String, nullable = False)
@@ -85,6 +85,9 @@ def connect():
 
 def main():
     pass
+
+
+
     
 
 if __name__ == "__main__":
