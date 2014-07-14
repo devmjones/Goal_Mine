@@ -1,67 +1,48 @@
 {% extends 'base.html' %}
-{% block title %} {{ student.first_name }} {{ student.last_name }}{% endblock %}
-{% block body %}
+    {% if student.nickname %}
+        {% block title %} {{ student.first_name }} "{{ studnet.nickname }}" {{ student.last_name }}{% endblock %}
+    {% else %}
+        {% block title %} {{ student.first_name }} {{ student.last_name }}{% endblock %}
+    {% endif %}
 
+{% block content%}
+     {% if student.nickname %}
+        <h1>IEP Goals for {{ student.first_name }} "{{ studnet.nickname }}" {{ student.last_name }}</h1>
+     {% else %}
+        <h1>IEP Goals for {{ student.first_name }} {{ student.last_name }}</h1>
+     {% endif %}
 
-       <h1>IEP Goals for {{ student.first_name }} {{ student.last_name }}</h1>
+        <ul>
+          {% if goals %}
+                {% for goal in goals %}
+                    <li>{{goal.name}}</li>
+                {% endfor %}
+          {% else %}
+               {% if student.nickname %}
+                   <h2>{{ student.first_name }} "{{ studnet.nickname }}" {{ student.last_name }} has no IEP goals at this time.</h2>
+               {% else %}
+                    <h2>{{ student.first_name }} {{ student.last_name }} has no IEP goals at this time.</h2>
+               {% endif %}
 
-         <div class="form">
-            <ul>
-                {% if goals %}
-                    {% for goal in goals %}
+          {% endif %}
+       </ul>
 
-                          <li>{{goal.name}}</li>
-                    {% endfor %}
-
-                {% else %}
-
-                     <h2>{{ student.first_name }} {{ student.last_name }} has no IEP goals at this time.</h2>
-
-                {% endif %}
-
-            </ul>
-         </div>
-
-<form action="/goals/{{ student.id }}" method="post">
- <input type="submit" value="Add New Goal">
+    <form action="/goals/{{ student.id }}" method="POST">
+     <button type="submit" class="add"><span class="glyphicon glyphicon-plus"><span> New Goal</button>
     </form>
 
+              {% if student.nickname %}
+    <h3>To enter a marker for {{ student.first_name }} "{{ studnet.nickname }}" {{ student.last_name }}, please select a date and enter your note in the field provided.</h3>
+              {% else %}
+    <h3>To enter a marker for {{ student.first_name }} {{ student.last_name }}, please select a date and enter your note in the field provided.</h3>
+              {% endif %}
+        <form id="add-marker" method="POST">
 
+            <textarea name="marker_text" rows="3" cols="50">Enter note here></textarea>
+            <button type="submit" class="save"><span class="glyphicon glyphicon-save"><span> Save </button>
+        </form>
 
-   <h3>To enter a marker for a student, please select a date and enter your note in the field provided.</h3>
-<form id="add-marker">
-        <textarea name="marker_text" rows="3" cols="50">Enter note here></textarea>
-                 <input type="submit">
-</form>
-
-<script type="text/javascript">
-$(document).ready(function()
-{
-    $("#add-marker").submit(function(event)
-    {
-        event.preventDefault();
-
-        var self = this
-        $.ajax(
-        {
-            "url": "/student/{{ student.id }}",
-            "type": "POST",
-            "data": {
-                "marker_text": $(self).find("textarea[name=marker_text]").val()
-            }
-        });
-    });
-});
-</script>
-
-
-{% for marker in markers %}
-<ul>
-    <li> {{marker.marker_date}} {{ marker.marker_text }} </li>
-
-</ul>
-{% endfor %}
-
+    <a href="/markers/{{ student.id }}"><button type="button" class="add"><span class="glyphicon glyphicon-eye-open"></span> View Markers</button></a>
 
 
 

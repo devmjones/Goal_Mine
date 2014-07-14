@@ -1,14 +1,20 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="/static/css/style.css" />
-        <title>
-            {% block title %}{% endblock %}
-        </title>
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
-</html>
+{% extends "bootstrap/base.html" %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+{% endblock %}
+
+{% block js_btm %}
+    <script src="/static/js.js" lang="javascript" type="text/javascript" charset="utf-8"></script>
+{% endblock %}
+
+{% block body %}
+
+        <div>
+             <a href="/logout">Log Out</a>
+        </div>
+    {% block content %}{% endblock %}
+
+{% endblock %}
+
+

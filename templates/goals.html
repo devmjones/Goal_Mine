@@ -1,37 +1,29 @@
 {% extends 'base.html' %}
 {% block title %}Goal Creation{% endblock %}
-{% block body %}
+{% block content %}
 
-<h1>IEP Goal Generation for {{ student.first_name }}{{ student.last_name }}</h1>
+    {% if student.nickname %}
+        <h1>IEP Goal Generation for {{ student.first_name }} "{{ studnet.nickname }}" {{ student.last_name }}</h1>
+    {% else %}
+        <h1>IEP Goal Generation for {{ student.first_name }} {{ student.last_name }}</h1>
+    {% endif %}
 
+   <form>
+        <h3>Please enter the Goal Nickname</h3> <input class="goal-text" type="text" name="Goal Nickname">
 
-       <form>
-   <h2>Please enter the Goal Nickname</h2> <input type="text" name="Goal Nickname">
-
-
-
-   <h2>What method of data collection would you like for this goal?</h2> <br>
-
-   <input type="radio" name="goal_type" value="tally"> Tally <br>
-   <input type="radio" name="goal_type" value="tf"> True/False <br>
-   <input type="radio" name="goal_type" value="range"> Range 1-6 <br>
-   <input type="radio" name="goal_type" value="narrative"> Narrative
-
-    <p>
-   </p>
-
-         <div id="subgoals">
-
-   <h2>Enter the items being tracked for this goal. Use the button to add more fields. <input type="text" name="Subgoal"></h2>
-             <input type="submit" value="+">
-             <input type="submit" value="-">
+        <p>Does this goal need to be timed? <input type="radio" name="timed" value="yes"> Yes</p>
 
 
-        </div>
+        <h3>Enter the items being tracked for this goal. Use the button to add more fields</h3>
 
-
-       <input type="submit"  value="Preview Goal">
-    </form>
+            <form action="/new_subgoals/new" method="POST">
+                <ol>
+                    <li class="myinput">name <input class="goal-text" type="text"> type <select><option>Tally</option><option>True/False</option><option>Narrative</option><option>Range 1-6</option></select> <a href="#">delete</a></li>
+                </ol>
+                <button type="button" class="add"><span class="glyphicon glyphicon-plus"><span> More</button><br>
+                <br><button type="submit" class="submit"><span class="glyphicon glyphicon-eye-open"><span> Preview</button><br>
+            </form>
+   </form>
 
 
 

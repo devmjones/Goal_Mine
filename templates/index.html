@@ -1,32 +1,27 @@
 
-{% extends 'bootstrap/base.html' %}
-{% block title %}Class Roster{% endblock %}
-{% block body %}
+{% extends 'base.html' %}
+{% block title %}SPED Track Home{% endblock %}
+{% block content %}
 
-<head> <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="/static/css/style.css" /></head>
+<h1>Welcome Teachers</h1>
+     <h2> Welcome to SPED Track, an easy-to-use data collection and reporting tool</h2>
+     <p>SPED Track was created by a teacher, for teachers and takes IEP goal tracking out of the white binder and spreadsheets and puts it into a web application that you can use on your smart phone, tablet, or desktop computer.</p>
 
-<body>
-    <h1> Welcome Teacher!</h1>
+        <h3>Features</h3>
+        <ul>
+            <li>Template wizard for data collection</li>
+            <li>Automatic date and time stamp for easy retrieval and report processing</li>
+            <li>Optional stopwatch and timer functions for timing-specific goals</li>
+            <li>Important event "markers" that allow you to document and view events such as medication changes along side goal progress.</li>
 
-        <p>
-           <div class="text">
-                 Welcome to IEPAT, or "Individualized Education Plan & Activity Tracker".
-                 Created by a teacher, for teachers!
-                 Allows for quick and easy data collection and progress reporting,
-                 all in an easy to use interface.
-           </div>
 
-            <div class="form">
-                 <a href= "/signup"><button>Sign Up</button></a>
+        <h4>Already a member? Log in below! Or sign up to get started.</h4>
+            <a href="/signup"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> Sign Up </button></a>
+            <a href="/login"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-log-in"></span> Log In </button></a>
 
-                 <a href= "/login"><button>Log In</button></a>
-            </div>
-        </p>
 
-</body
+
 
 {% endblock %}
 
 
-</html>

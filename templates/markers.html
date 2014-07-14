@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+<title>Markers</title>
+
+{% block content%}
+
+<h1>Markers for {{ student.first_name }} {{ student.last_name }}</h1>
+
+    {% for marker in markers %}
+        <ul>
+            <li> {{ marker.marker_date_as_datetime() }} {{ marker.marker_text }} </li>
+        </ul>
+    {% endfor %}
+
+{% endblock %}

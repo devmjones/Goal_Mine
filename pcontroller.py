@@ -1,31 +1,27 @@
 from flask import Flask, render_template, redirect, request, flash, session, g
 from pmodel import session as db_session
 import pmodel
-import time
+
 from flask.ext.bootstrap3 import Bootstrap
+from flask.ext.login import LoginManager, login_required, logout_user, login_user
 
 app = Flask(__name__)
-app.secret_key = "blahblah"
-
-#TODO- need actual secret key
+app.secret_key = '\xfb\x1c\x9dJ&H\xe8\x83x\x84Q\xde\xfe:\xd6\xfc\x055M\xdf\x9a\xf7\x19\x17'
 
 bootstrap = Bootstrap()
 bootstrap.init_app(app)
 
-#TODO- use this type of stuff or Flask Login package
-# @app.teardown_request
-# def shutdown_session(exception = None):
-#     db_session.remove()
+login_manager=LoginManager()
+login_manager.init_app(app)
+login_manager.login_view="/login"
 
-# @app.before_request
-# def load_user_id():
-#     g.user_id = session.get('user_id')
 
-# @app.route("/")
-# def index():
-#     if g.user_id:
-#         return redirect(url_for("display_search"))
-#     return render_template("index.html")
+@login_manager.user_loader
+def load_user(user_id):
+    try:
+        return pmodel.Teacher.query.filter_by(id=int(user_id)).first()
+    except:
+        return None
 
 @app.route("/")
 def index():
@@ -58,8 +54,6 @@ def process_signup():
 
 
 #TODO- check to see if email already exists
-#TODO- Add log out
-#TODO- Clear session when user logs out
 
 @app.route("/login", methods=["GET"])
 def login():
@@ -73,14 +67,15 @@ def process_login():
     print password
 
     user = db_session.query(pmodel.Teacher).filter_by(email=email, password=password).first()
-    print user
+
 
     if user:
         session["email"] = user.email
         session["password"] = user.password
         session["id"] = user.id
         flash("Login Successful!")
-        return redirect("/class")
+        login_user(user)
+        return redirect(request.args.get("next") or "/class")
 
     else:
         flash("Login information incorrect, please try again.")
@@ -88,41 +83,55 @@ def process_login():
 
 #TODO- add "remove student"
 
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect("/login")
+
 @app.route("/class", methods=["GET"])
+@login_required
 def view_class():
     students = pmodel.Student.query.filter_by(teacher_id=session["id"]).all()
-    return render_template("class.html",  students=students)
+    teacher = pmodel.Teacher.query.filter_by(id=session["id"]).first()
+    return render_template("class.html",  teacher= teacher, students=students)
 
-#TODO- add optional nickname field
+
+#TODO- put students in table, alpha by last name
+#TODO= add option to remove/edit student
 
 @app.route("/class", methods=["POST"])
+@login_required
 def add_student():
+
+#TODO- error if student name and nickname already exist.
 
     first_name = request.form["first_name"]
     last_name = request.form["last_name"]
+    nickname = request.form["nickname"]
     teacher_id = session["id"]
 
-    student = pmodel.Student(first_name=first_name, last_name=last_name, teacher_id=teacher_id)
+    student = pmodel.Student(first_name=first_name, last_name=last_name, nickname= nickname, teacher_id=teacher_id)
 
     pmodel.session.add(student)
     pmodel.session.commit()
 
-    flash("You have successfully added " + "%s %s to your class!" % (student.first_name, student.last_name))
+    flash("You have successfully added " + "%s %s %s to your class!" % (student.first_name, student.last_name, student.nickname))
     return redirect("/class")
 
 @app.route("/student/<int:student_id>", methods= ["GET"])
+@login_required
 def view_student(student_id):
-    #TODO= add option to remove student
     student= pmodel.Student.query.filter_by(id=student_id).one()
     goals= pmodel.Goal.query.filter_by(student_id=student_id).all()
     return render_template("student.html", student= student, goals=goals)
 
 
 @app.route("/student/<int:student_id>", methods= ["POST"])
+@login_required
 def add_marker(student_id):
-    #TODO- add calendar
-    #TODO- add option to remove markers
-    #TODO- limit visible markers to 5
+    #TODO- add calendar to marker field
+    #TODO- add option to edit/remove markers
+    #TODO- add option to edit/remove goals
 
     marker_text= request.form["marker_text"]
 
@@ -133,13 +142,21 @@ def add_marker(student_id):
     pmodel.session.add(marker)
     pmodel.session.commit()
 
-    flash("You have successfully added a marker for this student")
-    return redirect("/student/<int:student_id>")
+    flash("Marker added.")
+    return redirect("/markers/%d" % student_id)
+
+@app.route("/markers/<int:student_id>", methods=["GET"])
+@login_required
+def view_marker(student_id):
+    markers= pmodel.Marker.query.filter_by(id=student_id).all()
+    student= pmodel.Student.query.filter_by(id=student_id).one()
+    return render_template("markers.html", student=student, markers=markers)
 
 
 @app.route("/goals/<int:student_id>", methods=["POST"])
+@login_required
 def add_goals(student_id):
-    student = pmodel.Student(id=student_id)
+    student = pmodel.Student.query.filter_by(id=student_id).one()
     return render_template("goals.html", student=student)
 
 
