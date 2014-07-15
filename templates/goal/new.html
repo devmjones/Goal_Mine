@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
-{% block title %}Goal Creation{% endblock %}
+
+{% block title %}New Goal - {{ student.first_name }} {{ student.last_name }}{% endblock %}
+
 {% block content %}
 
     {% if student.nickname %}
@@ -16,7 +18,7 @@
         <li>Range 1-6: If a goal is being tracked in terms of degrees, such as 1 being very poor and 6 being excellent</li>
     </ul>
 
-   <form method="POST" action="/new_subgoals/new">
+   <form method="POST" action="/student/{{ student.id }}/goal/create">
         <h3>Please enter the Goal Nickname</h3> <input class="goal-text" type="text" name="goal_name" placeholder="Example: 'Bathroom Independence'" autofocus>
 
         <p>Does this goal need to be timed? <input type="radio" name="timed" value="yes"> Yes</p>
@@ -24,15 +26,12 @@
 
         <h3>Enter the items being tracked for this goal. Add fields as needed</h3>
 
-            <form action="/new_subgoals/new" method="POST">
                 <ol>
                     <li class="myinput">name <input name= "text_0" class="goal-text" type="text"> type <select name="type_0"><option value="tally">Tally</option><option value="t/f">True/False</option><option value="narrative">Narrative</option><option value="range">Range 1-6</option></select> <a href="#">delete</a></li>
                 </ol>
                 <button type="button" class="add"><span class="glyphicon glyphicon-plus"><span> More</button><br>
                 <br><button type="submit" class="submit"><span class="glyphicon glyphicon-ok"><span> Submit</button><br>
-            </form>
+                <input type="hidden" name="max_counter" value="0"/>
    </form>
-
-
 
 {% endblock %}

@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
+ {% block title %}
     {% if student.nickname %}
-        {% block title %} {{ student.first_name }} "{{ studnet.nickname }}" {{ student.last_name }}{% endblock %}
+       {{ student.first_name }} "{{ student.nickname }}" {{ student.last_name }}
     {% else %}
-        {% block title %} {{ student.first_name }} {{ student.last_name }}{% endblock %}
+         {{ student.first_name }} {{ student.last_name }}
     {% endif %}
+{% endblock %}
 
 {% block content%}
      {% if student.nickname %}
-        <h1>IEP Goals for {{ student.first_name }} "{{ studnet.nickname }}" {{ student.last_name }}</h1>
+        <h1>IEP Goals for {{ student.first_name }} "{{ student.nickname }}" {{ student.last_name }}</h1>
      {% else %}
         <h1>IEP Goals for {{ student.first_name }} {{ student.last_name }}</h1>
      {% endif %}
@@ -15,11 +17,11 @@
         <ul>
           {% if goals %}
                 {% for goal in goals %}
-                    <li>{{goal.name}}</li>
+                    <li>{{goal.goal_name}}</li>
                 {% endfor %}
           {% else %}
                {% if student.nickname %}
-                   <h2>{{ student.first_name }} "{{ studnet.nickname }}" {{ student.last_name }} has no IEP goals at this time.</h2>
+                   <h2>{{ student.first_name }} "{{ student.nickname }}" {{ student.last_name }} has no IEP goals at this time.</h2>
                {% else %}
                     <h2>{{ student.first_name }} {{ student.last_name }} has no IEP goals at this time.</h2>
                {% endif %}
@@ -27,23 +29,24 @@
           {% endif %}
        </ul>
 
-    <form action="/goals/{{ student.id }}" method="POST">
-     <button type="submit" class="add"><span class="glyphicon glyphicon-plus"><span> New Goal</button>
-    </form>
+{#     LINK TO VIEW CREATE GOAL TEMPLATE#}
 
+     <a href="/student/{{ student.id }}/goal/new"><button type="button" class="add"><span class="glyphicon glyphicon-plus"><span> New Goal</button></a>
+
+
+
+{#    ADDING MARKER#}
               {% if student.nickname %}
-    <h3>To enter a marker for {{ student.first_name }} "{{ studnet.nickname }}" {{ student.last_name }}, please select a date and enter your note in the field provided.</h3>
+    <h3>To enter a marker for {{ student.first_name }} "{{ student.nickname }}" {{ student.last_name }}, please select a date and enter your note in the field provided.</h3>
               {% else %}
     <h3>To enter a marker for {{ student.first_name }} {{ student.last_name }}, please select a date and enter your note in the field provided.</h3>
               {% endif %}
         <form id="add-marker" method="POST">
 
-            <textarea name="marker_text" rows="3" cols="50">Enter note here></textarea>
+            <textarea name="marker_text" rows="3" cols="50">Enter note here</textarea>
             <button type="submit" class="save"><span class="glyphicon glyphicon-save"><span> Save </button>
+            <a href="/markers/{{ student.id }}"><button type="button" class="add"><span class="glyphicon glyphicon-eye-open"></span> View Markers</button></a>
         </form>
-
-    <a href="/markers/{{ student.id }}"><button type="button" class="add"><span class="glyphicon glyphicon-eye-open"></span> View Markers</button></a>
-
 
 
 {% endblock %}
