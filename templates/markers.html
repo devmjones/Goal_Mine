@@ -7,9 +7,10 @@
 
         <ul>
     {% for marker in markers %}
-            <li> {{ marker.marker_date_as_datetime() }} {{ marker.marker_text }} </li>
+            <li> {{ marker.marker_date }} {{ marker.marker_text }} </li>
      {% endfor %}
         </ul>
 
+    <a href="/student/{{ student.id }}">Back to student page</a>
 
 {% endblock %}

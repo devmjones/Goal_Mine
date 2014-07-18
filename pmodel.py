@@ -1,6 +1,6 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine, ForeignKey
-from sqlalchemy import Column, Integer, String, Boolean, Text
+from sqlalchemy import Column, Integer, String, Boolean, Text, DateTime
 from sqlalchemy.orm import sessionmaker, scoped_session, relationship, backref
 from datetime import datetime
 import os
@@ -55,7 +55,6 @@ class Goal(Base):
     id = Column (Integer, primary_key = True)
     student_id = Column (Integer, ForeignKey ('students.id'))
     goal_name = Column (String, nullable = False)
-    date_created = Column (Integer, nullable = False)
 
     student = relationship("Student", backref= backref ("goals", order_by= id))
 
@@ -63,7 +62,7 @@ class Marker(Base):
     __tablename__ = "markers"
 
     id = Column (Integer, primary_key = True)
-    marker_date = Column (Integer, nullable = True)
+    marker_date = Column (DateTime, nullable = True)
     marker_text = Column (Text, nullable = True)
     student_id = Column (Integer, ForeignKey ('students.id'))
 
@@ -77,7 +76,7 @@ class SubGoalRawData(Base):
     __tablename__= "sub_goal_raw_data"
 
     id = Column (Integer, primary_key = True)
-    date = Column (Integer, nullable = False)
+    date = Column (DateTime, nullable = False)
     sub_goal_id = Column (Integer, ForeignKey ('sub_goals.id'))
     sub_goal_type = Column (String(64), nullable = False)
     sub_goal_notes = Column (Text, nullable = True)

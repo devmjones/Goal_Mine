@@ -2,19 +2,34 @@
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/jquery-ui/jquery-ui.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
 {% endblock %}
 
 {% block js_btm %}
+    <script src="/static/jquery-ui/jquery-ui.min.js"></script>
     <script src="/static/js.js" lang="javascript" type="text/javascript" charset="utf-8"></script>
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
 {% endblock %}
 
 {% block body %}
 
-        <div>
-             <a href="/logout">Log Out</a>
-        </div>
-    {% block content %}{% endblock %}
+
+
+         <div>
+                 <a href="/logout">Log Out</a>
+         </div>
+
+    {% block content %}
+        <h1 class="text-center"></h1>
+    {% endblock %}
 
 {% endblock %}
+
+
 
 

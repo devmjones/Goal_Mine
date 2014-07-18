@@ -14,12 +14,25 @@
         <h1>IEP Goals for {{ student.first_name }} {{ student.last_name }}</h1>
      {% endif %}
 
-        <ul>
-          {% if goals %}
-                {% for goal in goals %}
-                    <li>{{goal.goal_name}}</li>
-                {% endfor %}
-          {% else %}
+
+    {% if goals %}
+        <table class="table table-bordered">
+        <tr><th>Actions</th><th>Goals</th></tr>
+
+        {% for goal in goals %}
+            <tr>
+            <td><button type=<button class="btn btn-danger"><span class="glyphicon glyphicon-remove" ><span>Delete Goal</button>
+                <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-wrench" ><span>Edit Goal</button>
+                <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-folder-close" ><span>View Report</button>
+            <td>{{ goal.goal_name }} <a href="/goal/view/{{ student.id }}/{{ goal.id }}"><button type="button" class="btn btn-success">
+                                     <span class="glyphicon glyphicon-folder-open"></span> Take Data
+                                     </button></a></td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+
+
                {% if student.nickname %}
                    <h2>{{ student.first_name }} "{{ student.nickname }}" {{ student.last_name }} has no IEP goals at this time.</h2>
                {% else %}
@@ -27,15 +40,17 @@
                {% endif %}
 
           {% endif %}
-       </ul>
 
 {#     LINK TO VIEW CREATE GOAL TEMPLATE#}
 
-     <a href="/student/{{ student.id }}/goal/new"><button type="button" class="add"><span class="glyphicon glyphicon-plus"><span> New Goal</button></a>
+     <a href="/student/{{ student.id }}/goal/new"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"><span> New Goal</button></a>
 
 
 
 {#    ADDING MARKER#}
+
+
+
               {% if student.nickname %}
     <h3>To enter a marker for {{ student.first_name }} "{{ student.nickname }}" {{ student.last_name }}, please select a date and enter your note in the field provided.</h3>
               {% else %}
@@ -43,9 +58,10 @@
               {% endif %}
         <form id="add-marker" method="POST">
 
+            <p>Date: <input type="date" name="calendar"></p>
             <textarea name="marker_text" rows="3" cols="50">Enter note here</textarea>
-            <button type="submit" class="save"><span class="glyphicon glyphicon-save"><span> Save </button>
-            <a href="/markers/{{ student.id }}"><button type="button" class="add"><span class="glyphicon glyphicon-eye-open"></span> View Markers</button></a>
+            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-save"><span> Save </button>
+            <a href="/markers/{{ student.id }}"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span> View Markers</button></a>
         </form>
 
 
