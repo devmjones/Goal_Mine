@@ -1,0 +1,45 @@
+body{
+    background-color: #f5f5f5;
+}
+
+.goal-text{
+    width: 300px;
+}
+
+.info-bullets{
+    border: solid;
+    padding: 5px;
+    border-radius:25px;
+    background-color: lightblue;
+    
+}
+
+.bold{
+    font-weight: bold;
+}
+
+table{
+    border: 5px solid black;
+    table-layout: fixed;
+    width: 200px;
+}
+
+th, td {
+    border: 1px solid black;
+    overflow: hidden;
+    width: 100px;
+}
+img{
+    width: 170px;
+    height: 170px;
+}
+
+.center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+  

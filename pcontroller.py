@@ -42,7 +42,6 @@ def process_signup():
     password = request.form["password"]
     confirm_password = request.form["re-enter password"]
 
-
     existing= db_session.query(pmodel.Teacher).filter_by(email=email).first()
 
     if existing:
@@ -86,7 +85,7 @@ def process_login():
         session["id"] = user.id
         flash("Login Successful!")
         login_user(user)
-        return redirect(request.args.get("next") or "/class/%d" % user.id)
+        return redirect(request.args.get("next") or "/class")
 
     else:
         flash("Login information incorrect, please try again.")
@@ -147,22 +146,18 @@ def add_student():
 def view_student(student_id):
     student = pmodel.Student.query.filter_by(id=student_id).one()
     goals = pmodel.Goal.query.filter_by(student_id=student_id).all()
+    #TODO- add option to edit/remove goals
 
     return render_template("student.html", student=student, goals=goals)
 
 @app.route("/student/<int:student_id>", methods= ["POST"])
 @login_required
 def add_marker(student_id):
-    #TODO- hook up datepicker to markers
     #TODO- add option to edit/remove markers
-    #TODO- add option to edit/remove goals
 
     marker_text= request.form["marker_text"]
     raw_date=request.form["calendar"]
     marker_date= datetime.datetime.strptime(raw_date, "%Y-%m-%d")
-
-
-    # now= int(round(time.time()))
 
     marker= pmodel.Marker (marker_date= marker_date, marker_text= marker_text, student_id= student_id)
 
@@ -192,8 +187,7 @@ def new_goal(student_id):
 def create_goal(student_id):
     student = pmodel.Student.query.filter_by(id=student_id).one()
     goal_name = request.form["goal_name"]
-    now = int(round(time.time()))
-    goal = pmodel.Goal(student_id=student_id, goal_name=goal_name, date_created=now)
+    goal = pmodel.Goal(student_id=student_id, goal_name=goal_name)
     pmodel.session.add(goal)
     pmodel.session.commit()
 
@@ -213,10 +207,48 @@ def create_goal(student_id):
 @app.route("/goal/view/<int:student_id>/<int:goal_id>", methods=["GET"])
 @login_required
 def view_data_page(student_id, goal_id):
-    print "yes, we are entering the function."
     student = pmodel.Student.query.filter_by(id=student_id).first()
     goal = pmodel.Goal.query.filter_by(student_id=student_id, id=goal_id).first()
     return render_template("goal/view.html", student=student, goal=goal)
+
+@app.route("/student/<int:student_id>/goal/<int:goal_id>/record", methods=["POST"])
+@login_required
+def submit_data(student_id, goal_id):
+    student = pmodel.Student.query.filter_by(id=student_id).first()
+    sub_goals = pmodel.SubGoal.query.filter_by(goal_id=goal_id).all()
+
+    sub_goal_data_value = None
+    now = datetime.datetime.now()
+    sub_goal_time = None  # TODO add stopwatch value if applicable
+
+    for sub_goal in sub_goals:
+        if sub_goal.sub_goal_type == "tally":
+            sub_goal_data_value = request.form["tally_%d" % sub_goal.id]
+            sub_goal_notes = request.form["notes_%d" % sub_goal.id]
+
+        elif sub_goal.sub_goal_type == "t/f":
+            sub_goal_data_value = request.form["tf_%d" % sub_goal.id]
+            sub_goal_notes = request.form["notes_%d" % sub_goal.id]
+
+        elif sub_goal.sub_goal_type == "narrative":
+            sub_goal_data_value = request.form["narrative_text_%d" % sub_goal.id]
+            sub_goal_notes = None
+
+        elif sub_goal.sub_goal_type == "range":
+            sub_goal_data_value = request.form["range_%d" % sub_goal.id]
+            sub_goal_notes = request.form["notes_%d" % sub_goal.id]
+
+        sub_goal_raw_data = pmodel.SubGoalRawData(date=now, sub_goal_id=sub_goal.id,
+                                                  sub_goal_type=sub_goal.sub_goal_type,
+                                                  sub_goal_notes=sub_goal_notes,
+                                                  sub_goal_data_value=sub_goal_data_value,
+                                                  sub_goal_time=sub_goal_time)
+        pmodel.session.add(sub_goal_raw_data)
+        pmodel.session.commit()
+
+    flash("Data instance entered")
+    return redirect("/student/%d" % student.id)
+
 
 
 
