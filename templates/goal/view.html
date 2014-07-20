@@ -2,65 +2,98 @@
 
 {% block title %} Data Collection {% endblock %}
 
-<input type="hidden" name="max_counter" value="0"/>
-
-
-
 {# Tally Macro #}
 {% macro tally(sub_goal_id, sub_goal_name) -%} {# creating a function to render the tally data collection form #}
-    <div class="tally">
-         {{ sub_goal_name }}
-        <button type="button" name="tally_btn_{{ sub_goal_id }}" class="btn btn-success"><span class="glyphicon glyphicon-plus-sign"></span>Tally</button>
-        <input type="text" name="tally_{{ sub_goal_id }}" value="0"/> {# the field that the number will appear in, which can be edited #}
-         <textarea name="notes_{{ sub_goal_id }}" rows="3" cols="50" placeholder="Optional">Enter note here</textarea>
+
+    <div class="dc_body panel panel-success tally">
+        <div class="panel-heading"><h4>{{ sub_goal_name }}</h4></div>
+        <div class="panel-body">
+            <button type="button" name="tally_btn_{{ sub_goal_id }}" class="btn btn-success"><span
+                    class="glyphicon glyphicon-plus-sign"></span>Tally
+            </button>
+            <input type="text" name="tally_{{ sub_goal_id }}" value="0"/>
+            {# the field that the number will appear in, which can be edited #}
+            <textarea name="notes_{{ sub_goal_id }}" rows="3" cols="50" placeholder="Optional">Enter note
+                here</textarea><br>
+        </div>
     </div>
 {%- endmacro %}
 
 
 {# TF Macro #}
 {% macro tf(sub_goal_id, sub_goal_name)-%}
-{{ sub_goal_name }}
-    <div class="tf btn-group" data-toggle="buttons">
-        <label class="btn btn-success">
-            <input type="radio" name="tf_{{ sub_goal_id }}" value="yes">Yes</label>
-        <label class="btn btn-warning">
-            <input type="radio" name="tf_{{ sub_goal_id }}" value="no">No</label>
-        <textarea name="notes_{{ sub_goal_id }}" rows="3" cols="50" placeholder="Optional">Enter note here</textarea>
+
+    <div class="dc_body panel panel-success tf">
+        <div class="panel-heading"><h4>{{ sub_goal_name }}</h4></div>
+        <div class="panel-body">
+            <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-lg btn-default tf_radio">
+                    <input type="radio" name="tf_{{ sub_goal_id }}" value="yes">Yes</label>
+                <label class="btn btn-lg btn-default tf_radio">
+                    <input type="radio" name="tf_{{ sub_goal_id }}" value="no">No</label>
+            </div>
+            <textarea name="notes_{{ sub_goal_id }}" rows="3" cols="50" placeholder="Optional">Enter note here</textarea><br>
+        </div>
     </div>
-{%- endmacro  %}
+{%- endmacro %}
 
 
 {# Narrative Macro #}
 {% macro narrative(sub_goal_id, sub_goal_name) -%}
-    <div class="narrative">
-        {{ sub_goal_name }}
-{#        <p>Date: <input type="date" id="datepicker"></p>#}
-        <textarea name="narrative_text_{{ sub_goal_id }}"  rows="3" cols="50">Enter note here</textarea>
+    <div class="dc_body panel panel-success narrative">
+        <div class="panel-heading"><h4>{{ sub_goal_name }}</h4></div>
+        <div class="panel-body">
 
+            <textarea name="narrative_text_{{ sub_goal_id }}" rows="3" cols="50">Enter note here</textarea><br>
+
+        </div>
     </div>
+
 {%-endmacro %}
 
 {# Stopwatch Macro #}
-{% macro stopwatch(sub_goal_id, sub_goal_name) -%}
-    <div id="t" class="badge">00:00 <button id="btn">Start</button><button id="btn">Reset</button>
-
+{% macro stopwatch() -%}
+<div class="dc_body panel panel-success stopwatch">
+        <div class="panel-heading"><h4>Timer</h4></div>
+        <div class="panel-body">
+    <div id="stopwatch">00:00</div>
+    <input type="hidden" name="stopwatch" value="0"/>
+    <button id="startstop" class="btn btn-info btn-lg btn-block" type="button" >Start</button><br>
+</div>
+</div>
     </div>
 {%- endmacro %}
 
 
 {# Range Macro #}
 {% macro range(sub_goal_id, sub_goal_name) %}
-    <div class="range">
-    {{ sub_goal_name }}
+    <div class="dc_body panel panel-success range">
+        <div class="panel-heading"><h4>{{ sub_goal_name }}</h4></div>
+        <div class="panel-body">
+            <div class="btn-group" data-toggle="buttons">
 
-        <input type="radio" name="range_{{ sub_goal_id }}" value="1" /> 1<br />
-        <input type="radio" name="range_{{ sub_goal_id }}" value="2" /> 2<br />
-        <input type="radio" name="range_{{ sub_goal_id }}" value="3" /> 3<br />
-        <input type="radio" name="range_{{ sub_goal_id }}" value="4" /> 4<br />
-        <input type="radio" name="range_{{ sub_goal_id }}" value="5" /> 5<br />
-        <input type="radio" name="range_{{ sub_goal_id }}" value="6" /> 6<br />
-        <textarea name= "notes_{{ sub_goal_id }}"  rows="3" cols="50" placeholder="Optional">Enter note here</textarea>
+    <label class="btn btn-lg btn-default range_radio">
+        <input type="radio" name="range_{{ sub_goal_id }}" value="1"/> 1</label>
+
+    <label class="btn btn-lg btn-default range_radio">
+        <input type="radio" name="range_{{ sub_goal_id }}" value="2"/> 2</label>
+
+    <label class="btn btn-lg btn-default range_radio">
+        <input type="radio" name="range_{{ sub_goal_id }}" value="3"/> 3</label>
+
+    <label class="btn btn-lg btn-default range_radio">
+        <input type="radio" name="range_{{ sub_goal_id }}" value="4"/> 4</label>
+
+    <label class="btn btn-lg btn-default range_radio">
+        <input type="radio" name="range_{{ sub_goal_id }}" value="5"/> 5</label>
+
+    <label class="btn btn-lg btn-default range_radio">
+        <input type="radio" name="range_{{ sub_goal_id }}" value="6"/> 6</label>
+
+        <textarea name="notes_{{ sub_goal_id }}" rows="3" cols="50" placeholder="Optional">Enter note here</textarea>
     </div>
+     </div>
+     </div>
 {%-endmacro %}
 
 
@@ -70,26 +103,32 @@
     <h1>Data Collection for "{{ goal.goal_name }}"</h1>
 
     <form action="/student/{{ student.id }}/goal/{{ goal.id }}/record" method="POST">
-    {% for sub_goal in goal.sub_goals %}
+        {% for sub_goal in goal.sub_goals %}
 
-        {% if sub_goal.sub_goal_type == 'tally' %}
-            {{tally(sub_goal.id, sub_goal.sub_goal_name)}}
+            {% if sub_goal.sub_goal_type == 'tally' %}
+                {{ tally(sub_goal.id, sub_goal.sub_goal_name) }}
 
-        {% elif sub_goal.sub_goal_type == 'narrative' %}
-            {{ narrative(sub_goal.id, sub_goal.sub_goal_name) }}
+            {% elif sub_goal.sub_goal_type == 'narrative' %}
+                {{ narrative(sub_goal.id, sub_goal.sub_goal_name) }}
 
-        {% elif sub_goal.sub_goal_type == 't/f' %}
-            {{ tf(sub_goal.id,sub_goal.sub_goal_name) }}
+            {% elif sub_goal.sub_goal_type == 't/f' %}
+                {{ tf(sub_goal.id,sub_goal.sub_goal_name) }}
 
-        {% elif sub_goal.sub_goal_type == 'range' %}
-            {{ range(sub_goal.id, sub_goal.sub_goal_name) }}
+            {% elif sub_goal.sub_goal_type == 'range' %}
+                {{ range(sub_goal.id, sub_goal.sub_goal_name) }}
 
-        {% else %}
-            <div>UNKNOWN SUBGOAL TYPE!</div>
+            {% else %}
+                <div>UNKNOWN SUBGOAL TYPE!</div>
 
+            {% endif %}
+        {% endfor %}
+
+        {% if goal.is_timed %}
+            {{ stopwatch() }}
         {% endif %}
-    {% endfor %}
-  <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-file-open"></span> Submit Data</button>
+
+        <button type="submit" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-file-open"></span> Submit Data
+        </button>
 
     </form>
 

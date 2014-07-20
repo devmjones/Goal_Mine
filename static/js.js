@@ -27,40 +27,24 @@ $('.tally > button').click(function(evt) {
 });
 
 //tf radio buttons
-$('.btn').button()
+$('.btn.tf_radio').button()
 
 ///stopwatch
-(function(){
-
-$("#btn").click(function(){
-switch($(this).html().toLowerCase())
-{
-
-case "start":
-$("#t").timer({
-action: 'start',
-seconds: 0
-});
-$(this).html("Pause");
-$("input[name='s']").attr("disabled", "disabled");
-$("#t").addClass("badge-important");
-break;
-
-case "resume":
-$("#t").timer('resume');
-$(this).html("Pause")
-$("#t").addClass("badge-important");
-break;
-
-case "pause":
-//you can specify action via object
-$("#t").timer({action: 'pause'});
-$(this).html("Resume")
-$("#t").removeClass("badge-important");
-break;
-
-}
-});
-
-})();
-
+   var stopwatch_interval = null;
+      $('#startstop').click(function(e) {
+        if($(e.target).text() == 'Start') {
+          stopwatch_interval = setInterval(function() {
+            i =  parseInt($('input[name=stopwatch]').val())+1;
+            $('input[name=stopwatch]').val(i.toString());
+            minutes = Math.floor(i/60).toString();
+            if(minutes.length == 1) minutes='0'+minutes
+            seconds = (i%60).toString();
+            if(seconds.length == 1) seconds = '0'+seconds
+            $('#stopwatch').text(minutes+':'+seconds);
+          }, 1000);
+          $('#startstop').text('Stop');
+        } else {
+          clearInterval(stopwatch_interval);
+          $('#startstop').text('Start');
+        }
+      });

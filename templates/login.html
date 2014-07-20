@@ -2,7 +2,10 @@
 {% block title %}Log In{% endblock %}
 {% block content %}
 
-  <h1>Please Log In </h1>
+
+    <div class="marker_body panel panel-success login">
+   <div class="panel-heading"><h1>Please Log In Below</h1></div>
+
         <form method="POST">
             <label for="inputEmail1">Email</label>
              <input type="email" name="inputEmail1" placeholder="Email" autofocus>
@@ -12,7 +15,7 @@
              <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-log-in"></span> Log In</button>
 
         </form>
-
-
+</div>
+</div>
 
 {% endblock %}

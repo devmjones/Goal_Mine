@@ -2,17 +2,20 @@
 <title>Sign Up</title>
 {% block content%}
 
-<div class="form-group"
-<h1>Please sign up below</h1>
+<div class="marker_body panel panel-success">
+   <div class="panel-heading"><h1>Please Sign Up Below</h1></div>
+<div class="form-group">
         <form method="POST">
             <input type="text" name="first_name" class= "form-control" placeholder= "First Name" required autofocus />
             <input type="text" name="last_name" class="form-control" placeholder="Last Name" required />
             <input type= "email" name= "email" class= "form-control" placeholder= "Email" required />
             <input type="password" name="password" class="form-control" placeholder="Password" required />
             <input type="password" name="re-enter password" class="form-control" placeholder="Please re-enter Password" required />
-            <button type="submit" class="btn btn-default btn-lg btn-block"><span class="glyphicon glyphicon-pencil"></span> Sign Up</button>
-        </form>
 
+            <button type="submit" class="btn btn-success btn-lg btn-block"><span class="glyphicon glyphicon-pencil"></span> Sign Up</button>
+
+        </form>
+</div>
 </div>
 
 

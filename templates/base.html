@@ -1,37 +1,30 @@
 {% extends "bootstrap/base.html" %}
 
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/jquery-ui/jquery-ui.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 {% endblock %}
 
 {% block js_btm %}
-    <script src="/static/jquery-ui/jquery-ui.min.js"></script>
+    <!--script src="/static/jquery-ui/jquery-ui.min.js"></script-->
     <script src="/static/js.js" lang="javascript" type="text/javascript" charset="utf-8"></script>
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="dist/timer.jquery.min.js"></script>
-
 {% endblock %}
 
 {% block body %}
-
-
-
-         <div>
-                 <a href="/logout">Log Out</a>
-         </div>
-
-    {% block content %}
-        <h1 class="text-center"></h1>
-    {% endblock %}
-
+    <div class="page-margins">
+    <div class="page-header">
+        <div id="log_out"><a href="/logout">Log Out</a></div>
+        <h1>
+            <img src="/static/images/teachertatt.jpg" alt="teacher apple tattoo" class="img-circle">
+            Goal Mine... <small> for teachers, by a teacher</small>
+        </h1>
+    </div>
+    </div>
+    {% block content %}{% endblock %}
 {% endblock %}
-
 
 
 

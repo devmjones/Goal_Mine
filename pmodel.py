@@ -55,6 +55,7 @@ class Goal(Base):
     id = Column (Integer, primary_key = True)
     student_id = Column (Integer, ForeignKey ('students.id'))
     goal_name = Column (String, nullable = False)
+    is_timed= Column(Boolean, nullable= False)
 
     student = relationship("Student", backref= backref ("goals", order_by= id))
 

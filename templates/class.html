@@ -3,38 +3,49 @@
 {% block content %}
 
 
-<h1> Welcome {{ teacher.first_name }} {{ teacher.last_name }}</h1>
-
-    <h2> Please use the form below to add students to your class.</h2>
-        <form class="form-signin" method="POST" action="/class">
-            <input type="text" name="first_name" class="form-control" placeholder="Student First Name" required autofocus />
-            <input type="text" name="last_name" class="form-control" placeholder="Student Last Name" required />
-            <input type="text" name="nickname"  class="form-control" placeholder="Optional: Nickname" />
-            <button type="submit" class="btn btn-success btn-lg btn-block"><span class="glyphicon glyphicon-plus"><span> Add Student</button>
-        </form>
+    <h1> Welcome {{ teacher.first_name }} {{ teacher.last_name }}</h1>
 
 
-     <h2> Your Class</h2>
-
+    <div class="panel panel-success">
+        <div class="panel-heading"><h2> Your Class </h2></div>
         <table class="table table-bordered">
-        <tr><th>Delete</th><th>First Name</th><th>Last Name</th><th>Nickname</th></tr>
+            <tr>
+                <th>Delete</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Nickname</th>
+            </tr>
 
-        {% for student in students %}
+            {% for student in students %}
 
-         <tr>
-             <td><a href="/student/{{student.id}}/delete">Delete Student</a></td>
-             <td><a href="/student/{{student.id}}">{{student.first_name}}</a></td>
+                <tr>
+                    <td><a href="/student/{{ student.id }}/delete">Delete Student</a></td>
+                    <td><a href="/student/{{ student.id }}">{{ student.first_name }}</a></td>
 
-             <td><a href="/student/{{student.id}}">{{student.last_name}}</a></td>
+                    <td><a href="/student/{{ student.id }}">{{ student.last_name }}</a></td>
 
-             {% if student.nickname %}
-                <td>{{student.nickname}}</td>
-             {% else %}
-                 <td>  </td>
-             {% endif %}
-         </tr>
-        {% endfor %}
-</table>
+                    {% if student.nickname %}
+                        <td>{{ student.nickname }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+
+
+
+    <div class="panel panel-success">
+    <div class="panel-heading"><h2> Please use the form below to add students to your class.</h2></div>
+    <form class="form-signin" method="POST" action="/class">
+        <input type="text" name="first_name" class="form-control" placeholder="Student First Name" required autofocus/>
+        <input type="text" name="last_name" class="form-control" placeholder="Student Last Name" required/>
+        <input type="text" name="nickname" class="form-control" placeholder="Optional: Nickname"/>
+        <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-plus"><span> Add Student</button>
+    </form>
+</div>
 
 
 {% endblock %}

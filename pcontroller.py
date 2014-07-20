@@ -187,7 +187,9 @@ def new_goal(student_id):
 def create_goal(student_id):
     student = pmodel.Student.query.filter_by(id=student_id).one()
     goal_name = request.form["goal_name"]
-    goal = pmodel.Goal(student_id=student_id, goal_name=goal_name)
+    timed = (request.form["timed"] == "yes")
+
+    goal = pmodel.Goal(student_id=student_id, goal_name=goal_name, is_timed=timed)
     pmodel.session.add(goal)
     pmodel.session.commit()
 
@@ -219,7 +221,7 @@ def submit_data(student_id, goal_id):
 
     sub_goal_data_value = None
     now = datetime.datetime.now()
-    sub_goal_time = None  # TODO add stopwatch value if applicable
+    sub_goal_time = int(request.form["stopwatch"])
 
     for sub_goal in sub_goals:
         if sub_goal.sub_goal_type == "tally":
