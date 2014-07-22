@@ -10,36 +10,54 @@
         <h1>IEP Goal Generation for {{ student.first_name }} {{ student.last_name }}</h1>
     {% endif %}
 
-    <div class="info-bullets">
-    <h4 class="text-center">Which Data Collection Method Should I Use?</h4>
+
+      <div class="info-bullets">
+    <h3 class="text-center">Which Data Collection Method Should I Use?</h3>
     <ul>
         <li><span class="bold">Tally Method:</span> If you need to count how many times something occurs, such as prompts or specific behaviors</li>
         <li><span class="bold">True/False:</span> If you need to indicate whether or not something has occurred, such as whether a prompt was given or if a step was completed </li>
         <li><span class="bold">Narrative:</span> If you need to describe an incident or event, such as a behavioral episode</li>
-        <li><span class="bold">Range 1-6:</span>If a goal is being tracked in terms of degrees, such as 1 being very poor and 6 being excellent</li>
-        <li><span class="bold">Timed:</span>For goals that are dependent on a length of time, such as doing something for or within X amount of seconds</li>
+        <li><span class="bold">Range 1-6: </span>If a goal is being tracked in terms of degrees, such as 1 being very poor and 6 being excellent</li>
+        <li><span class="bold">Timed: </span>For goals that are dependent on a length of time, such as doing something for or within X amount of seconds</li>
     </ul>
 
     </div>
 
-   <form method="POST" action="/student/{{ student.id }}/goal/create">
-        <h3>Please enter the Goal Nickname</h3> <input class="goal-text" type="text" name="goal_name" placeholder="Example: 'Bathroom Independence'" autofocus><br>
+    <div class="panel panel-success goal">
+        <div class="panel-heading"><h3>Goal Wizard </h3></div>
+        <div class="panel-body">
+            <form method="POST" action="/student/{{ student.id }}/goal/create">
+                <h3>Please enter the Goal Nickname</h3> <input class="goal-text" type="text" name="goal_name"
+                                                               placeholder="Example: 'Bathroom Independence'" autofocus><br>
 
-        <br><p>Does this goal need to be timed? <input type="radio" name="timed" value="yes"> Yes <input type="radio" name="not-timed" value="no"> No </p>
+                <br>
+
+                <p>Does this goal need to be timed? <input type="radio" name="timed" value="yes"> Yes <input
+                        type="radio" name="not-timed" value="no"> No </p>
 
 
-        <h3>Enter the items being tracked for this goal. Add fields as needed</h3>
+                <h3>Enter the items being tracked for this goal. Add fields as needed</h3>
 
                 <ol>
-                    <li class="myinput">name <input name= "text_0" class="goal-text" type="text" placeholder="Example: 'Washed Hands'"> type <select name="type_0"><option value="tally">Tally</option><option value="t/f">True/False</option><option value="narrative">Narrative</option><option value="range">Range 1-6</option></select> <a href="#">delete</a></li>
+                    <li class="myinput">name <input name="text_0" class="goal-text" type="text"
+                                                    placeholder="Example: 'Washed Hands'"> type <select name="type_0">
+                        <option value="tally">Tally</option>
+                        <option value="t/f">True/False</option>
+                        <option value="narrative">Narrative</option>
+                        <option value="range">Range 1-6</option>
+                    </select> <a href="#">delete</a></li>
                 </ol>
 
-                <button type="button" class="btn btn-primary add"><span class="glyphicon glyphicon-plus"><span> More</button><br>
+                <button type="button" class="btn btn-primary add"><span class="glyphicon glyphicon-plus"><span> More
+                </button>
 
-   <div class="center-button"
-                <br><button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"><span> Submit</button><br>
+                <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"><span> Submit
+                </button>
+
                 <input type="hidden" name="max_counter" value="0"/>
-   </div>
-   </form>
+        </div>
+    </div>
+             </form>
+
 
 {% endblock %}

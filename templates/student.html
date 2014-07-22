@@ -33,6 +33,8 @@
                     <th>Goals</th>
                 </tr>
 
+
+
                 {% for goal in goals %}
                     <tr>
                         <td>
@@ -42,9 +44,10 @@
                             <button type="button" class="btn btn-primary"><span
                                     class="glyphicon glyphicon-wrench"></span> Edit Goal
                             </button>
+                            <a href = "/goal/report/{{ student.id }}/{{ goal.id }}">
                             <button type="button" class="btn btn-primary"><span
                                     class="glyphicon glyphicon-folder-close"></span> View Report
-                            </button>
+                            </button></a>
                         <td>{{ goal.goal_name }} <a href="/goal/view/{{ student.id }}/{{ goal.id }}">
                             <button type="button" class="btn btn-success right-button">
                                 <span class="glyphicon glyphicon-folder-open"></span> Take Data
@@ -60,10 +63,11 @@
 
         {% if student.nickname %}
             <h2>{{ student.first_name }} "{{ student.nickname }}" {{ student.last_name }} has no IEP goals at this
-                time.</h2>
+                time. <a href="/student/{{ student.id }}/goal/new"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"><span> New Goal</button></a></h2>
         {% else %}
-            <h2>{{ student.first_name }} {{ student.last_name }} has no IEP goals at this time.</h2>
+            <h2>{{ student.first_name }} {{ student.last_name }} has no IEP goals at this time. <a href="/student/{{ student.id }}/goal/new"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"><span> New Goal</button></a></h2>
         {% endif %}
+
 
     {% endif %}
 
@@ -76,8 +80,8 @@
             <h4>To enter a marker for {{ student.first_name }} "{{ student.nickname }}" {{ student.last_name }}, please
                 select a date and enter your note in the field provided.</h4>
         {% else %}
-            <h4>To enter a marker for {{ student.first_name }} {{ student.last_name }}, please select a date and enter
-                your note in the field provided.</h4>
+            <h3>To enter a marker for {{ student.first_name }} {{ student.last_name }}, please select a date and enter
+                your note in the field provided.</h3>
         {% endif %}
         <form id="add-marker" method="POST">
 
@@ -92,5 +96,7 @@
         </form>
     </div>
 
+
+    <a href="/class"> Back to Class </a>
 
 {% endblock %}

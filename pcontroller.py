@@ -28,6 +28,7 @@ def load_user(user_id):
 @app.route("/")
 def index():
     return render_template("index.html")
+#TODO- add breadcrumbs
 
 @app.route("/signup")
 def show_signup():
@@ -64,7 +65,7 @@ def process_signup():
 
         return redirect("/class")
     else:
-        flash("Your passwords don't match, please try again.")
+        flash("Your passwords don't match, please try again.", "error")
         return redirect("/signup")
 
 
@@ -83,18 +84,20 @@ def process_login():
         session["email"] = user.email
         session["password"] = user.password
         session["id"] = user.id
-        flash("Login Successful!")
+        flash("Login Successful!", "success")
         login_user(user)
         return redirect(request.args.get("next") or "/class")
 
     else:
-        flash("Login information incorrect, please try again.")
+        flash("Login information incorrect, please try again.", "error")
         return redirect("/login")
 
 @app.route("/logout")
 def logout():
     logout_user()
+    session.clear()
     return redirect("/login")
+#TODO- clear session of everything but user name
 
 @app.route("/class", methods=["GET"])
 @login_required
@@ -103,9 +106,9 @@ def view_class():
     students = pmodel.Student.query.filter_by(teacher_id=teacher.id).all()
     return render_template("class.html",  teacher= teacher, students=students)
 
-
+#TODO- change table to a list
 #TODO- put students alpha by last name
-#TODO= add option to remove/edit student
+#TODO= hook up buttons to remove/edit student
 
 @app.route("/class", methods=["POST"])
 @login_required
@@ -128,7 +131,7 @@ def add_student():
     pmodel.session.add(student)
     pmodel.session.commit()
 
-    flash("You have successfully added " + "%s %s %s to your class!" % (student.first_name, student.last_name, student.nickname))
+    flash("You have successfully added " + "%s %s %s to your class!" "success" % (student.first_name, student.last_name, student.nickname))
     return redirect("/class")
 
 # @app.route("/student/<int:student_id>/delete", methods=["GET"])
@@ -146,7 +149,9 @@ def add_student():
 def view_student(student_id):
     student = pmodel.Student.query.filter_by(id=student_id).one()
     goals = pmodel.Goal.query.filter_by(student_id=student_id).all()
-    #TODO- add option to edit/remove goals
+    #TODO- hook up buttons to edit/remove goals
+    #TODO- make list instead of table
+    #TODO- move actions to the right of goals
 
     return render_template("student.html", student=student, goals=goals)
 
@@ -154,6 +159,7 @@ def view_student(student_id):
 @login_required
 def add_marker(student_id):
     #TODO- add option to edit/remove markers
+    #TODO- put in panel form
 
     marker_text= request.form["marker_text"]
     raw_date=request.form["calendar"]
@@ -165,7 +171,7 @@ def add_marker(student_id):
     pmodel.session.add(marker)
     pmodel.session.commit()
 
-    flash("Marker added.")
+    flash("Marker added.", "success")
     return redirect("/markers/%d" % student_id)
 
 @app.route("/markers/<int:student_id>", methods=["GET"])
@@ -174,6 +180,8 @@ def view_marker(student_id):
     markers= pmodel.Marker.query.filter_by(student_id=student_id).all()
     student= pmodel.Student.query.filter_by(id=student_id).one()
     return render_template("markers.html", student=student, markers=markers, time=time.time())
+
+#TODO- fix flow of app routes starting here.
 
 
 @app.route("/student/<int:student_id>/goal/new", methods=["GET"])
@@ -222,6 +230,7 @@ def submit_data(student_id, goal_id):
     sub_goal_data_value = None
     now = datetime.datetime.now()
     sub_goal_time = int(request.form["stopwatch"])
+#TODO- if subgoal data value is null, error message.
 
     for sub_goal in sub_goals:
         if sub_goal.sub_goal_type == "tally":
@@ -251,7 +260,14 @@ def submit_data(student_id, goal_id):
     flash("Data instance entered")
     return redirect("/student/%d" % student.id)
 
-
+@app.route("/goal/report/<int:student_id>/<int:goal_id>", methods=["GET"])
+@login_required
+def view_goal_report(student_id, goal_id):
+    sd = request.form["start_date"]
+    start_date = datetime.datetime.strptime(sd, "%Y-%m-%d")
+    ed = request.form["end_date"]
+    end_date = datetime.datetime.strptime(ed, "%Y-%m-%d")
+    return render_template("/goal/summary/%d/%d" % student_id, goal_id, start_date=start_date, end_date= end_date)
 
 
 

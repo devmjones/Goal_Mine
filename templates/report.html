@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %} Report Generation {% endblock %}
+
+
+{% block content %}
+
+{{ student_name }}
+Goal Summary Report for {{ goal_name }}
+
+<h2>Please enter the date range for this goal report</h2>
+
+<p>Start Date: <input type="date" name="start_date"></p>
+<p>End Date: <input type="date" name="end_date"></p>
+
+
+<button type="submit" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-eye-open"></span> Generate Report Summary
+        </button>
+
+
+{% endblock %}
