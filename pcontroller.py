@@ -257,7 +257,7 @@ def submit_data(student_id, goal_id):
         pmodel.session.add(sub_goal_raw_data)
         pmodel.session.commit()
 
-    flash("Data instance entered", success)
+    flash("Data instance entered", "success")
     return redirect("/student/%d" % student.id)
 
 @app.route("/goal/report/<int:student_id>/<int:goal_id>", methods=["GET", "POST"])
@@ -267,7 +267,7 @@ def view_goal_report(student_id, goal_id):
     goal = pmodel.Goal.query.filter_by(student_id=student_id, id=goal_id).first()
 
     if request.method == 'POST':
-        if start_date in request.form and end_date in request.form:
+        if 'start_date' in request.form and 'end_date' in request.form: #keys are always in strings
             sd = request.form["start_date"]
             start_date = datetime.datetime.strptime(sd, "%Y-%m-%d")
             ed = request.form["end_date"]
