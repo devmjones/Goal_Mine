@@ -106,6 +106,6 @@ th, td {
     width: 100px;
 }
 
-.tf .tf_radio.active {
+.tf .tf_radio.active, .range .range_radio.active {
     background-color:palegreen;
 }

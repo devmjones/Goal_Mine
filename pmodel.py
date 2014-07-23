@@ -2,7 +2,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine, ForeignKey
 from sqlalchemy import Column, Integer, String, Boolean, Text, DateTime
 from sqlalchemy.orm import sessionmaker, scoped_session, relationship, backref
-from datetime import datetime
+from datetime import datetime, date
 from collections import Counter
 import os
 

@@ -5,17 +5,18 @@
 
 {% block content %}
 
-{{ student_name }}
-Goal Summary Report for {{ goal_name }}
+<h1>{{ student.first_name }} {{ student.last_name }}</h1>
+<h1>Goal Summary Report for: "{{ goal.goal_name }}"</h1>
 
 <h2>Please enter the date range for this goal report</h2>
 
+<form>
 <p>Start Date: <input type="date" name="start_date"></p>
 <p>End Date: <input type="date" name="end_date"></p>
 
 
 <button type="submit" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-eye-open"></span> Generate Report Summary
         </button>
-
+</form>
 
 {% endblock %}
