@@ -9,8 +9,8 @@ import os
 import os.path
 db_exists = os.path.isfile('iepdata.db')
 engine = create_engine("sqlite:///iepdata.db", echo = False)
-session = scoped_session(sessionmaker(bind= engine, 
-                                      autocommit= False, 
+session = scoped_session(sessionmaker(bind= engine,
+                                      autocommit= False,
                                       autoflush = False))
 
 Base = declarative_base()
@@ -73,9 +73,10 @@ class Marker(Base):
     def marker_date_as_datetime(self):
         return datetime.fromtimestamp(self.marker_date)
 
-    def get_marker_record(self, start_date, end_date, student_id):
-        marker_record= db_session.query(Marker).filter(marker_date >= start_date).filter_by(marker_date <= end_date).filter_by(student_id=student_id).all()
-        return query
+    @classmethod
+    def get_marker_record(cls, start_date, end_date, student_id):
+        marker_record= cls.query.filter(cls.marker_date >= start_date).filter(cls.marker_date <= end_date).filter_by(student_id=student_id).all()
+        return cls.query (marker_record)
 
 
 class SubGoalRawData(Base):
@@ -90,9 +91,6 @@ class SubGoalRawData(Base):
     sub_goal_time = Column(Integer, nullable=True)
 
     sub_goal = relationship("SubGoal", backref = backref ("sub_goal_raw_data", order_by= id))
-
-    def __repr__(self):
-        return "Data SubGoal(%d) of Goal(%d)" % (self.sub_goal_id, self.sub_goal.goal_id)
 
     @classmethod
     def get_report_data(cls, goal_id, start_date, end_date):
@@ -130,7 +128,7 @@ class SubGoalRawData(Base):
 
         for sub_goal_id in report_data:
 
-            summary = none #this will the the summary of one subgoal (by type)
+            summary = None #this will the the summary of one subgoal by subgoal id (all have same type)
             raw_data_item_list = report_data[sub_goal_id]
             first_item = raw_data_item_list[0]
             sub_goal_type = first_item.sub_goal_type
@@ -142,25 +140,27 @@ class SubGoalRawData(Base):
             elif sub_goal_type == "narrative":
                 summary = cls.narrative_summary(raw_data_item_list)
             elif sub_goal_type == "range":
-                summary = cls. range_summary(raw_data_item_list)
+                summary = cls.range_summary(raw_data_item_list)
 
-             summaries.append(summary)
+            summaries.append(summary)
+        return summaries
 
 
 
     @staticmethod
     def tally_summary(raw_tally_items): #list of complete raw data objects of the tally type for that subgoal
         tally_info = {}
-        if raw_tally_items == []:
+        if not raw_tally_items:
             return tally_info
+        tally_info["type"] = "tally"
         tally_info["sub_goal_name"] = raw_tally_items[0].sub_goal.sub_goal_name #pulling the name of the subgoal out of the subgoal object that belongs to the first raw tally items object
         tally_info["count"] = len(raw_tally_items)
         tally_info["average"] = 0
         for item in raw_tally_items:
             tally_info["average"] += int(item.sub_goal_data_value)
             tally_info["average"] /= tally_info["count"]
+        breakdown = {}
         for item in raw_tally_items:
-            breakdown = {}
             value = item.sub_goal_data_value
             if breakdown.get(value):
                 breakdown[value] += 1
@@ -172,8 +172,9 @@ class SubGoalRawData(Base):
     @staticmethod
     def narrative_summary(raw_narrative_items):
         narrative_info = {}
-        if raw_narrative_items == []:
+        if not raw_narrative_items:
             return narrative_info
+        narrative_info["type"] = "narrative"
         narrative_info["sub_goal_name"] = raw_narrative_items[0].sub_goal.sub_goal_name
         narrative_info["count"] = len(raw_narrative_items)
         narrative_info["data_items"] = raw_narrative_items
@@ -182,13 +183,13 @@ class SubGoalRawData(Base):
     @staticmethod
     def tf_summary(raw_tf_items):
         tf_info = {}
-        if raw_tf_items == []:
+        if not raw_tf_items:
             return tf_info
+        tf_info["type"] = "tf"
         tf_info["sub_goal_name"] = raw_tf_items[0].sub_goal.sub_goal_name
         tf_info["count"] = len(raw_tf_items)
-
+        breakdown = {}
         for item in raw_tf_items:
-            breakdown = {}
             value = item.sub_goal_data_value
             if breakdown.get(value):
                 breakdown[value] += 1
@@ -200,12 +201,13 @@ class SubGoalRawData(Base):
     @staticmethod
     def range_summary(raw_range_items):
         range_info = {}
-        if raw_range_items == []:
+        if not raw_range_items:
             return range_info
+        range_info["type"] = "range"
         range_info["sub_goal_name"] = raw_range_items[0].sub_goal.sub_goal_name
         range_info["count"] = len(raw_range_items)
+        breakdown = {}
         for item in raw_range_items:
-            breakdown = {}
             value = item.sub_goal_data_value
             if breakdown.get(value):
                 breakdown[value] += 1
@@ -239,7 +241,7 @@ def main():
 
 if not db_exists:
     Base.metadata.create_all(engine)
-    
+
 
 if __name__ == "__main__":
     main()

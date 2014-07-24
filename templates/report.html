@@ -2,6 +2,9 @@
 
 {% block title %} Report Generation {% endblock %}
 
+{% macro tally_summary(summary)-%}
+    <h2>{{ summary["sub_goal_name"] }}</h2>
+{%- endmacro %}
 
 {% block content %}
 
@@ -10,7 +13,7 @@
 
 <h2>Please enter the date range for this goal report</h2>
 
-<form>
+<form method="POST">
 <p>Start Date: <input type="date" name="start_date"></p>
 <p>End Date: <input type="date" name="end_date"></p>
 
@@ -19,4 +22,11 @@
         </button>
 </form>
 
+    {% if summaries %}
+        {% for summary in summaries %}
+            {% if summary["type"] == "tally" %}
+                {{ tally_summary(summary) }}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 {% endblock %}

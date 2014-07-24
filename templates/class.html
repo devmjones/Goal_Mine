@@ -16,7 +16,7 @@
                 <th>Nickname</th>
             </tr>
 
-            {% for student in students %}
+            {% for student in students|sort(attribute="last_name")%}
 
                 <tr>
                     <td><a href="/student/{{ student.id }}/delete">Delete Student</a></td>

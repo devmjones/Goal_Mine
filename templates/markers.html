@@ -3,13 +3,16 @@
 
 {% block content%}
 
-<h1>Markers for {{ student.first_name }} {{ student.last_name }}</h1>
-
+<div class="panel panel-success">
+            <div class="panel-heading"><h1>Markers for {{ student.first_name }} {{ student.last_name }}</h1></div>
+<div class="panel-body">
         <ul>
     {% for marker in markers %}
             <li> {{ marker.marker_date }} {{ marker.marker_text }} </li>
      {% endfor %}
         </ul>
+ </div>
+</div>
 
     <a href="/student/{{ student.id }}">Back to student page</a>
 

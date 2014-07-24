@@ -17,9 +17,13 @@
 {% block body %}
     <div class="page-margins">
     <div class="page-header">
-        <div id="log_out"><a href="/logout">Log Out</a></div>
+        {% if "email" in session %}
+          <div id="log_out"> <a href="/logout">Log Out</a></div>
+        {% else %}
+          <div id="log_in"> <a href="/login">Log In</a></div>
+        {% endif %}
         <h1>
-            <a href="/"><img src="/static/images/teachertatt.jpg" alt="teacher apple tattoo" class="img-circle"/></a>
+            <a href="/class"><img src="/static/images/teachertatt.jpg" alt="teacher apple tattoo" class="img-circle"/></a>
             Goal Mine... <small> for teachers, by a teacher</small>
         </h1>
     </div>

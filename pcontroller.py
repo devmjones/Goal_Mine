@@ -34,7 +34,7 @@ def index():
 def show_signup():
     return render_template("signup.html")
 
-@app.route("/signup", methods = ["POST"])
+@app.route("/signup", methods=["POST"])
 def process_signup():
    
     first_name = request.form["first_name"]
@@ -71,6 +71,8 @@ def process_signup():
 
 @app.route("/login", methods=["GET"])
 def login():
+    logout_user()
+    session.clear()
     return render_template("login.html")
 
 @app.route("/login", methods=["POST"])
@@ -97,7 +99,7 @@ def logout():
     logout_user()
     session.clear()
     return redirect("/login")
-#TODO- clear session of everything but user name
+
 
 @app.route("/class", methods=["GET"])
 @login_required
@@ -107,7 +109,6 @@ def view_class():
     return render_template("class.html",  teacher= teacher, students=students)
 
 #TODO- change table to a list
-#TODO- put students alpha by last name
 #TODO= hook up buttons to remove/edit student
 
 @app.route("/class", methods=["POST"])
@@ -159,7 +160,6 @@ def view_student(student_id):
 @login_required
 def add_marker(student_id):
     #TODO- add option to edit/remove markers
-    #TODO- put in panel form
 
     marker_text= request.form["marker_text"]
     raw_date=request.form["calendar"]
@@ -266,18 +266,16 @@ def view_goal_report(student_id, goal_id):
     student = pmodel.Student.query.filter_by(id=student_id).first()
     goal = pmodel.Goal.query.filter_by(student_id=student_id, id=goal_id).first()
 
-    if request.method == 'POST':
-        if 'start_date' in request.form and 'end_date' in request.form: #keys are always in strings
-            sd = request.form["start_date"]
-            start_date = datetime.datetime.strptime(sd, "%Y-%m-%d")
-            ed = request.form["end_date"]
-            end_date = datetime.datetime.strptime(ed, "%Y-%m-%d")
-            return render_template("report.html", student_id=student_id, goal_id=goal_id, start_date=start_date, end_date=end_date, student=student, goal=goal)
-    elif request.method == "GET":
-            return render_template("report.html", student_id=student_id, goal_id=goal_id, student=student, goal=goal)
-
-
-
+    if 'start_date' in request.form and 'end_date' in request.form: #keys are always in strings
+        sd = request.form["start_date"]
+        start_date = datetime.datetime.strptime(sd, "%Y-%m-%d")
+        ed = request.form["end_date"]
+        end_date = datetime.datetime.strptime(ed, "%Y-%m-%d")
+        report_data = pmodel.SubGoalRawData.get_report_data(goal_id, start_date, end_date)
+        summaries = pmodel.SubGoalRawData.summaries_for_report_data(report_data)
+        return render_template("report.html", student_id=student_id, goal_id=goal_id, start_date=start_date, end_date=end_date, student=student, goal=goal, summaries=summaries)
+    else:
+        return render_template("report.html", student_id=student_id, goal_id=goal_id, student=student, goal=goal)
 
 if __name__=="__main__":
     app.run(debug= True)
