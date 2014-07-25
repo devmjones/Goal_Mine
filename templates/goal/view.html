@@ -13,7 +13,7 @@
             </button>
             <input type="text" name="tally_{{ sub_goal_id }}" value="0"/>
             {# the field that the number will appear in, which can be edited #}
-            <textarea name="notes_{{ sub_goal_id }}" rows="3" cols="50" placeholder="Optional">Enter note here</textarea><br>
+            <textarea name="notes_{{ sub_goal_id }}" rows="3" cols="50" placeholder="Optional"></textarea><br>
         </div>
     </div>
 {%- endmacro %}
@@ -30,7 +30,7 @@
                 <label class="btn btn-lg btn-default tf_radio">
                     <input type="radio" name="tf_{{ sub_goal_id }}" value="no">No</label>
             </div>
-            <textarea name="notes_{{ sub_goal_id }}" rows="3" cols="50" placeholder="Optional">Enter note here</textarea><br>
+            <textarea name="notes_{{ sub_goal_id }}" rows="3" cols="50" placeholder="Optional"></textarea><br>
         </div>
     </div>
 {%- endmacro %}
@@ -42,7 +42,7 @@
         <div class="panel-heading"><h4>{{ sub_goal_name }}</h4></div>
         <div class="panel-body">
 
-            <textarea name="narrative_text_{{ sub_goal_id }}" rows="3" cols="50">Enter note here</textarea><br>
+            <textarea name="narrative_text_{{ sub_goal_id }}" rows="3" cols="50"></textarea><br>
 
         </div>
     </div>
@@ -88,7 +88,7 @@
     <label class="btn btn-lg btn-default range_radio">
         <input type="radio" name="range_{{ sub_goal_id }}" value="6"/> 6</label>
 
-        <textarea name="notes_{{ sub_goal_id }}" rows="3" cols="50" placeholder="Optional">Enter note here</textarea>
+        <textarea name="notes_{{ sub_goal_id }}" rows="3" cols="50" placeholder="Optional"></textarea>
     </div>
      </div>
      </div>

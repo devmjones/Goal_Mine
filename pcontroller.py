@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, request, flash, session, g
 from pmodel import session as db_session
 import pmodel
-import time, datetime
+import time,datetime
 from datetime import date
 
 from flask.ext.bootstrap3 import Bootstrap
@@ -161,11 +161,11 @@ def view_student(student_id):
 def add_marker(student_id):
     #TODO- add option to edit/remove markers
 
-    marker_text= request.form["marker_text"]
-    raw_date=request.form["calendar"]
-    marker_date= datetime.datetime.strptime(raw_date, "%Y-%m-%d")
+    marker_text = request.form["marker_text"]
+    raw_date = request.form["calendar"]
+    marker_date = datetime.datetime.strptime(raw_date, "%Y-%m-%d")
 
-    marker= pmodel.Marker (marker_date= marker_date, marker_text= marker_text, student_id= student_id)
+    marker = pmodel.Marker(marker_date= marker_date, marker_text= marker_text, student_id= student_id)
 
 
     pmodel.session.add(marker)
@@ -177,12 +177,11 @@ def add_marker(student_id):
 @app.route("/markers/<int:student_id>", methods=["GET"])
 @login_required
 def view_marker(student_id):
-    markers= pmodel.Marker.query.filter_by(student_id=student_id).all()
+    markers = pmodel.Marker.query.filter_by(student_id=student_id).all()
     student= pmodel.Student.query.filter_by(id=student_id).one()
     return render_template("markers.html", student=student, markers=markers, time=time.time())
 
 #TODO- fix flow of app routes starting here.
-
 
 @app.route("/student/<int:student_id>/goal/new", methods=["GET"])
 @login_required
@@ -208,7 +207,7 @@ def create_goal(student_id):
             text= request.form["text_%d" % i] #ditto
         except: # in case someone randomly types a student number into the browser.
             continue
-        sub_goal= pmodel.SubGoal(goal_id=goal.id, sub_goal_name=text, sub_goal_type=type)
+        sub_goal = pmodel.SubGoal(goal_id=goal.id, sub_goal_name=text, sub_goal_type=type)
         pmodel.session.add(sub_goal)
         pmodel.session.commit()
 
@@ -226,7 +225,6 @@ def view_data_page(student_id, goal_id):
 def submit_data(student_id, goal_id):
     student = pmodel.Student.query.filter_by(id=student_id).first()
     sub_goals = pmodel.SubGoal.query.filter_by(goal_id=goal_id).all()
-
     sub_goal_data_value = None
     now = datetime.datetime.now()
     sub_goal_time = int(request.form["stopwatch"])
@@ -257,6 +255,8 @@ def submit_data(student_id, goal_id):
         pmodel.session.add(sub_goal_raw_data)
         pmodel.session.commit()
 
+#TODO- make range and t/f fields mandatory, make sure blank tally = 0, narrative mandatory or ""?
+
     flash("Data instance entered", "success")
     return redirect("/student/%d" % student.id)
 
@@ -265,15 +265,17 @@ def submit_data(student_id, goal_id):
 def view_goal_report(student_id, goal_id):
     student = pmodel.Student.query.filter_by(id=student_id).first()
     goal = pmodel.Goal.query.filter_by(student_id=student_id, id=goal_id).first()
+    markers= pmodel.Marker.query.filter_by(student_id=student_id).all()
 
-    if 'start_date' in request.form and 'end_date' in request.form: #keys are always in strings
+    if "start_date" in request.form and "end_date" in request.form: #keys are always in strings
         sd = request.form["start_date"]
         start_date = datetime.datetime.strptime(sd, "%Y-%m-%d")
         ed = request.form["end_date"]
-        end_date = datetime.datetime.strptime(ed, "%Y-%m-%d")
+        end_date = datetime.datetime.strptime(ed + 'T23:59:59.999999', "%Y-%m-%dT%H:%M:%S.%f")
         report_data = pmodel.SubGoalRawData.get_report_data(goal_id, start_date, end_date)
         summaries = pmodel.SubGoalRawData.summaries_for_report_data(report_data)
-        return render_template("report.html", student_id=student_id, goal_id=goal_id, start_date=start_date, end_date=end_date, student=student, goal=goal, summaries=summaries)
+        marker_data = pmodel.Marker.get_marker_record(start_date, end_date, student_id)
+        return render_template("report.html", student_id=student_id, goal_id=goal_id, start_date=start_date, end_date=end_date, student=student, goal=goal, summaries=summaries, markers=markers, marker_data=marker_data)
     else:
         return render_template("report.html", student_id=student_id, goal_id=goal_id, student=student, goal=goal)
 

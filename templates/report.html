@@ -3,67 +3,124 @@
 {% block title %} Report Generation {% endblock %}
 
 {% macro tally_summary(summary)-%}
-  <div class="panel panel-success">
-    <div class = "panel-heading"><h3>{{ summary["sub_goal_name"] }}</h3></div>
-      <div class = "panel-body">
-    <h4>Total instances of data collection: {{ tally_summary["count"] }}</h4>
-    <h4>Average tally number: {{ tally_summary["average"]}}</h4>
-    <h4>Breakdown of tally totals: {{ tally_summary["breakdown"] }}</h4>
-  </div>
-      </div>
+    <div class="panel panel-success">
+        <div class="panel-heading"><h2>{{ summary["sub_goal_name"] }}</h2></div>
+        <div class="panel-body">
+            <p><b>Total instances of data collection:</b>{{ summary["count"] }}</p>
+
+            <p><b>Average tally number:</b>{{ summary["average"] }}</p>
+
+            <p><b>Breakdown of tally totals:</b>{{ summary["breakdown"] }}</p>
+
+            <p><b>Percentage of tally totals:</b> {{ summary["percentage"] }}</p>
+        <p>***************************************************************************</p>
+
+            {% for item in summary["data_items"] %}
+                <p> <b>Date:</b> {{ item.date.strftime("%A, %B %d %Y %H:%M") }}  <b>Number tallied:</b> {{ item.sub_goal_data_value }} <b> Notes:</b> {{ item.sub_goal_notes }}</p>
+            {% endfor %}
+
+        </div>
+    </div>
 {%- endmacro %}
 
 {% macro range_summary(summary) -%}
-  <div class="panel panel-success">
-       <div class = "panel-heading"><h3>{{ summary["sub_goal_name"] }}</h3></div>
-       <div class = "panel-body">
-    <h4>Total instances of data collection: {{ range_summary ["count"] }}</h4>
-    <h4>Breakdown of range totals: {{ range_summary["breakdown"] }}</h4>
-  </div>
+    <div class="panel panel-success">
+        <div class="panel-heading"><h2>{{ summary["sub_goal_name"] }}</h2></div>
+        <div class="panel-body">
+            <p><b>Total instances of data collection:</b> {{ summary["count"] }}</p>
+
+            <p><b>Breakdown of range totals:</b> {{ summary["breakdown"] }}</p>
+
+            <p><b>Percentage of range totals:</b>{{ summary["percentage"] }}</p>
+        <p>***************************************************************************</p>
+            {% for item in summary["data_items"] %}
+
+                <p> <b>Date:</b> {{ item.date.strftime("%A, %B %d %Y %H:%M") }}  <b>Success:</b> {{ item.sub_goal_data_value }} <b> Notes:</b> {{ item.sub_goal_notes }}</p>
+
+            {% endfor %}
         </div>
+    </div>
 
 {%- endmacro %}
 
 {% macro narrative_summary(summary) -%}
-  <div class="panel panel-success">
-    <div class = "panel-heading"><h3>{{ summary["sub_goal_name"] }}</h3></div>
-        <div class = "panel-body">
-    <h4>Total instances of data collection: {{ narrative_summary["count"] }}</h4>
-    <h4>Narrative entries: {{ narrative_summary["data_items"] }}</h4>
-  </div>
+    <div class="panel panel-success">
+        <div class="panel-heading"><h2>{{ summary["sub_goal_name"] }}</h2></div>
+        <div class="panel-body">
+
+            <p><b>Total instances of data collection:</b> {{ summary["count"] }}</p>
+
+            <ul>
+                {% for item in summary["data_items"] %}
+
+                <p> <b>Date:</b> {{ item.date.strftime("%A, %B %d %Y %H:%M") }}  <b>Narrative:</b> {{ item.sub_goal_data_value }}</p>
+
+                {% endfor %}
+            </ul>
+
         </div>
+    </div>
 {%- endmacro %}
 
 {% macro tf_summary(summary) -%}
-  <div class="panel panel-success">
-    <div class = "panel-heading"><h3>{{ summary["sub_goal_name"] }}</h3></div>
-        <div class = "panel-body">
-    <h4>Total instances of data collection: {{ tf_summary["count"] }}</h4>
-    <h4>Breakdown of Yes/No: {{ tf_summary["breakdown"] }}</h4>
-  </div>
+    <div class="panel panel-success">
+        <div class="panel-heading"><h2>{{ summary["sub_goal_name"] }}</h2></div>
+        <div class="panel-body">
+            <p><b>Total instances of data collection:</b> {{ summary["count"] }}</p>
+
+            <p><b>Total Yes:</b> {{ summary["breakdown"]["yes"] }}</p>
+            <p><b>Total No:</b> {{ summary["breakdown"]["no"] }}</p>
+
+            <p><b>Percentage Yes:</b> {{ summary["percentage"]["yes"]}}%</p>
+            <p><b>Percentage No:</b> {{ summary["percentage"]["no"]}}%</p>
+
+        <p>***************************************************************************</p>
+
+          {%for item in summary["data_items"] %}
+                <p> <b>Date:</b> {{ item.date.strftime("%A, %B %d %Y %H:%M") }}  <b>Number selected:</b> {{ item.sub_goal_data_value }} <b> Notes:</b> {{ item.sub_goal_notes }}</p>
+            {% endfor %}
+
         </div>
+    </div>
 {%- endmacro %}
 
 
 {% block content %}
 
-<h1>{{ student.first_name }} {{ student.last_name }}</h1>
-<h1>Goal Summary Report for: "{{ goal.goal_name }}"</h1>
+    <h1>{{ student.first_name }} {{ student.last_name }}</h1>
+    <h1>Goal Summary Report for: "{{ goal.goal_name }}"</h1>
+
+    <div class="panel panel-success">
+        <div class="panel panel-heading"><h2> Markers for this date range:</h2></div>
+        <div class="panel panel-body">
+            {% if markers %}
+                {% for marker in marker_data %}
+                    <p>{{ marker.marker_date.strftime("%A, %B %d %Y") }}: {{ marker.marker_text }}</p>
+                {% endfor %}
+            {% else %}
+                <p>There are no markers for this date range.</p>
+            {% endif %}
+
+        </div>
+    </div>
 
 
-<div class = "panel panel-success">
-    <div class = "panel-heading"><h2>Please enter the date range for this goal report</h2></div>
-   <div class = "panel-body">
-<form method="POST">
-<p>Start Date: <input type="date" name="start_date"></p>
-<p>End Date: <input type="date" name="end_date"></p>
+
+    <div class="panel panel-success">
+        <div class="panel-heading"><h2>Please enter the date range for this goal report</h2></div>
+        <div class="panel-body">
+            <form method="POST">
+                <p>Start Date: <input type="date" name="start_date"></p>
+
+                <p>End Date: <input type="date" name="end_date"></p>
 
 
-<button type="submit" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-eye-open"></span> Generate Report Summary
-        </button>
-</form>
-   </div>
-</div>
+                <button type="submit" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-eye-open"></span>
+                    Generate Report Summary
+                </button>
+            </form>
+        </div>
+    </div>
 
     {% if summaries %}
         {% for summary in summaries %}
@@ -71,7 +128,7 @@
                 {{ tally_summary(summary) }}
 
             {% elif summary["type"] == "range" %}
-                 {{ range_summary(summary) }}
+                {{ range_summary(summary) }}
 
             {% elif summary["type"] == "narrative" %}
                 {{ narrative_summary(summary) }}
@@ -82,4 +139,6 @@
             {% endif %}
         {% endfor %}
     {% endif %}
+
+    <a href="/student/{{ student.id }}">Back to student page</a>
 {% endblock %}
