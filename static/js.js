@@ -26,8 +26,14 @@ $('.tally button').click(function(evt) {
     counter.val((current_val + 1).toString()); //adding to it, then turning it back into a string so the form will take it. May not need#}
 });
 
-//tf radio buttons
-$('.btn.tf_radio').button()
+
+//tf buttons
+$('.tf .btn').click(function(evt) {
+    counter = $(evt.target).closest('.input-group').find('input'); //getting the input (a number, thus calling it counter) instead of just the button#}
+    current_val = parseInt(counter.val()); //stuff entered into a form is returned as a string, so we have to make it an integer so we can add to it#}
+    counter.val((current_val + 1).toString()); //adding to it, then turning it back into a string so the form will take it. May not need#}
+});
+
 
 ///stopwatch
    var stopwatch_interval = null;

@@ -212,18 +212,20 @@ class SubGoalRawData(Base):
 
         tf_summary_info["count"] = len(raw_tf_items)
 
-        breakdown = {}
+        total_yes= 0
+        total_no= 0
+
         for item in raw_tf_items:
-            value = str(item.sub_goal_data_value)
-            if breakdown.get(value):
-                breakdown[value] += 1
-            else:
-                breakdown[value] = 1
-        tf_summary_info["breakdown"] = breakdown
+            raw_value = str(item.sub_goal_data_value)
+            (yes, no) = raw_value.split(":")
+            total_yes += int(yes)
+            total_no += int(no)
 
         percentage = {}
-        for value in breakdown:
-            percentage[value] = (breakdown[value] / float(tf_summary_info["count"])) * 100.0
+        percentage["yes"] = (float(total_yes) / float(total_yes + total_no)) * 100.0
+        percentage["no"] = 100.0 - percentage["yes"]
+        tf_summary_info["yes"] = total_yes
+        tf_summary_info["no"] = total_no
         tf_summary_info["percentage"] = percentage
 
         return tf_summary_info

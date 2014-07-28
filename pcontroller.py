@@ -227,7 +227,11 @@ def submit_data(student_id, goal_id):
     sub_goals = pmodel.SubGoal.query.filter_by(goal_id=goal_id).all()
     sub_goal_data_value = None
     now = datetime.datetime.now()
-    sub_goal_time = int(request.form["stopwatch"])
+    if 'stopwatch' in request.form:
+        sub_goal_time = int(request.form["stopwatch"])
+    else:
+        sub_goal_time = 0
+
 #TODO- if subgoal data value is null, error message.
 
     for sub_goal in sub_goals:
@@ -236,7 +240,9 @@ def submit_data(student_id, goal_id):
             sub_goal_notes = request.form["notes_%d" % sub_goal.id]
 
         elif sub_goal.sub_goal_type == "t/f":
-            sub_goal_data_value = request.form["tf_%d" % sub_goal.id]
+            sub_goal_yes_data_value = request.form["yes_%d" % sub_goal.id]
+            sub_goal_no_data_value = request.form["no_%d" % sub_goal.id]
+            sub_goal_data_value = sub_goal_yes_data_value + ":" + sub_goal_no_data_value
             sub_goal_notes = request.form["notes_%d" % sub_goal.id]
 
         elif sub_goal.sub_goal_type == "narrative":

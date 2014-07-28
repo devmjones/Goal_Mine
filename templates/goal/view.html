@@ -24,12 +24,14 @@
     <div class="dc_body panel panel-success tf">
         <div class="panel-heading"><h4>{{ sub_goal_name }}</h4></div>
         <div class="panel-body">
-            <div class="btn-group" data-toggle="buttons">
-                <label class="btn btn-lg btn-default tf_radio">
-                    <input type="radio" name="tf_{{ sub_goal_id }}" value="yes">Yes</label>
-                <label class="btn btn-lg btn-default tf_radio">
-                    <input type="radio" name="tf_{{ sub_goal_id }}" value="no">No</label>
-            </div>
+            <span class="input-group input-group-lg">
+                <a data-target='#' class="input-group-addon yes-button btn btn-default">Yes</a>
+                <input type="text" class="form-control" name="yes_{{ sub_goal_id }}" value="0" required/>
+            </span>
+            <span class="input-group input-group-lg">
+                <a data-target='#' class="input-group-addon no-button btn btn-default" >No</a>
+                <input type="text" class="form-control" name="no_{{ sub_goal_id }}" value="0" required/>
+            </span>
             <textarea name="notes_{{ sub_goal_id }}" rows="3" cols="50" placeholder="Optional"></textarea><br>
         </div>
     </div>
@@ -42,7 +44,7 @@
         <div class="panel-heading"><h4>{{ sub_goal_name }}</h4></div>
         <div class="panel-body">
 
-            <textarea name="narrative_text_{{ sub_goal_id }}" rows="3" cols="50"></textarea><br>
+            <textarea name="narrative_text_{{ sub_goal_id }}" rows="3" cols="50" required></textarea><br>
 
         </div>
     </div>
@@ -71,22 +73,22 @@
             <div class="btn-group btn-group-lg" data-toggle="buttons">
 
     <label class="btn btn-lg btn-default range_radio">
-        <input type="radio" name="range_{{ sub_goal_id }}" value="1"/> 1</label>
+        <input type="radio" name="range_{{ sub_goal_id }}" value="1" required/> 1</label>
 
     <label class="btn btn-lg btn-default range_radio">
-        <input type="radio" name="range_{{ sub_goal_id }}" value="2"/> 2</label>
+        <input type="radio" name="range_{{ sub_goal_id }}" value="2" required/> 2</label>
 
     <label class="btn btn-lg btn-default range_radio">
-        <input type="radio" name="range_{{ sub_goal_id }}" value="3"/> 3</label>
+        <input type="radio" name="range_{{ sub_goal_id }}" value="3" required/> 3</label>
 
     <label class="btn btn-lg btn-default range_radio">
-        <input type="radio" name="range_{{ sub_goal_id }}" value="4"/> 4</label>
+        <input type="radio" name="range_{{ sub_goal_id }}" value="4" required/> 4</label>
 
     <label class="btn btn-lg btn-default range_radio">
-        <input type="radio" name="range_{{ sub_goal_id }}" value="5"/> 5</label>
+        <input type="radio" name="range_{{ sub_goal_id }}" value="5" required/> 5</label>
 
     <label class="btn btn-lg btn-default range_radio">
-        <input type="radio" name="range_{{ sub_goal_id }}" value="6"/> 6</label>
+        <input type="radio" name="range_{{ sub_goal_id }}" value="6" required/> 6</label>
 
         <textarea name="notes_{{ sub_goal_id }}" rows="3" cols="50" placeholder="Optional"></textarea>
     </div>

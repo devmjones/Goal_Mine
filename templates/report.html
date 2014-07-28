@@ -8,12 +8,20 @@
         <div class="panel-body">
             <p><b>Total instances of data collection:</b>{{ summary["count"] }}</p>
 
-            <p><b>Average tally number:</b>{{ summary["average"] }}</p>
+            <p><b>Average tally number: </b>{{ summary["average"] }}</p>
 
-            <p><b>Breakdown of tally totals:</b>{{ summary["breakdown"] }}</p>
+        {% for key in summary["breakdown"].keys() %}
 
-            <p><b>Percentage of tally totals:</b> {{ summary["percentage"] }}</p>
-        <p>***************************************************************************</p>
+            <p><b>Breakdown of tally totals: </b> Number {{ key }}: {{ summary["breakdown"][key] }} time(s).</p>
+
+        {% endfor %}
+
+        {% for key in summary["percentage"].keys() %}
+
+            <p><b>Percentage of tally totals: </b> {{ key }}: {{ summary["percentage"][key] }}%</p>
+        {% endfor %}
+
+        <hr/>
 
             {% for item in summary["data_items"] %}
                 <p> <b>Date:</b> {{ item.date.strftime("%A, %B %d %Y %H:%M") }}  <b>Number tallied:</b> {{ item.sub_goal_data_value }} <b> Notes:</b> {{ item.sub_goal_notes }}</p>
@@ -27,12 +35,21 @@
     <div class="panel panel-success">
         <div class="panel-heading"><h2>{{ summary["sub_goal_name"] }}</h2></div>
         <div class="panel-body">
-            <p><b>Total instances of data collection:</b> {{ summary["count"] }}</p>
+            <p><b>Total instances of data collection: </b> {{ summary["count"] }}</p>
 
-            <p><b>Breakdown of range totals:</b> {{ summary["breakdown"] }}</p>
+             {% for key in summary["breakdown"].keys() %}
 
-            <p><b>Percentage of range totals:</b>{{ summary["percentage"] }}</p>
-        <p>***************************************************************************</p>
+            <p><b>Breakdown of range span: </b> Number {{ key }}: {{ summary["breakdown"][key] }} time(s).</p>
+
+        {% endfor %}
+
+             {% for key in summary["percentage"].keys() %}
+
+            <p><b>Percentage of range span: </b> {{ key }}: {{ summary["percentage"][key] }}%</p>
+
+        {% endfor %}
+
+        <hr/>
             {% for item in summary["data_items"] %}
 
                 <p> <b>Date:</b> {{ item.date.strftime("%A, %B %d %Y %H:%M") }}  <b>Success:</b> {{ item.sub_goal_data_value }} <b> Notes:</b> {{ item.sub_goal_notes }}</p>
@@ -48,12 +65,12 @@
         <div class="panel-heading"><h2>{{ summary["sub_goal_name"] }}</h2></div>
         <div class="panel-body">
 
-            <p><b>Total instances of data collection:</b> {{ summary["count"] }}</p>
+            <p><b>Total instances of data collection: </b> {{ summary["count"] }}</p>
 
             <ul>
                 {% for item in summary["data_items"] %}
 
-                <p> <b>Date:</b> {{ item.date.strftime("%A, %B %d %Y %H:%M") }}  <b>Narrative:</b> {{ item.sub_goal_data_value }}</p>
+                <p> <b>Date: </b> {{ item.date.strftime("%A, %B %d %Y %H:%M") }}  <b>Narrative: </b> {{ item.sub_goal_data_value }}</p>
 
                 {% endfor %}
             </ul>
@@ -66,18 +83,18 @@
     <div class="panel panel-success">
         <div class="panel-heading"><h2>{{ summary["sub_goal_name"] }}</h2></div>
         <div class="panel-body">
-            <p><b>Total instances of data collection:</b> {{ summary["count"] }}</p>
+            <p><b>Total instances of data collection: </b> {{ summary["count"] }}</p>
 
-            <p><b>Total Yes:</b> {{ summary["breakdown"]["yes"] }}</p>
-            <p><b>Total No:</b> {{ summary["breakdown"]["no"] }}</p>
+            <p><b>Total Yes: </b> {{ summary["yes"] }}</p>
+            <p><b>Total No: </b> {{ summary["no"] }}</p>
 
-            <p><b>Percentage Yes:</b> {{ summary["percentage"]["yes"]}}%</p>
-            <p><b>Percentage No:</b> {{ summary["percentage"]["no"]}}%</p>
+            <p><b>Percentage Yes: </b> {{ "%.02f" % summary["percentage"]["yes"]}}%</p>
+            <p><b>Percentage No: </b> {{ "%.02f" % summary["percentage"]["no"]}}%</p>
 
-        <p>***************************************************************************</p>
+       <hr/>
 
           {%for item in summary["data_items"] %}
-                <p> <b>Date:</b> {{ item.date.strftime("%A, %B %d %Y %H:%M") }}  <b>Number selected:</b> {{ item.sub_goal_data_value }} <b> Notes:</b> {{ item.sub_goal_notes }}</p>
+                <p> <b>Date: </b> {{ item.date.strftime("%A, %B %d %Y %H:%M") }}  <b>Ratio of yes to no: </b> {{ item.sub_goal_data_value }} <b> Notes:</b> {{ item.sub_goal_notes }}</p>
             {% endfor %}
 
         </div>

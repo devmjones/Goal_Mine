@@ -77,8 +77,27 @@ th, td {
 .dc_body .panel-body {
     padding: 20px;
 }
-.tf .btn-group {
-    line-height: 70px;
+/*.tf .btn-group {
+    /*line-height: 70px;
+}*/
+
+.tf .input-group {
+    float: left;
+    margin-bottom: 15px;
+}
+.tf .yes-button, .tf .no-button {
+    width: 75px;
+}
+
+.tf .yes-button:hover, .tf .no-button:hover {
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
+}
+
+.tf .input-group input {
+    margin-right: 15px;
+    width: 150px;
 }
 
 .dc_body textarea {
@@ -106,6 +125,6 @@ th, td {
     width: 100px;
 }
 
-.tf .tf_radio.active, .range .range_radio.active {
+.range .range_radio.active {
     background-color:palegreen;
 }

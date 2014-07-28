@@ -28,11 +28,11 @@
         <div class="panel-body">
             <form method="POST" action="/student/{{ student.id }}/goal/create">
                 <h3>Please enter the Goal Nickname</h3> <input class="goal-text" type="text" name="goal_name"
-                                                               placeholder="Example: 'Bathroom Independence'" autofocus><br>
+                                                               placeholder="Example: 'Bathroom Independence'" autofocus required><br>
 
                 <br>
 
-                <p>Does this goal need to be timed? <input type="radio" name="timed" value="yes"> Yes <input
+                <p>Does this goal need to be timed? <input type="radio" name="timed" value="yes" required> Yes <input
                         type="radio" name="timed" value="no"> No </p>
 
 
@@ -40,7 +40,7 @@
 
                 <ol>
                     <li class="myinput">name <input name="text_0" class="goal-text" type="text"
-                                                    placeholder="Example: 'Washed Hands'"> type <select name="type_0">
+                                                    placeholder="Example: 'Washed Hands'" required> type <select name="type_0">
                         <option value="tally">Tally</option>
                         <option value="t/f">True/False</option>
                         <option value="narrative">Narrative</option>
