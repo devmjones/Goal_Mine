@@ -194,7 +194,7 @@ def new_goal(student_id):
 def create_goal(student_id):
     student = pmodel.Student.query.filter_by(id=student_id).one()
     goal_name = request.form["goal_name"]
-    timed = (request.form["timed"] == "yes")
+    timed = (request.form["timed"] == "yes") #delete
 
     goal = pmodel.Goal(student_id=student_id, goal_name=goal_name, is_timed=timed)
     pmodel.session.add(goal)
@@ -227,12 +227,11 @@ def submit_data(student_id, goal_id):
     sub_goals = pmodel.SubGoal.query.filter_by(goal_id=goal_id).all()
     sub_goal_data_value = None
     now = datetime.datetime.now()
-    if 'stopwatch' in request.form:
+    if 'stopwatch' in request.form: #delete or edit
         sub_goal_time = int(request.form["stopwatch"])
     else:
         sub_goal_time = 0
 
-#TODO- if subgoal data value is null, error message.
 
     for sub_goal in sub_goals:
         if sub_goal.sub_goal_type == "tally":
@@ -253,11 +252,15 @@ def submit_data(student_id, goal_id):
             sub_goal_data_value = request.form["range_%d" % sub_goal.id]
             sub_goal_notes = request.form["notes_%d" % sub_goal.id]
 
+        # elif sub_goal.sub_goal_type == "stopwatch":
+        #     sub_goal_data_value = request.form["stopwatch_%d" % sub_goal.id]
+        #     sub_goal_notes = request.form["notes_$d" % sub_goal.id]
+
         sub_goal_raw_data = pmodel.SubGoalRawData(date=now, sub_goal_id=sub_goal.id,
                                                   sub_goal_type=sub_goal.sub_goal_type,
                                                   sub_goal_notes=sub_goal_notes,
                                                   sub_goal_data_value=sub_goal_data_value,
-                                                  sub_goal_time=sub_goal_time)
+                                                  sub_goal_time=sub_goal_time) #delete
         pmodel.session.add(sub_goal_raw_data)
         pmodel.session.commit()
 

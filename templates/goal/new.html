@@ -18,7 +18,7 @@
         <li><span class="bold">True/False:</span> If you need to indicate whether or not something has occurred, such as whether a prompt was given or if a step was completed </li>
         <li><span class="bold">Narrative:</span> If you need to describe an incident or event, such as a behavioral episode</li>
         <li><span class="bold">Range 1-6: </span>If a goal is being tracked in terms of degrees, such as 1 being very poor and 6 being excellent</li>
-        <li><span class="bold">Timed: </span>For goals that are dependent on a length of time, such as doing something for or within X amount of seconds</li>
+        <li><span class="bold">Stopwatch: </span>For goals that are dependent on a length of time, such as doing something for or within X amount of seconds</li>
     </ul>
 
     </div>
@@ -32,6 +32,7 @@
 
                 <br>
 
+{#              delete below:#}
                 <p>Does this goal need to be timed? <input type="radio" name="timed" value="yes" required> Yes <input
                         type="radio" name="timed" value="no"> No </p>
 
@@ -45,6 +46,7 @@
                         <option value="t/f">True/False</option>
                         <option value="narrative">Narrative</option>
                         <option value="range">Range 1-6</option>
+{#                      <option value = "stopwatch">Stopwatch</option>#}
                     </select> <a href="#">delete</a></li>
                 </ol>
 

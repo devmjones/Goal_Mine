@@ -146,6 +146,30 @@ class SubGoalRawData(Base):
         return summaries
 
 
+    # @staticmethod
+    # def stopwatch_summary(raw_stopwatch_items):
+    #     stopwatch_summary_info = {}
+    #     if not stopwatch_summary_info:
+    #         return stopwatch_summary_info
+    #     stopwatch_summary_info["type"] = "stopwatch"
+    #     stopwatch_summary_info["sub_goal_name"] = raw_stopwatch_items[0].sub_goal.sub_goal_name
+    #     stopwatch_summary_info["data_items"] = raw_stopwatch_items
+    #     stopwatch_summary_info["notes"] = []
+    #     for item in raw_stopwatch_items:
+    #         stopwatch_summary_info["notes"].append(str(item.sub_goal_notes))
+    #     stopwatch_summary_info["count"] = len(raw_stopwatch_items)
+    #     stopwatch_summary_info["average"] = 0
+    #     for item in raw_stopwatch_items:
+    #         stopwatch_summary_info["average"] += int(item.sub_goal_data_value)
+    #     stopwatch_summary_info["average"] /= stopwatch_summary_info["count"]
+    #     breakdown = {}
+    #     for item in raw_stopwatch_items:
+    #         value = int(item.sub_goal_data_value)
+    #         if breakdown.get(value):
+    #             breakdown[value] += 1
+    #         else:
+    #             breakdown[value] = 1
+    #         stopwatch_summary_info["breakdown"] = breakdown
 
     @staticmethod
     def tally_summary(raw_tally_items): # raw data item list. list of complete raw data objects of the tally type for that subgoal
@@ -212,8 +236,8 @@ class SubGoalRawData(Base):
 
         tf_summary_info["count"] = len(raw_tf_items)
 
-        total_yes= 0
-        total_no= 0
+        total_yes = 0
+        total_no = 0
 
         for item in raw_tf_items:
             raw_value = str(item.sub_goal_data_value)

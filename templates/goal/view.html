@@ -117,6 +117,9 @@
             {% elif sub_goal.sub_goal_type == 'range' %}
                 {{ range(sub_goal.id, sub_goal.sub_goal_name) }}
 
+{#            {% elif sub_goal.sub_goal_type == 'stopwatch' %}#}
+{#                {{ stopwatch(sub_goal.id, sub_goal.sub_goal_name }}#}
+
             {% else %}
                 <div>UNKNOWN SUBGOAL TYPE!</div>
 
