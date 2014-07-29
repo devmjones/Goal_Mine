@@ -2,8 +2,9 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine, ForeignKey
 from sqlalchemy import Column, Integer, String, Boolean, Text, DateTime
 from sqlalchemy.orm import sessionmaker, scoped_session, relationship, backref
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 from collections import Counter
+from types import *
 import os
 
 import os.path
@@ -56,7 +57,6 @@ class Goal(Base):
     id = Column(Integer, primary_key=True)
     student_id = Column(Integer, ForeignKey('students.id'))
     goal_name = Column(String, nullable=False)
-    is_timed = Column(Boolean, nullable=False)
 
     student = relationship("Student", backref=backref("goals", order_by=id))
 
@@ -88,7 +88,6 @@ class SubGoalRawData(Base):
     sub_goal_type = Column(String(64), nullable=False)
     sub_goal_notes = Column(Text, nullable=True)
     sub_goal_data_value = Column(String, nullable=False)
-    sub_goal_time = Column(Integer, nullable=True)
 
     sub_goal = relationship("SubGoal", backref = backref ("sub_goal_raw_data", order_by= id))
 
@@ -141,35 +140,40 @@ class SubGoalRawData(Base):
                 summary = cls.narrative_summary(raw_data_item_list)
             elif sub_goal_type == "range":
                 summary = cls.range_summary(raw_data_item_list)
+            elif sub_goal_type == "stopwatch":
+                summary = cls.stopwatch_summary(raw_data_item_list)
 
             summaries.append(summary)
         return summaries
 
 
-    # @staticmethod
-    # def stopwatch_summary(raw_stopwatch_items):
-    #     stopwatch_summary_info = {}
-    #     if not stopwatch_summary_info:
-    #         return stopwatch_summary_info
-    #     stopwatch_summary_info["type"] = "stopwatch"
-    #     stopwatch_summary_info["sub_goal_name"] = raw_stopwatch_items[0].sub_goal.sub_goal_name
-    #     stopwatch_summary_info["data_items"] = raw_stopwatch_items
-    #     stopwatch_summary_info["notes"] = []
-    #     for item in raw_stopwatch_items:
-    #         stopwatch_summary_info["notes"].append(str(item.sub_goal_notes))
-    #     stopwatch_summary_info["count"] = len(raw_stopwatch_items)
-    #     stopwatch_summary_info["average"] = 0
-    #     for item in raw_stopwatch_items:
-    #         stopwatch_summary_info["average"] += int(item.sub_goal_data_value)
-    #     stopwatch_summary_info["average"] /= stopwatch_summary_info["count"]
-    #     breakdown = {}
-    #     for item in raw_stopwatch_items:
-    #         value = int(item.sub_goal_data_value)
-    #         if breakdown.get(value):
-    #             breakdown[value] += 1
-    #         else:
-    #             breakdown[value] = 1
-    #         stopwatch_summary_info["breakdown"] = breakdown
+    @staticmethod
+    def stopwatch_summary(raw_stopwatch_items):
+        stopwatch_summary_info = {}
+        if not raw_stopwatch_items:
+            return stopwatch_summary_info
+        stopwatch_summary_info["type"] = "stopwatch"
+        stopwatch_summary_info["sub_goal_name"] = raw_stopwatch_items[0].sub_goal.sub_goal_name
+        stopwatch_summary_info["data_items"] = raw_stopwatch_items
+        stopwatch_summary_info["notes"] = []
+        for item in raw_stopwatch_items:
+            stopwatch_summary_info["notes"].append(str(item.sub_goal_notes))
+        stopwatch_summary_info["count"] = len(raw_stopwatch_items)
+        stopwatch_summary_info["average"] = 0
+        for item in raw_stopwatch_items:
+            stopwatch_summary_info["average"] += int(item.sub_goal_data_value)
+        stopwatch_summary_info["average"] /= stopwatch_summary_info["count"]
+        stopwatch_summary_info["average"] = timedelta(seconds=stopwatch_summary_info["average"])
+        breakdown = {}
+        for item in raw_stopwatch_items:
+            value = timedelta(seconds=int(item.sub_goal_data_value))
+            if breakdown.get(value):
+                breakdown[value] += 1
+            else:
+                breakdown[value] = 1
+        stopwatch_summary_info["breakdown"] = breakdown
+        return stopwatch_summary_info
+
 
     @staticmethod
     def tally_summary(raw_tally_items): # raw data item list. list of complete raw data objects of the tally type for that subgoal

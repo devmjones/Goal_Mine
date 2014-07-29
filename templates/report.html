@@ -2,6 +2,33 @@
 
 {% block title %} Report Generation {% endblock %}
 
+
+{% macro stopwatch_summary(summary)-%}
+    <div class="panel panel-success">
+        <div class="panel-heading"><h2>{{ summary["sub_goal_name"] }}</h2></div>
+        <div class="panel-body">
+            <p><b>Total instances of data collection:</b>{{ summary["count"] }}</p>
+
+            <p><b>Average time (hour:min:sec): </b>{{ summary["average"]}}</p>
+
+        {% for key in summary["breakdown"].keys() %}
+
+            <p><b>Breakdown of time (hour:min:sec): </b> Time: {{ key }}: {{ summary["breakdown"][key] }} time(s).</p>
+
+        {% endfor %}
+
+        <hr/>
+
+            {% for item in summary["data_items"] %}
+                <p> <b>Date:</b> {{ item.date.strftime("%A, %B %d %Y %H:%M") }}  <b>Recorded time:</b> {{ item.sub_goal_data_value }} <b> Notes:</b> {{ item.sub_goal_notes }}</p>
+            {% endfor %}
+
+        </div>
+    </div>
+{%- endmacro %}
+
+
+
 {% macro tally_summary(summary)-%}
     <div class="panel panel-success">
         <div class="panel-heading"><h2>{{ summary["sub_goal_name"] }}</h2></div>
@@ -152,6 +179,9 @@
 
             {% elif summary["type"] == "tf" %}
                 {{ tf_summary(summary) }}
+
+            {% elif summary["type"] == "stopwatch" %}
+                {{ stopwatch_summary(summary) }}
 
             {% endif %}
         {% endfor %}
