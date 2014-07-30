@@ -8,23 +8,25 @@ from types import *
 import os
 
 import os.path
+
 db_exists = os.path.isfile('iepdata.db')
-engine = create_engine("sqlite:///iepdata.db", echo = False)
-session = scoped_session(sessionmaker(bind= engine,
-                                      autocommit= False,
-                                      autoflush = False))
+engine = create_engine("sqlite:///iepdata.db", echo=False)
+session = scoped_session(sessionmaker(bind=engine,
+                                      autocommit=False,
+                                      autoflush=False))
 
 Base = declarative_base()
 Base.query = session.query_property()
 
+
 class Teacher(Base):
     __tablename__ = "teachers"
 
-    id = Column(Integer, primary_key= True)
-    first_name = Column(String (64), nullable = False)
-    last_name = Column(String (64), nullable = False)
-    email = Column(String(64), nullable = False)
-    password = Column(String(64), nullable = False)
+    id = Column(Integer, primary_key=True)
+    first_name = Column(String(64), nullable=False)
+    last_name = Column(String(64), nullable=False)
+    email = Column(String(64), nullable=False)
+    password = Column(String(64), nullable=False)
 
     def is_authenticated(self):
         return True
@@ -39,17 +41,17 @@ class Teacher(Base):
         return unicode(self.id)
 
 
-
 class Student(Base):
     __tablename__ = "students"
 
-    id = Column(Integer, primary_key = True)
-    first_name = Column(String (64), nullable=False)
-    last_name = Column(String (64), nullable=False)
+    id = Column(Integer, primary_key=True)
+    first_name = Column(String(64), nullable=False)
+    last_name = Column(String(64), nullable=False)
     nickname = Column(String(64), nullable=True)
     teacher_id = Column(Integer, ForeignKey('teachers.email'))
 
     teacher = relationship("Teacher", backref="students")
+
 
 class Goal(Base):
     __tablename__ = "goals"
@@ -60,22 +62,24 @@ class Goal(Base):
 
     student = relationship("Student", backref=backref("goals", order_by=id))
 
+
 class Marker(Base):
     __tablename__ = "markers"
 
     id = Column(Integer, primary_key=True)
-    marker_date = Column(DateTime, nullable =True)
+    marker_date = Column(DateTime, nullable=True)
     marker_text = Column(Text, nullable=True)
     student_id = Column(Integer, ForeignKey('students.id'))
 
-    student = relationship("Student",  backref=backref("markers", order_by= id))
+    student = relationship("Student", backref=backref("markers", order_by=id))
 
     def marker_date_as_datetime(self):
         return datetime.fromtimestamp(self.marker_date)
 
     @classmethod
     def get_marker_record(cls, start_date, end_date, student_id):
-        marker_record= cls.query.filter(cls.marker_date >= start_date).filter(cls.marker_date <= end_date).filter_by(student_id=student_id).all()
+        marker_record = cls.query.filter(cls.marker_date >= start_date).filter(cls.marker_date <= end_date).filter_by(
+            student_id=student_id).all()
         return marker_record
 
 
@@ -89,51 +93,40 @@ class SubGoalRawData(Base):
     sub_goal_notes = Column(Text, nullable=True)
     sub_goal_data_value = Column(String, nullable=False)
 
-    sub_goal = relationship("SubGoal", backref = backref ("sub_goal_raw_data", order_by= id))
+    sub_goal = relationship("SubGoal", backref=backref("sub_goal_raw_data", order_by=id))
 
     @classmethod
     def get_report_data(cls, goal_id, start_date, end_date):
-        report_data = {} # creating empty dict, keys will be sub goal ids, and the values the raw data objects associated with those sub goals.
-        raw_data = cls.query.join(SubGoal)\
-                      .filter(SubGoal.goal_id == goal_id)\
-                      .filter(SubGoalRawData.date >= start_date)\
-                      .filter(SubGoalRawData.date <= end_date)\
-                      .order_by('sub_goal_id', 'date').all()
-                   # use join when you need to filter by a field in an associated table, order by organizes them by specified columns.
-        for item in raw_data: # result of db query (list of raw data objects)
-            if item.sub_goal_id not in report_data: # use. because items are db objects.
-                report_data[item.sub_goal_id]= [] # if sub_goal id not in dict, add as key with empty list as value.
+        report_data = {}  # creating empty dict, keys will be sub goal ids, and the values the raw data objects associated with those sub goals.
+        raw_data = cls.query.join(SubGoal) \
+            .filter(SubGoal.goal_id == goal_id) \
+            .filter(SubGoalRawData.date >= start_date) \
+            .filter(SubGoalRawData.date <= end_date) \
+            .order_by('sub_goal_id', 'date').all()
+        # use join when you need to filter by a field in an associated table, order by organizes them by specified columns.
+        for item in raw_data:  # result of db query (list of raw data objects)
+            if item.sub_goal_id not in report_data:  # use. because items are db objects.
+                report_data[item.sub_goal_id] = []  # if sub_goal id not in dict, add as key with empty list as value.
             report_data[item.sub_goal_id].append(item)
         return report_data
 
-    # @staticmethod
-    # def print_report_data(report_data):
-    #     for sub_goal_id in report_data:
-    #         print "SUBGOAL %d (type %s)" % (sub_goal_id, report_data[sub_goal_id][0].sub_goal_type)
-    #         for raw_data in report_data[sub_goal_id]:
-    #             print " - DATA:"
-    #             print "   id: %d" % (raw_data.id)
-    #             print "   date: %s" % (raw_data.date)
-    #             print "   sub_goal_id: %d" % (raw_data.sub_goal_id)
-    #             print "   sub_goal_type: %s" % (raw_data.sub_goal_type)
-    #             print "   sub_goal_notes: %s" % (raw_data.sub_goal_notes)
-    #             print "   sub_goal_data_value: %s" % (raw_data.sub_goal_data_value)
-    #             print "   sub_goal_time: %d" % (raw_data.sub_goal_time)
 
     @classmethod
     def summaries_for_report_data(cls, report_data):
 
-        summaries = [] # will be a list of dictionaries from report data
+        summaries = []  # will be a list of dictionaries from report data
 
-        for sub_goal_id in report_data: # we are going to go through each set by sub goal id.
+        for sub_goal_id in report_data:  # we are going to go through each set by sub goal id.
 
-            summary = None #this will the the summary of one subgoal by subgoal id (all have same type)
-            raw_data_item_list = report_data[sub_goal_id] # not in " " because it's an object. List of just the subgoal ids?
-            first_item = raw_data_item_list[0]  #we are looking at the first item with each subgoal in the list of sub_goal ids
-            sub_goal_type = first_item.sub_goal_type # and checking it's subgoal type since it's an object
+            summary = None  #this will the the summary of one subgoal by subgoal id (all have same type)
+            raw_data_item_list = report_data[
+                sub_goal_id]  # not in " " because it's an object. List of just the subgoal ids?
+            first_item = raw_data_item_list[
+                0]  #we are looking at the first item with each subgoal in the list of sub_goal ids
+            sub_goal_type = first_item.sub_goal_type  # and checking it's subgoal type since it's an object
 
             if sub_goal_type == "tally":
-                summary = cls.tally_summary(raw_data_item_list) # each is a list of sub goal raw data objects
+                summary = cls.tally_summary(raw_data_item_list)  # each is a list of sub goal raw data objects
             elif sub_goal_type == "t/f":
                 summary = cls.tf_summary(raw_data_item_list)
             elif sub_goal_type == "narrative":
@@ -149,21 +142,26 @@ class SubGoalRawData(Base):
 
     @staticmethod
     def stopwatch_summary(raw_stopwatch_items):
+
         stopwatch_summary_info = {}
         if not raw_stopwatch_items:
             return stopwatch_summary_info
         stopwatch_summary_info["type"] = "stopwatch"
         stopwatch_summary_info["sub_goal_name"] = raw_stopwatch_items[0].sub_goal.sub_goal_name
         stopwatch_summary_info["data_items"] = raw_stopwatch_items
+
         stopwatch_summary_info["notes"] = []
         for item in raw_stopwatch_items:
             stopwatch_summary_info["notes"].append(str(item.sub_goal_notes))
+
         stopwatch_summary_info["count"] = len(raw_stopwatch_items)
+
         stopwatch_summary_info["average"] = 0
         for item in raw_stopwatch_items:
             stopwatch_summary_info["average"] += int(item.sub_goal_data_value)
         stopwatch_summary_info["average"] /= stopwatch_summary_info["count"]
         stopwatch_summary_info["average"] = timedelta(seconds=stopwatch_summary_info["average"])
+
         breakdown = {}
         for item in raw_stopwatch_items:
             value = timedelta(seconds=int(item.sub_goal_data_value))
@@ -176,16 +174,18 @@ class SubGoalRawData(Base):
 
 
     @staticmethod
-    def tally_summary(raw_tally_items): # raw data item list. list of complete raw data objects of the tally type for that subgoal
+    def tally_summary(
+            raw_tally_items):  # raw data item list. list of complete raw data objects of the tally type for that subgoal
 
         tally_summary_info = {}
         if not raw_tally_items:
             return tally_summary_info
         tally_summary_info["type"] = "tally"
-        tally_summary_info["sub_goal_name"] = raw_tally_items[0].sub_goal.sub_goal_name #pulling the name of the subgoal out of the subgoal object that belongs to the first raw tally items object
+        tally_summary_info["sub_goal_name"] = raw_tally_items[
+            0].sub_goal.sub_goal_name  # pulling the name of the subgoal out of the subgoal object that belongs to the first raw tally items object
         tally_summary_info["data_items"] = raw_tally_items
 
-        tally_summary_info["notes"] = [] # list of strings containng subgoal notes
+        tally_summary_info["notes"] = []  # list of strings containing subgoal notes
         for item in raw_tally_items:
             tally_summary_info["notes"].append(str(item.sub_goal_notes))
 
@@ -234,7 +234,7 @@ class SubGoalRawData(Base):
         tf_summary_info["sub_goal_name"] = raw_tf_items[0].sub_goal.sub_goal_name
         tf_summary_info["data_items"] = raw_tf_items
 
-        tf_summary_info["notes"] = [] # list of strings containng subgoal notes
+        tf_summary_info["notes"] = []  # list of strings containng subgoal notes
         for item in raw_tf_items:
             tf_summary_info["notes"].append(str(item.sub_goal_notes))
 
@@ -269,7 +269,7 @@ class SubGoalRawData(Base):
         range_summary_info["sub_goal_name"] = raw_range_items[0].sub_goal.sub_goal_name
         range_summary_info["data_items"] = raw_range_items
 
-        range_summary_info["notes"] = [] # list of strings containng subgoal notes
+        range_summary_info["notes"] = []  # list of strings containng subgoal notes
         for item in raw_range_items:
             range_summary_info["notes"].append(str(item.sub_goal_notes))
 
@@ -316,7 +316,6 @@ def main():
 
 if not db_exists:
     Base.metadata.create_all(engine)
-
 
 if __name__ == "__main__":
     main()

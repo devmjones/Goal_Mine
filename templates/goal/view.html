@@ -29,7 +29,7 @@
                 <input type="text" class="form-control" name="yes_{{ sub_goal_id }}" value="0" required/>
             </span>
             <span class="input-group input-group-lg">
-                <a data-target='#' class="input-group-addon no-button btn btn-default" >No</a>
+                <a data-target='#' class="input-group-addon no-button btn btn-default">No</a>
                 <input type="text" class="form-control" name="no_{{ sub_goal_id }}" value="0" required/>
             </span>
             <textarea name="notes_{{ sub_goal_id }}" rows="3" cols="50" placeholder="Optional"></textarea><br>
@@ -52,15 +52,17 @@
 {%-endmacro %}
 
 {# Stopwatch Macro #}
-{% macro stopwatch() -%}
-<div class="dc_body panel panel-success stopwatch">
-        <div class="panel-heading"><h4>Timer</h4></div>
+{% macro stopwatch(sub_goal_id, sub_goal_name) -%}
+    <div class="dc_body panel panel-success stopwatch">
+        <div class="panel-heading"><h4>{{ sub_goal_name }}</h4></div>
         <div class="panel-body">
-    <div id="stopwatch">00:00</div>
-    <input type="hidden" name="stopwatch" value="0"/>
-    <button id="startstop" class="btn btn-info btn-lg btn-block" type="button" >Start</button><br>
-</div>
-</div>
+            <div id="stopwatch">00:00</div>
+            <input class="stopwatch" type="hidden" name="stopwatch_{{ sub_goal_id }}" value="0"/>
+            <button id="startstop" class="btn btn-info btn-lg btn-block" type="button">Start</button>
+            <br>
+
+            <textarea name="notes_{{ sub_goal_id }}" rows="3" cols="50" placeholder="Optional"></textarea>
+        </div>
     </div>
 {%- endmacro %}
 
@@ -72,28 +74,28 @@
         <div class="panel-body">
             <div class="btn-group btn-group-lg" data-toggle="buttons">
 
-    <label class="btn btn-lg btn-default range_radio">
-        <input type="radio" name="range_{{ sub_goal_id }}" value="1" required/> 1</label>
+                <label class="btn btn-lg btn-default range_radio">
+                    <input type="radio" name="range_{{ sub_goal_id }}" value="1" required/> 1</label>
 
-    <label class="btn btn-lg btn-default range_radio">
-        <input type="radio" name="range_{{ sub_goal_id }}" value="2" required/> 2</label>
+                <label class="btn btn-lg btn-default range_radio">
+                    <input type="radio" name="range_{{ sub_goal_id }}" value="2" required/> 2</label>
 
-    <label class="btn btn-lg btn-default range_radio">
-        <input type="radio" name="range_{{ sub_goal_id }}" value="3" required/> 3</label>
+                <label class="btn btn-lg btn-default range_radio">
+                    <input type="radio" name="range_{{ sub_goal_id }}" value="3" required/> 3</label>
 
-    <label class="btn btn-lg btn-default range_radio">
-        <input type="radio" name="range_{{ sub_goal_id }}" value="4" required/> 4</label>
+                <label class="btn btn-lg btn-default range_radio">
+                    <input type="radio" name="range_{{ sub_goal_id }}" value="4" required/> 4</label>
 
-    <label class="btn btn-lg btn-default range_radio">
-        <input type="radio" name="range_{{ sub_goal_id }}" value="5" required/> 5</label>
+                <label class="btn btn-lg btn-default range_radio">
+                    <input type="radio" name="range_{{ sub_goal_id }}" value="5" required/> 5</label>
 
-    <label class="btn btn-lg btn-default range_radio">
-        <input type="radio" name="range_{{ sub_goal_id }}" value="6" required/> 6</label>
+                <label class="btn btn-lg btn-default range_radio">
+                    <input type="radio" name="range_{{ sub_goal_id }}" value="6" required/> 6</label>
 
-        <textarea name="notes_{{ sub_goal_id }}" rows="3" cols="50" placeholder="Optional"></textarea>
+                <textarea name="notes_{{ sub_goal_id }}" rows="3" cols="50" placeholder="Optional"></textarea>
+            </div>
+        </div>
     </div>
-     </div>
-     </div>
 {%-endmacro %}
 
 
@@ -117,8 +119,8 @@
             {% elif sub_goal.sub_goal_type == 'range' %}
                 {{ range(sub_goal.id, sub_goal.sub_goal_name) }}
 
-{#            {% elif sub_goal.sub_goal_type == 'stopwatch' %}#}
-{#                {{ stopwatch(sub_goal.id, sub_goal.sub_goal_name }}#}
+            {% elif sub_goal.sub_goal_type == 'stopwatch' %}
+                {{ stopwatch(sub_goal.id, sub_goal.sub_goal_name) }}
 
             {% else %}
                 <div>UNKNOWN SUBGOAL TYPE!</div>
@@ -126,13 +128,12 @@
             {% endif %}
         {% endfor %}
 
-        {% if goal.is_timed %}
-            {{ stopwatch() }}
-        {% endif %}
-
-    <button type="submit" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-file-open"></span> Submit Data
+    <div id= "dc_submit">
+        <button type="submit" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-file-open"></span> Submit
+            Data
         </button>
+    </div>
 
-   </form>
+    </form>
 
 {% endblock %}

@@ -11,8 +11,7 @@
         <table class="table table-bordered">
             <tr>
                 <th>Delete</th>
-                <th>First Name</th>
-                <th>Last Name</th>
+                <th>Name</th>
                 <th>Nickname</th>
             </tr>
 
@@ -20,9 +19,8 @@
 
                 <tr>
                     <td><a href="/student/{{ student.id }}/delete">Delete Student</a></td>
-                    <td><a href="/student/{{ student.id }}">{{ student.first_name }}</a></td>
+                    <td><a href="/student/{{ student.id }}">{{ student.first_name }} {{ student.last_name }}</a></td>
 
-                    <td><a href="/student/{{ student.id }}">{{ student.last_name }}</a></td>
 
                     {% if student.nickname %}
                         <td>{{ student.nickname }}</td>
@@ -50,6 +48,3 @@
 
 {% endblock %}
 
-{#<div id="dialog-confirm" title="Delete Student?">#}
-{#  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This student will be permanently deleted and cannot be recovered. Are you sure?</p>#}
-{#</div>#}

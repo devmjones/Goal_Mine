@@ -20,7 +20,7 @@
         <hr/>
 
             {% for item in summary["data_items"] %}
-                <p> <b>Date:</b> {{ item.date.strftime("%A, %B %d %Y %H:%M") }}  <b>Recorded time:</b> {{ item.sub_goal_data_value }} <b> Notes:</b> {{ item.sub_goal_notes }}</p>
+                <p> {{ item.date.strftime("%A, %B %d %Y %H:%M") }}  <b>Recorded time:</b> {{ item.sub_goal_data_value }} <b> Notes:</b> {{ item.sub_goal_notes }}</p>
             {% endfor %}
 
         </div>
@@ -45,13 +45,13 @@
 
         {% for key in summary["percentage"].keys() %}
 
-            <p><b>Percentage of tally totals: </b> {{ key }}: {{ summary["percentage"][key] }}%</p>
+            <p><b>Percentage of tally totals: </b> {{ key }}: {{ "%.02f" %(summary["percentage"][key]) }}%</p>
         {% endfor %}
 
         <hr/>
 
             {% for item in summary["data_items"] %}
-                <p> <b>Date:</b> {{ item.date.strftime("%A, %B %d %Y %H:%M") }}  <b>Number tallied:</b> {{ item.sub_goal_data_value }} <b> Notes:</b> {{ item.sub_goal_notes }}</p>
+                <p>{{ item.date.strftime("%A, %B %d %Y %H:%M") }}  <b>Number tallied:</b> {{ item.sub_goal_data_value }} <b> Notes:</b> {{ item.sub_goal_notes }}</p>
             {% endfor %}
 
         </div>
@@ -72,14 +72,14 @@
 
              {% for key in summary["percentage"].keys() %}
 
-            <p><b>Percentage of range span: </b> {{ key }}: {{ summary["percentage"][key] }}%</p>
+            <p><b>Percentage of range span: </b> {{ key }}: {{ "%.02f" %(summary["percentage"][key]) }}%</p>
 
         {% endfor %}
 
         <hr/>
             {% for item in summary["data_items"] %}
 
-                <p> <b>Date:</b> {{ item.date.strftime("%A, %B %d %Y %H:%M") }}  <b>Success:</b> {{ item.sub_goal_data_value }} <b> Notes:</b> {{ item.sub_goal_notes }}</p>
+                <p>{{ item.date.strftime("%A, %B %d %Y %H:%M") }}  <b>Number Selected:</b> {{ item.sub_goal_data_value }} <b> Notes:</b> {{ item.sub_goal_notes }}</p>
 
             {% endfor %}
         </div>
@@ -97,7 +97,7 @@
             <ul>
                 {% for item in summary["data_items"] %}
 
-                <p> <b>Date: </b> {{ item.date.strftime("%A, %B %d %Y %H:%M") }}  <b>Narrative: </b> {{ item.sub_goal_data_value }}</p>
+                <p>{{ item.date.strftime("%A, %B %d %Y %H:%M") }}  <b>Narrative: </b> {{ item.sub_goal_data_value }}</p>
 
                 {% endfor %}
             </ul>
@@ -121,7 +121,7 @@
        <hr/>
 
           {%for item in summary["data_items"] %}
-                <p> <b>Date: </b> {{ item.date.strftime("%A, %B %d %Y %H:%M") }}  <b>Ratio of yes to no: </b> {{ item.sub_goal_data_value }} <b> Notes:</b> {{ item.sub_goal_notes }}</p>
+                <p>{{ item.date.strftime("%A, %B %d %Y %H:%M") }}  <b>Ratio of yes to no: </b> {{ item.sub_goal_data_value }} <b> Notes:</b> {{ item.sub_goal_notes }}</p>
             {% endfor %}
 
         </div>
