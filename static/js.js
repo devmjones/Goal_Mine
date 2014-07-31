@@ -40,8 +40,8 @@ $('.tf .btn').click(function(evt) {
       $('#startstop').click(function(e) {
         if($(e.target).text() == 'Start') {
           stopwatch_interval = setInterval(function() {
-            i =  parseInt($('input[name=stopwatch]').val())+1;
-            $('input[name=stopwatch]').val(i.toString());
+            i =  parseInt($('input.stopwatch').val())+1;
+            $('input.stopwatch').val(i.toString());
             minutes = Math.floor(i/60).toString();
             if(minutes.length == 1) minutes='0'+minutes
             seconds = (i%60).toString();
@@ -54,3 +54,7 @@ $('.tf .btn').click(function(evt) {
           $('#startstop').text('Start');
         }
       });
+
+//function myWarning() {
+//    alert("Deleting will erase all data. Are you sure you want to delete?);
+//}

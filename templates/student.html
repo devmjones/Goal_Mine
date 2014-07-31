@@ -74,26 +74,28 @@
     {#    ADDING MARKER#}
 
 
-    <div class="marker_body panel panel-success">
+    <div class="marker panel panel-success">
         <div class="panel-heading"><h3>Markers</h3></div>
-        {% if student.nickname %}
-            <h4>To enter a marker for {{ student.first_name }} "{{ student.nickname }}" {{ student.last_name }}, please
-                select a date and enter your note in the field provided.</h4>
-        {% else %}
-            <h3>To enter a marker for {{ student.first_name }} {{ student.last_name }}, please select a date and enter
-                your note in the field provided.</h3>
-        {% endif %}
-        <form id="add-marker" method="POST">
+        <div class="panel-body">
+            {% if student.nickname %}
+                <h4>To enter a marker for {{ student.first_name }} "{{ student.nickname }}" {{ student.last_name }}, please
+                    select a date and enter your note in the field provided.</h4>
+            {% else %}
+                <h3>To enter a marker for {{ student.first_name }} {{ student.last_name }}, please select a date and enter
+                    your note in the field provided.</h3>
+            {% endif %}
+            <form id="add-marker" method="POST">
 
-            <p>Date: <input type="date" name="calendar"></p>
-            <textarea name="marker_text" rows="3" cols="50">Enter note here</textarea>
-            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-save"></span> Save</button>
-            <a href="/markers/{{ student.id }}">
-                <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span> View
-                    Markers
-                </button>
-            </a>
-        </form>
+                <p>Date: <input type="date" name="calendar"></p>
+                <textarea name="marker_text" rows="3" cols="50">Enter note here</textarea>
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-save"></span> Save</button>
+                <a href="/markers/{{ student.id }}">
+                    <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span> View
+                        Markers
+                    </button>
+                </a>
+            </form>
+        </div>
     </div>
 
 

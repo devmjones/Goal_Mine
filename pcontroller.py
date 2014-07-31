@@ -31,8 +31,6 @@ def index():
     return render_template("index.html")
 
 
-# TODO- add breadcrumbs
-
 @app.route("/signup")
 def show_signup():
     return render_template("signup.html")

@@ -194,6 +194,7 @@ class SubGoalRawData(Base):
         for item in raw_tally_items:
             tally_summary_info["average"] += int(item.sub_goal_data_value)
         tally_summary_info["average"] /= tally_summary_info["count"]
+
         breakdown = {}
         for item in raw_tally_items:
             value = int(item.sub_goal_data_value)
@@ -274,6 +275,10 @@ class SubGoalRawData(Base):
             range_summary_info["notes"].append(str(item.sub_goal_notes))
 
         range_summary_info["count"] = len(raw_range_items)
+        range_summary_info["average"] = 0
+        for item in raw_range_items:
+            range_summary_info["average"] += int(item.sub_goal_data_value)
+        range_summary_info["average"] /= range_summary_info["count"]
 
         breakdown = {}
         for item in raw_range_items:

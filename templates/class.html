@@ -18,7 +18,7 @@
             {% for student in students|sort(attribute="last_name")%}
 
                 <tr>
-                    <td><a href="/student/{{ student.id }}/delete">Delete Student</a></td>
+                    <td><a href="/student/{{ student.id }}/delete">Delete Student</a></td>#}
                     <td><a href="/student/{{ student.id }}">{{ student.first_name }} {{ student.last_name }}</a></td>
 
 

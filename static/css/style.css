@@ -5,7 +5,8 @@ hr {
 }
 
 body {
-    background-color: aliceblue;
+    background: url(/static/images/ice_age_@2X.png)
+    /*background-color: aliceblue;*/
 }
 
 h1, h2, h3, h4, h5, h6, p, td, text {
@@ -43,17 +44,17 @@ h1 {
     font-weight: bold;
 }
 
-table {
-    border: 5px solid black;
-    table-layout: fixed;
-    width: 200px;
-}
+/*table {*/
+    /*border: 5px solid black;*/
+    /*table-layout: fixed;*/
+    /*width: 200px;*/
+/*}*/
 
-th, td {
-    border: 1px solid black;
-    overflow: hidden;
-    width: 100px;
-}
+/*th, td {*/
+    /*border: 1px solid black;*/
+    /*overflow: hidden;*/
+    /*width: 100px;*/
+/*}*/
 
 .img-circle {
     width: 125px;
@@ -138,4 +139,9 @@ th, td {
 
 .range .range_radio.active {
     background-color: palegreen;
+}
+
+.panel.marker .panel-body {
+  margin-left: auto;
+  margin-right: auto;
 }
