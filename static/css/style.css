@@ -1,3 +1,5 @@
+/*Standard Elements*/
+
 hr {
     height: 12px;
     border: 0;
@@ -6,7 +8,6 @@ hr {
 
 body {
     background: url(/static/images/ice_age_@2X.png)
-    /*background-color: aliceblue;*/
 }
 
 h1, h2, h3, h4, h5, h6, p, td, text {
@@ -15,7 +16,7 @@ h1, h2, h3, h4, h5, h6, p, td, text {
 
 }
 
-p, li, th, text {
+p, li, th, text, td {
     font-size: 16pt;
 }
 
@@ -23,8 +24,49 @@ h1 {
     text-align: center;
 }
 
+th {
+    background-color: lightgrey;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.right-button {
+    float: right;
+}
+
+
+/*Log in and Out, Index and Base*/
+
+.glyphicon {
+    margin-right: 5px;
+}
+
 #login {
     text-align: center;
+    padding: 20px
+}
+
+.login-body {
+    height: 100px;
+    width: 100px;
+}
+
+#log_out {
+    float: right;
+}
+
+.img-circle {
+    width: 125px;
+    height: 125px;
+    float: left
+}
+
+
+.page-header {
+    border-bottom-color: black;
+    border-bottom-width: 2px;
 }
 
 .goal-text {
@@ -40,40 +82,35 @@ h1 {
     margin-top: 20px;
 }
 
-.bold {
-    font-weight: bold;
+#bottom-link {
+    margin-bottom: 30px;
 }
 
-/*table {*/
-    /*border: 5px solid black;*/
-    /*table-layout: fixed;*/
-    /*width: 200px;*/
-/*}*/
+/*Data Collection and records*/
 
-/*th, td {*/
-    /*border: 1px solid black;*/
-    /*overflow: hidden;*/
-    /*width: 100px;*/
-/*}*/
+.data_sum {
+    color: forestgreen;
+    margin-bottom: 20px;
+}
 
-.img-circle {
-    width: 125px;
-    height: 125px;
-    float: left
+.tot_rec {
+    color: darkred;
+    text-align: center;
+}
+
+#dc_submit {
+    text-align: center
 
 }
 
-#log_out {
-    float: right;
+.dc_body textarea {
+    height: 45px;
+    width: 400px;
 }
 
-.page-header {
-    border-bottom-color: black;
-    border-bottom-width: 2px;
-}
-
-.glyphicon {
-    margin-right: 5px;
+.dc_body.narrative textarea {
+    height: 75px;
+    width: 540px
 }
 
 .dc_body {
@@ -107,41 +144,28 @@ h1 {
     width: 150px;
 }
 
-.dc_body textarea {
-    height: 45px;
-    width: 400px;
-}
-
-.dc_body.narrative textarea {
-    height: 75px;
-    width: 540px
-}
-
-#dc_submit {
-    text-align: center
-
-}
-
 #stopwatch {
     font-size: 18pt;
     font-weight: bold;
     text-align: center;
 }
 
-.right-button {
-    float: right;
-}
-
-.login-body {
-    height: 100px;
-    width: 100px;
-}
-
 .range .range_radio.active {
     background-color: palegreen;
 }
 
+table.table td.date {
+    white-space: nowrap;
+    padding-right: 5px;
+}
+
+/*Misc*/
+
 .panel.marker .panel-body {
   margin-left: auto;
   margin-right: auto;
+}
+
+#goal-options, #student-options {
+    float: right;
 }

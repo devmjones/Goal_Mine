@@ -2,18 +2,29 @@
 {% block title %} Markers {% endblock%}
 
 {% block content%}
+<h1>&nbsp;</h1>
 
 <div class="panel panel-success marker">
             <div class="panel-heading"><h1>Markers for {{ student.first_name }} {{ student.last_name }}</h1></div>
 <div class="panel-body">
-        <ul>
+        <table class="table">
+        <tr>
+            <th>Date</th>
+            <th>Marker</th>
+        </tr>
     {% for marker in markers %}
-            <li> {{ marker.marker_date }} {{ marker.marker_text }} </li>
+        <tr>
+            <td> {{ marker.marker_date }}</td>
+            <td> {{ marker.marker_text }} <div class="btn-group" id="goal-options">
+                <button type=<button class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>Delete Marker</button>
+                <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-wrench"></span>Edit Marker</button>
+     </div></td>
+        </tr>
      {% endfor %}
-        </ul>
+        </table>
  </div>
 </div>
 
-    <a href="/student/{{ student.id }}">Back to student page</a>
+    <a href="/class"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-user"></span>Back to Student Page</a></button>
 
 {% endblock %}

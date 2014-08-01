@@ -9,30 +9,15 @@
     <div class="panel panel-success">
         <div class="panel-heading"><h2>{{ summary["sub_goal_name"] }}</h2></div>
         <div class="panel-body">
-            <h3>Total instances of data collection: {{ summary["count"] }}</h3>
+            <h3 class="data_sum">Total instances of data collection: {{ summary["count"] }}</h3>
 
-            <h3>Average time (hour:min:sec): {{ summary["average"] }}</h3>
+            <h3 class="data_sum">Average time (hour:min:sec): {{ summary["average"] }}</h3>
 
-            <table class="table">
-                <tr>
-                    <th>Time</th>
-                    <th>Number of times recorded</th>
-                </tr>
-
-                {% for key in summary["breakdown"].keys() |sort %}
-
-                    <tr>
-                        <td> {{ key }}</td>
-                        <td>{{ summary["breakdown"][key] }}</td>
-                    </tr>
-
-                {% endfor %}
-            </table>
 
             <hr/>
-            <h3>Total Record for this Date Range</h3>
+            <h3 class="tot_rec">Total Record for this Date Range</h3>
             <br>
-            <table class="table">
+            <table class="table report">
                 <tr>
                     <th>Date</th>
                     <th>Recorded Time</th>
@@ -60,11 +45,11 @@
     <div class="panel panel-success">
         <div class="panel-heading"><h2>{{ summary["sub_goal_name"] }}</h2></div>
         <div class="panel-body">
-            <h3>Total instances of data collection: {{ summary["count"] }}</h3>
+            <h3 class="data_sum">Total instances of data collection: {{ summary["count"] }}</h3>
 
-            <h3>Average tally number: {{ summary["average"] }}</h3>
+            <h3 class="data_sum">Average tally number: {{ summary["average"] }}</h3>
 
-            <table class="table">
+            <table class="table report">
                 <tr>
                     <th>Tally Number</th>
                     <th>Number of times recorded</th>
@@ -85,9 +70,9 @@
 
             <hr/>
 
-            <h3>Total Record for this Date Range</h3>
+            <h3 class="tot_rec">Total Record for this Date Range</h3>
             <br>
-            <table class="table">
+            <table class="table report">
                 <tr>
                     <th>Date</th>
                     <th>Number Tallied</th>
@@ -115,12 +100,12 @@
     <div class="panel panel-success">
         <div class="panel-heading"><h2>{{ summary["sub_goal_name"] }}</h2></div>
         <div class="panel-body">
-            <h3>Total instances of data collection: {{ summary["count"] }}</h3>
+            <h3 class="data_sum">Total instances of data collection: {{ summary["count"] }}</h3>
 
-            <h3>Average Number Selected: {{ summary["average"] }}</h3>
+            <h3 class="data_sum">Average Number Selected: {{ summary["average"] }}</h3>
 
 
-            <table class="table">
+            <table class="table report">
             <tr>
                 <th>Number</th>
                 <th>Times selected</th>
@@ -141,9 +126,9 @@
 
 
             <hr/>
-            <h3>Total Record for this Date Range</h3>
+            <h3 class="tot_rec">Total Record for this Date Range</h3>
             <br>
-            <table class="table">
+            <table class="table report">
                 <tr>
                     <th>Date</th>
                     <th>Number Selected</th>
@@ -153,7 +138,7 @@
 
                 {% for item in summary["data_items"] %}
                     <tr>
-                        <td>{{ item.date.strftime("%A, %B %d %Y %H:%M") }}</td>
+                        <td class="date">{{ item.date.strftime("%A, %B %d %Y %H:%M") }}</td>
                         <td>{{ item.sub_goal_data_value }}</td>
                         <td>{{ item.sub_goal_notes }}</td>
                     </tr>
@@ -172,9 +157,9 @@
         <div class="panel-heading"><h2>{{ summary["sub_goal_name"] }}</h2></div>
         <div class="panel-body">
 
-            <h3>Total instances of data collection: {{ summary["count"] }} </h3>
+            <h3 class="data_sum">Total instances of data collection: {{ summary["count"] }} </h3>
 
-            <table class="table">
+            <table class="table report">
                 <tr>
                     <th>Date</th>
                     <th>Narrative</th>
@@ -182,7 +167,7 @@
 
                 {% for item in summary["data_items"] %}
                     <tr>
-                        <td>{{ item.date.strftime("%A, %B %d %Y %H:%M") }}</td>
+                        <td class="date">{{ item.date.strftime("%A, %B %d %Y %H:%M") }}</td>
                         <td>{{ item.sub_goal_data_value }}</td>
                     </tr>
 
@@ -200,10 +185,10 @@
     <div class="panel panel-success">
         <div class="panel-heading"><h2>{{ summary["sub_goal_name"] }}</h2></div>
         <div class="panel-body">
-            <h3>Total instances of data collection: {{ summary["count"] }}</h3>
+            <h3 class="data_sum">Total instances of data collection: {{ summary["count"] }}</h3>
 
 
-            <table class="table">
+            <table class="table report">
             <tr>
                 <th></th>
                 <th>Yes</th>
@@ -224,9 +209,9 @@
 
             <hr/>
 
-            <h3>Total Record for this Date Range</h3>
+            <h3 class="tot_rec">Total Record for this Date Range</h3>
             <br>
-            <table class="table">
+            <table class="table report">
                 <tr>
                     <th>Date</th>
                     <th>Ratio of Yes to No</th>
@@ -236,7 +221,7 @@
 
                 {% for item in summary["data_items"] %}
                     <tr>
-                        <td>{{ item.date.strftime("%A, %B %d %Y %H:%M") }}</td>
+                        <td class="date">{{ item.date.strftime("%A, %B %d %Y %H:%M") }}</td>
                         <td>{{ item.sub_goal_data_value }}</td>
                         <td>{{ item.sub_goal_notes }}</td>
                     </tr>
@@ -307,5 +292,5 @@
         {% endfor %}
     {% endif %}
 
-    <a href="/student/{{ student.id }}">Back to student page</a>
+    <a href="/class"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-user"></span>Back to Student Page</a></button>
 {% endblock %}

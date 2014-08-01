@@ -55,6 +55,6 @@ $('.tf .btn').click(function(evt) {
         }
       });
 
-//function myWarning() {
-//    alert("Deleting will erase all data. Are you sure you want to delete?);
-//}
+
+
+

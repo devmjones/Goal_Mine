@@ -112,7 +112,7 @@ def view_class():
     return render_template("class.html", teacher=teacher, students=students)
 
 
-#TODO= hook up buttons to remove/edit student
+#TODO= hook up buttons to remove student
 
 @app.route("/class", methods=["POST"])
 @login_required
