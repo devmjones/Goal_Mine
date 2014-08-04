@@ -18,13 +18,29 @@ Next steps: Integrating D3 or Google Visualization API to visually represent dat
 
 Screenshots:
 
-<a href="http://imgur.com/8xHTfDO"><img src="http://i.imgur.com/8xHTfDOl.jpg" title="Hosted by imgur.com"/></a>
-<a href="http://imgur.com/qJneAlZ"><img src="http://i.imgur.com/qJneAlZl.jpg" title="Hosted by imgur.com"/></a>
-<a href="http://imgur.com/TBmm7gl"><img src="http://i.imgur.com/TBmm7gll.jpg" title="Hosted by imgur.com"/></a>
-<a href="http://imgur.com/a1s595r"><img src="http://i.imgur.com/a1s595rl.jpg" title="Hosted by imgur.com"/></a>
-<a href="http://imgur.com/T9MLcPC"><img src="http://i.imgur.com/T9MLcPCl.jpg" title="Hosted by imgur.com"/></a>
-<a href="http://imgur.com/kNocVkW"><img src="http://i.imgur.com/kNocVkWl.jpg" title="Hosted by imgur.com"/></a>
-<a href="http://imgur.com/RTcZjRc"><img src="http://i.imgur.com/RTcZjRcl.jpg" title="Hosted by imgur.com"/></a>
-<a href="http://imgur.com/0BmXHHS"><img src="http://i.imgur.com/0BmXHHSl.jpg" title="Hosted by imgur.com"/></a>
-<a href="http://imgur.com/uTnV1al"><img src="http://i.imgur.com/uTnV1all.jpg" title="Hosted by imgur.com"/></a>
-<a href="http://imgur.com/evjgGuW"><img src="http://i.imgur.com/evjgGuWl.jpg" title="Hosted by imgur.com"/></a>
+Homepage
+<a href="http://imgur.com/kNocVkW"><img src="http://i.imgur.com/kNocVkW.jpg" title="Hosted by imgur.com"/></a>
+
+Classroom
+<a href="http://imgur.com/RTcZjRc"><img src="http://i.imgur.com/RTcZjRc.jpg" title="Hosted by imgur.com"/></a>
+
+Student Page
+<a href="http://imgur.com/0BmXHHS"><img src="http://i.imgur.com/0BmXHHS.jpg" title="Hosted by imgur.com"/></a>
+
+Markers
+<a href="http://imgur.com/uTnV1al"><img src="http://i.imgur.com/uTnV1al.jpg" title="Hosted by imgur.com"/></a>
+
+Goal Creation
+<a href="http://imgur.com/8xHTfDO"><img src="http://i.imgur.com/8xHTfDO.jpg" title="Hosted by imgur.com"/></a>
+
+Data Collection
+<a href="http://imgur.com/evjgGuW"><img src="http://i.imgur.com/evjgGuW.jpg" title="Hosted by imgur.com"/></a>
+
+Report Generation with Markers
+<a href="http://imgur.com/a1s595r"><img src="http://i.imgur.com/a1s595r.jpg" title="Hosted by imgur.com"/></a>
+
+Report Summary 1
+<a href="http://imgur.com/qJneAlZ"><img src="http://i.imgur.com/qJneAlZ.jpg" title="Hosted by imgur.com"/></a>
+
+Report Summary 2
+<a href="http://imgur.com/TBmm7gl"><img src="http://i.imgur.com/TBmm7gl.jpg" title="Hosted by imgur.com"/></a>
