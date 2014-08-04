@@ -18,13 +18,13 @@ Next steps: Integrating D3 or Google Visualization API to visually represent dat
 
 Screenshots:
 
-http://imgur.com/8xHTfDO
-http://imgur.com/qJneAlZ
-http://imgur.com/TBmm7gl
-http://imgur.com/a1s595r
-http://imgur.com/T9MLcPC
-http://imgur.com/kNocVkW
-http://imgur.com/RTcZjRc
-http://imgur.com/0BmXHHS
-http://imgur.com/uTnV1al
-http://imgur.com/evjgGuW
+<a href="http://imgur.com/8xHTfDO"><img src="http://i.imgur.com/8xHTfDOl.jpg" title="Hosted by imgur.com"/></a>
+<a href="http://imgur.com/qJneAlZ"><img src="http://i.imgur.com/qJneAlZl.jpg" title="Hosted by imgur.com"/></a>
+<a href="http://imgur.com/TBmm7gl"><img src="http://i.imgur.com/TBmm7gll.jpg" title="Hosted by imgur.com"/></a>
+<a href="http://imgur.com/a1s595r"><img src="http://i.imgur.com/a1s595rl.jpg" title="Hosted by imgur.com"/></a>
+<a href="http://imgur.com/T9MLcPC"><img src="http://i.imgur.com/T9MLcPCl.jpg" title="Hosted by imgur.com"/></a>
+<a href="http://imgur.com/kNocVkW"><img src="http://i.imgur.com/kNocVkWl.jpg" title="Hosted by imgur.com"/></a>
+<a href="http://imgur.com/RTcZjRc"><img src="http://i.imgur.com/RTcZjRcl.jpg" title="Hosted by imgur.com"/></a>
+<a href="http://imgur.com/0BmXHHS"><img src="http://i.imgur.com/0BmXHHSl.jpg" title="Hosted by imgur.com"/></a>
+<a href="http://imgur.com/uTnV1al"><img src="http://i.imgur.com/uTnV1all.jpg" title="Hosted by imgur.com"/></a>
+<a href="http://imgur.com/evjgGuW"><img src="http://i.imgur.com/evjgGuWl.jpg" title="Hosted by imgur.com"/></a>
