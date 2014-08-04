@@ -116,14 +116,14 @@ class SubGoalRawData(Base):
 
         summaries = []  # will be a list of dictionaries from report data
 
-        for sub_goal_id in report_data:  # we are going to go through each set by sub goal id.
+        for sub_goal_id in report_data:  # I am going to go through each set by sub goal id.
 
-            summary = None  #this will the the summary of one subgoal by subgoal id (all have same type)
-            raw_data_item_list = report_data[
-                sub_goal_id]  # not in " " because it's an object. List of just the subgoal ids?
-            first_item = raw_data_item_list[
-                0]  #we are looking at the first item with each subgoal in the list of sub_goal ids
+            summary = None  # this will the the summary of one subgoal by subgoal id (all have same type)
+            raw_data_item_list = report_data[sub_goal_id]  # not in " " because it's an object. List of just the subgoal ids?
+            first_item = raw_data_item_list[0]  # I am looking at the first item with each subgoal in the list of sub_goal ids
             sub_goal_type = first_item.sub_goal_type  # and checking it's subgoal type since it's an object
+
+            # depending on subgoal type, the diffrent type methods will be called to create the type summary dictionaries, with raw_data_items_list being the parameter.
 
             if sub_goal_type == "tally":
                 summary = cls.tally_summary(raw_data_item_list)  # each is a list of sub goal raw data objects
@@ -181,8 +181,7 @@ class SubGoalRawData(Base):
         if not raw_tally_items:
             return tally_summary_info
         tally_summary_info["type"] = "tally"
-        tally_summary_info["sub_goal_name"] = raw_tally_items[
-            0].sub_goal.sub_goal_name  # pulling the name of the subgoal out of the subgoal object that belongs to the first raw tally items object
+        tally_summary_info["sub_goal_name"] = raw_tally_items[0].sub_goal.sub_goal_name  # pulling the name of the subgoal out of the subgoal object that belongs to the first raw tally items object
         tally_summary_info["data_items"] = raw_tally_items
 
         tally_summary_info["notes"] = []  # list of strings containing subgoal notes

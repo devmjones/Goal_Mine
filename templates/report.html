@@ -17,7 +17,7 @@
             <hr/>
             <h3 class="tot_rec">Total Record for this Date Range</h3>
             <br>
-            <table class="table report">
+            <table class="table-bordered table report">
                 <tr>
                     <th>Date</th>
                     <th>Recorded Time</th>
@@ -27,7 +27,7 @@
 
                 {% for item in summary["data_items"] %}
                     <tr>
-                        <td>{{ item.date.strftime("%A, %B %d %Y %H:%M") }}</td>
+                        <td class="date">{{ item.date.strftime("%A, %B %d %Y %H:%M") }}</td>
                         <td>{{ item.sub_goal_data_value }}</td>
                         <td>{{ item.sub_goal_notes }}</td>
                     </tr>
@@ -49,7 +49,7 @@
 
             <h3 class="data_sum">Average tally number: {{ summary["average"] }}</h3>
 
-            <table class="table report">
+            <table class="table-bordered table report">
                 <tr>
                     <th>Tally Number</th>
                     <th>Number of times recorded</th>
@@ -72,7 +72,7 @@
 
             <h3 class="tot_rec">Total Record for this Date Range</h3>
             <br>
-            <table class="table report">
+            <table class="table-bordered table report">
                 <tr>
                     <th>Date</th>
                     <th>Number Tallied</th>
@@ -82,7 +82,7 @@
 
                 {% for item in summary["data_items"] %}
                     <tr>
-                        <td>{{ item.date.strftime("%A, %B %d %Y %H:%M") }}</td>
+                        <td class="date">{{ item.date.strftime("%A, %B %d %Y %H:%M") }}</td>
                         <td>{{ item.sub_goal_data_value }}</td>
                         <td>{{ item.sub_goal_notes }}</td>
                     </tr>
@@ -105,7 +105,7 @@
             <h3 class="data_sum">Average Number Selected: {{ summary["average"] }}</h3>
 
 
-            <table class="table report">
+            <table class="table-bordered table report">
             <tr>
                 <th>Number</th>
                 <th>Times selected</th>
@@ -117,7 +117,7 @@
                 <tr>
                     <td>{{ key }}</td>
                     <td>{{ summary["breakdown"][key] }}</td>
-                    <td>{{ "%.02f" %(summary["percentage"][key]) }}%</td>
+                    <td class="date">{{ "%.02f" %(summary["percentage"][key]) }}%</td>
                 </tr>
 
             {% endfor %}
@@ -128,7 +128,7 @@
             <hr/>
             <h3 class="tot_rec">Total Record for this Date Range</h3>
             <br>
-            <table class="table report">
+            <table class="table-bordered table report">
                 <tr>
                     <th>Date</th>
                     <th>Number Selected</th>
@@ -159,7 +159,7 @@
 
             <h3 class="data_sum">Total instances of data collection: {{ summary["count"] }} </h3>
 
-            <table class="table report">
+            <table class="table-bordered table report">
                 <tr>
                     <th>Date</th>
                     <th>Narrative</th>
@@ -188,7 +188,7 @@
             <h3 class="data_sum">Total instances of data collection: {{ summary["count"] }}</h3>
 
 
-            <table class="table report">
+            <table class="table-bordered table report">
             <tr>
                 <th></th>
                 <th>Yes</th>
@@ -211,7 +211,7 @@
 
             <h3 class="tot_rec">Total Record for this Date Range</h3>
             <br>
-            <table class="table report">
+            <table class="table-bordered table report">
                 <tr>
                     <th>Date</th>
                     <th>Ratio of Yes to No</th>
@@ -292,5 +292,5 @@
         {% endfor %}
     {% endif %}
 
-    <a href="/class"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-user"></span>Back to Student Page</a></button>
+    <a href="/class"><button type="button" id="bottom-link" btn btn-default"><span class="glyphicon glyphicon-user"></span>Back to Student Page</a></button>
 {% endblock %}
