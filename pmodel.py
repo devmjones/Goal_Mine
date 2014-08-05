@@ -95,6 +95,9 @@ class SubGoalRawData(Base):
 
     sub_goal = relationship("SubGoal", backref=backref("sub_goal_raw_data", order_by=id))
 
+    def value_as_timedelta(self):
+        return timedelta(seconds = int(self.sub_goal_data_value))
+
     @classmethod
     def get_report_data(cls, goal_id, start_date, end_date):
         report_data = {}  # creating empty dict, keys will be sub goal ids, and the values the raw data objects associated with those sub goals.

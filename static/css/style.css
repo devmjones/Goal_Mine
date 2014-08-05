@@ -89,6 +89,10 @@ th {
 
 /*Data Collection and records*/
 
+.notes {
+    width: 50%;
+}
+
 .data_sum {
     color: forestgreen;
     margin-bottom: 20px;

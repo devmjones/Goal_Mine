@@ -28,8 +28,8 @@
                 {% for item in summary["data_items"] %}
                     <tr>
                         <td class="date">{{ item.date.strftime("%A, %B %d %Y %H:%M") }}</td>
-                        <td>{{ item.sub_goal_data_value }}</td>
-                        <td>{{ item.sub_goal_notes }}</td>
+                        <td>{{ item.value_as_timedelta() }}</td>
+                        <td class="notes">{{ item.sub_goal_notes }}</td>
                     </tr>
 
                 {% endfor %}
@@ -84,7 +84,7 @@
                     <tr>
                         <td class="date">{{ item.date.strftime("%A, %B %d %Y %H:%M") }}</td>
                         <td>{{ item.sub_goal_data_value }}</td>
-                        <td>{{ item.sub_goal_notes }}</td>
+                        <td class="notes">{{ item.sub_goal_notes }}</td>
                     </tr>
 
                 {% endfor %}
@@ -140,7 +140,7 @@
                     <tr>
                         <td class="date">{{ item.date.strftime("%A, %B %d %Y %H:%M") }}</td>
                         <td>{{ item.sub_goal_data_value }}</td>
-                        <td>{{ item.sub_goal_notes }}</td>
+                        <td class="notes">{{ item.sub_goal_notes }}</td>
                     </tr>
 
                 {% endfor %}
@@ -168,7 +168,7 @@
                 {% for item in summary["data_items"] %}
                     <tr>
                         <td class="date">{{ item.date.strftime("%A, %B %d %Y %H:%M") }}</td>
-                        <td>{{ item.sub_goal_data_value }}</td>
+                        <td class="notes">{{ item.sub_goal_data_value }}</td>
                     </tr>
 
                 {% endfor %}
@@ -223,7 +223,7 @@
                     <tr>
                         <td class="date">{{ item.date.strftime("%A, %B %d %Y %H:%M") }}</td>
                         <td>{{ item.sub_goal_data_value }}</td>
-                        <td>{{ item.sub_goal_notes }}</td>
+                        <td class="notes">{{ item.sub_goal_notes }}</td>
                     </tr>
 
                 {% endfor %}
