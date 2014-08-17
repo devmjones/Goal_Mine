@@ -8,7 +8,7 @@ from flask.ext.bootstrap3 import Bootstrap
 from flask.ext.login import LoginManager, login_required, logout_user, login_user, current_user
 
 app = Flask(__name__)
-app.secret_key = '\xfb\x1c\x9dJ&H\xe8\x83x\x84Q\xde\xfe:\xd6\xfc\x055M\xdf\x9a\xf7\x19\x17'
+app.secret_key = '\xfb\x1c\x9dJ&H\xe8\x83x\x84Q\xde\xfe:\xd6\xfc\x055M\xdf\x9a\xf7\x19\x17' # redo and hide from view before deploying
 
 bootstrap = Bootstrap()
 bootstrap.init_app(app)
@@ -207,10 +207,10 @@ def create_goal(student_id):
 
     max_counter = int(request.form["max_counter"])  # max_counter is created in jQuery.
     for i in range(
-                    max_counter + 1):  #to ensure we get the last number, as range includes number up to but not including.
+                    max_counter + 1):  #to ensure I get the last number, as range includes number up to but not including.
         try:
             type = request.form[
-                "type_%d" % i]  # in jQuery we iterate through our list and name each type "type_x", with x being a number. The number lines up with the index.
+                "type_%d" % i]  # in jQuery I iterate through my list and name each type "type_x", with x being a number. The number lines up with the index.
             text = request.form["text_%d" % i]  #ditto
         except:  # in case someone randomly types a student number into the browser.
             continue
@@ -218,7 +218,7 @@ def create_goal(student_id):
         pmodel.session.add(sub_goal)
         pmodel.session.commit()
 
-    return redirect("/student/%d" % student_id)  #back to student page
+    return redirect("/student/%d" % student_id)
 
 
 @app.route("/goal/view/<int:student_id>/<int:goal_id>", methods=["GET"])
