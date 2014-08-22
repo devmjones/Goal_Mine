@@ -207,12 +207,12 @@ def create_goal(student_id):
 
     max_counter = int(request.form["max_counter"])  # max_counter is created in jQuery.
     for i in range(
-                    max_counter + 1):  #to ensure I get the last number, as range includes number up to but not including.
+                    max_counter + 1):
         try:
             type = request.form[
-                "type_%d" % i]  # in jQuery I iterate through my list and name each type "type_x", with x being a number. The number lines up with the index.
-            text = request.form["text_%d" % i]  #ditto
-        except:  # in case someone randomly types a student number into the browser.
+                "type_%d" % i]
+            text = request.form["text_%d" % i]
+        except:
             continue
         sub_goal = pmodel.SubGoal(goal_id=goal.id, sub_goal_name=text, sub_goal_type=type)
         pmodel.session.add(sub_goal)

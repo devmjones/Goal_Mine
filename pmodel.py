@@ -100,16 +100,16 @@ class SubGoalRawData(Base):
 
     @classmethod
     def get_report_data(cls, goal_id, start_date, end_date):
-        report_data = {}  # creating empty dict, keys will be sub goal ids, and the values the raw data objects associated with those sub goals.
+        report_data = {}
         raw_data = cls.query.join(SubGoal) \
             .filter(SubGoal.goal_id == goal_id) \
             .filter(SubGoalRawData.date >= start_date) \
             .filter(SubGoalRawData.date <= end_date) \
             .order_by('sub_goal_id', 'date').all()
-        # use join when you need to filter by a field in an associated table, order by organizes them by specified columns.
-        for item in raw_data:  # result of db query (list of raw data objects)
-            if item.sub_goal_id not in report_data:  # use. because items are db objects.
-                report_data[item.sub_goal_id] = []  # if sub_goal id not in dict, add as key with empty list as value.
+
+        for item in raw_data:
+            if item.sub_goal_id not in report_data:
+                report_data[item.sub_goal_id] = []
             report_data[item.sub_goal_id].append(item)
         return report_data
 
@@ -117,16 +117,16 @@ class SubGoalRawData(Base):
     @classmethod
     def summaries_for_report_data(cls, report_data):
 
-        summaries = []  # will be a list of dictionaries from report data
+        summaries = []
 
-        for sub_goal_id in report_data:  # I am going to go through each set by sub goal id.
+        for sub_goal_id in report_data:
 
-            summary = None  # this will the the summary of one subgoal by subgoal id (all have same type)
-            raw_data_item_list = report_data[sub_goal_id]  # not in " " because it's an object. List of just the subgoal ids?
-            first_item = raw_data_item_list[0]  # I am looking at the first item with each subgoal in the list of sub_goal ids
-            sub_goal_type = first_item.sub_goal_type  # and checking it's subgoal type since it's an object
+            summary = None
+            raw_data_item_list = report_data[sub_goal_id]
+            first_item = raw_data_item_list[0]
+            sub_goal_type = first_item.sub_goal_type
 
-            # depending on subgoal type, the diffrent type methods will be called to create the type summary dictionaries, with raw_data_items_list being the parameter.
+
 
             if sub_goal_type == "tally":
                 summary = cls.tally_summary(raw_data_item_list)  # each is a list of sub goal raw data objects
@@ -178,16 +178,16 @@ class SubGoalRawData(Base):
 
     @staticmethod
     def tally_summary(
-            raw_tally_items):  # raw data item list. list of complete raw data objects of the tally type for that subgoal
+            raw_tally_items):
 
         tally_summary_info = {}
         if not raw_tally_items:
             return tally_summary_info
         tally_summary_info["type"] = "tally"
-        tally_summary_info["sub_goal_name"] = raw_tally_items[0].sub_goal.sub_goal_name  # pulling the name of the subgoal out of the subgoal object that belongs to the first raw tally items object
+        tally_summary_info["sub_goal_name"] = raw_tally_items[0].sub_goal.sub_goal_name
         tally_summary_info["data_items"] = raw_tally_items
 
-        tally_summary_info["notes"] = []  # list of strings containing subgoal notes
+        tally_summary_info["notes"] = []
         for item in raw_tally_items:
             tally_summary_info["notes"].append(str(item.sub_goal_notes))
 
@@ -237,7 +237,7 @@ class SubGoalRawData(Base):
         tf_summary_info["sub_goal_name"] = raw_tf_items[0].sub_goal.sub_goal_name
         tf_summary_info["data_items"] = raw_tf_items
 
-        tf_summary_info["notes"] = []  # list of strings containng subgoal notes
+        tf_summary_info["notes"] = []
         for item in raw_tf_items:
             tf_summary_info["notes"].append(str(item.sub_goal_notes))
 
@@ -272,7 +272,7 @@ class SubGoalRawData(Base):
         range_summary_info["sub_goal_name"] = raw_range_items[0].sub_goal.sub_goal_name
         range_summary_info["data_items"] = raw_range_items
 
-        range_summary_info["notes"] = []  # list of strings containng subgoal notes
+        range_summary_info["notes"] = []
         for item in raw_range_items:
             range_summary_info["notes"].append(str(item.sub_goal_notes))
 
