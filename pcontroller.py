@@ -140,14 +140,14 @@ def add_student():
     return redirect("/class")
 
 
-# @app.route("/student/<int:student_id>/delete", methods=["GET"])
-# @login_required
-# def delete_student(student_id):
-#   student = pmodel.Student.query.filter_by(id=student_id).one()
-#     db_session.delete(student)
-#     db_session.commit()
-#     flash("You have successfully deleted this student")
-#     return_redirect("/class")
+@app.route("/student/<int:student_id>/delete", methods=["GET"])
+@login_required
+def delete_student(student_id):
+    student = pmodel.Student.query.filter_by(id=student_id).one()
+    db_session.delete(student)
+    db_session.commit()
+    flash("You have successfully deleted this student")
+    return redirect("/class")
 
 
 @app.route("/student/<int:student_id>", methods=["GET"])
@@ -219,6 +219,15 @@ def create_goal(student_id):
         pmodel.session.commit()
 
     return redirect("/student/%d" % student_id)
+
+# @app.route("/student/<int:student_id>/<int;goal_id>/delete", methods=["GET"])
+# @login_required
+# def delete_goal(goal_id):
+#     goal = pmodel.Goal.query.filter_by(id=goal_id).one()
+#     db_session.delete(goal)
+#     db_session.commit()
+#     flash("You have successfully deleted this goal")
+#     return redirect("/student/%d" % student.id)
 
 
 @app.route("/goal/view/<int:student_id>/<int:goal_id>", methods=["GET"])

@@ -55,6 +55,29 @@ $('.tf .btn').click(function(evt) {
         }
       });
 
+$(function() {
+
+    $('.delete-student').click(function(evt) {
+        bootbox.confirm("Are you sure?!", function(result) {
+            if(result) {
+                var id = $(evt.target).data('student-id');
+                window.location = "/student/" + id + "/delete";
+            }
+        });
+    });
+
+});
 
 
-
+//$(function() {
+//
+//    $('.delete-goal').click(function(evt) {
+//        bootbox.confirm("Are you sure?!", function(result) {
+//            if(result) {
+//                var id = $(evt.target).data('goal-id');
+//                window.location = "/student/" + id + "/delete";
+//            }
+//        });
+//    });
+//
+//});

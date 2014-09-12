@@ -19,12 +19,15 @@
 
             <tr>
 
-                    <td><a href="/student/{{ student.id }}">{{ student.first_name }} {{ student.last_name }}
+                    <td><a href="/student/{{ student.id }}">{{ student.first_name }} {{ student.last_name }}</a>
                         <div class="btn-group" id="student-options">
-                            <button type="button" id="delete" class="btn btn-danger">Delete Student</button></a>
-
-                        <a href="/markers/{{ student.id }}"><button type="button" class="btn btn-primary"><span
-                                class="glyphicon glyphicon-eye-open"></span>View Markers</button></div></a>
+                            <button type="button" class="delete-student btn btn-danger" data-student-id="{{ student.id }}">Delete Student</button>
+                            <a href="/markers/{{ student.id }}">
+                                <button type="button" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-eye-open"></span> View Markers
+                                </button>
+                            </a>
+                        </div>
                     </td>
 
 
