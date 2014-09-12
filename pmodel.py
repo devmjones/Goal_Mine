@@ -51,7 +51,7 @@ class Student(Base):
     nickname = Column(String(64), nullable=True)
     teacher_id = Column(Integer, ForeignKey('teachers.email'))
 
-    teacher = relationship("Teacher", backref="students")
+    teacher = relationship("Teacher", backref=backref("students", cascade="all,delete"))
 
 
 class Goal(Base):
@@ -61,7 +61,7 @@ class Goal(Base):
     student_id = Column(Integer, ForeignKey('students.id'))
     goal_name = Column(String, nullable=False)
 
-    student = relationship("Student", backref=backref("goals", order_by=id))
+    student = relationship("Student", backref=backref("goals", order_by=id, cascade="all, delete"))
 
 
 class Marker(Base):
@@ -308,7 +308,7 @@ class SubGoal(Base):
     sub_goal_name = Column(String(64), nullable=False)
     sub_goal_type = Column(String(64), nullable=False)
 
-    goal = relationship("Goal", backref=backref("sub_goals", order_by=id))
+    goal = relationship("Goal", backref=backref("sub_goals", order_by=id, cascade="all, delete"))
 
 
 def connect():
