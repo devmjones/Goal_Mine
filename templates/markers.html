@@ -16,7 +16,7 @@
         <tr>
             <td> {{ marker.marker_date }}</td>
             <td> {{ marker.marker_text }} <div class="btn-group" id="goal-options">
-                <button type=<button class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>Delete Marker</button>
+                <button type=<button class="delete-marker btn btn-danger"><span class="glyphicon glyphicon-remove"data-marker-id="{{ marker.id }}></span>Delete Marker</button>
                 <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-wrench"></span>Edit Marker</button>
      </div></td>
         </tr>

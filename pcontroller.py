@@ -1,4 +1,5 @@
 from flask import Flask, render_template, redirect, request, flash, session, g
+# from flaskext.bcrypt import Bcrypt
 from pmodel import session as db_session
 import pmodel
 import time, datetime
@@ -8,6 +9,7 @@ from flask.ext.bootstrap3 import Bootstrap
 from flask.ext.login import LoginManager, login_required, logout_user, login_user, current_user
 
 app = Flask(__name__)
+# flash_bcrypt = Bcrypt(app)
 app.secret_key = '\xfb\x1c\x9dJ&H\xe8\x83x\x84Q\xde\xfe:\xd6\xfc\x055M\xdf\x9a\xf7\x19\x17' # redo and hide from view before deploying
 
 bootstrap = Bootstrap()
@@ -112,8 +114,6 @@ def view_class():
     return render_template("class.html", teacher=teacher, students=students)
 
 
-#TODO= hook up buttons to remove student
-
 @app.route("/class", methods=["POST"])
 @login_required
 def add_student():
@@ -155,7 +155,6 @@ def delete_student(student_id):
 def view_student(student_id):
     student = pmodel.Student.query.filter_by(id=student_id).one()
     goals = pmodel.Goal.query.filter_by(student_id=student_id).all()
-    #TODO- hook up buttons to edit/remove goals
 
     return render_template("student.html", student=student, goals=goals)
 
@@ -163,8 +162,6 @@ def view_student(student_id):
 @app.route("/student/<int:student_id>", methods=["POST"])
 @login_required
 def add_marker(student_id):
-    #TODO- add option to edit/remove markers
-
     marker_text = request.form["marker_text"]
     raw_date = request.form["calendar"]
     marker_date = datetime.datetime.strptime(raw_date, "%Y-%m-%d")
@@ -184,6 +181,10 @@ def view_marker(student_id):
     markers = pmodel.Marker.query.filter_by(student_id=student_id).all()
     student = pmodel.Student.query.filter_by(id=student_id).one()
     return render_template("markers.html", student=student, markers=markers, time=time.time())
+
+# @app.route("/markers/<int:student_id>/delete", methods=["GET"])
+# @login_required
+# def delete_marker()
 
 
 #TODO- fix flow of app routes starting here.
@@ -220,14 +221,17 @@ def create_goal(student_id):
 
     return redirect("/student/%d" % student_id)
 
-# @app.route("/student/<int:student_id>/<int;goal_id>/delete", methods=["GET"])
-# @login_required
-# def delete_goal(goal_id):
-#     goal = pmodel.Goal.query.filter_by(id=goal_id).one()
-#     db_session.delete(goal)
-#     db_session.commit()
-#     flash("You have successfully deleted this goal")
-#     return redirect("/student/%d" % student.id)
+@app.route("/student/<int:student_id>/goal/<int:goal_id>/delete", methods=["GET"])
+@login_required
+def delete_goal(student_id, goal_id):
+    goal = pmodel.Goal.query.filter_by(id=goal_id).one()
+    student = pmodel.Student.query.filter_by(id=goal_id, teacher_id=session["id"]).one()
+    if not student:
+        flash("Invalid student")
+    db_session.delete(goal)
+    db_session.commit()
+    flash("You have successfully deleted this goal", "success")
+    return redirect("/student/%d" % student_id)
 
 
 @app.route("/goal/view/<int:student_id>/<int:goal_id>", methods=["GET"])

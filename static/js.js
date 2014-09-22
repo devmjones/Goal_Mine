@@ -58,7 +58,7 @@ $('.tf .btn').click(function(evt) {
 $(function() {
 
     $('.delete-student').click(function(evt) {
-        bootbox.confirm("Are you sure?!", function(result) {
+        bootbox.confirm("Are you sure you want to delete this student? This is permanent and can not be undone.", function(result) {
             if(result) {
                 var id = $(evt.target).data('student-id');
                 window.location = "/student/" + id + "/delete";
@@ -69,15 +69,16 @@ $(function() {
 });
 
 
-//$(function() {
-//
-//    $('.delete-goal').click(function(evt) {
-//        bootbox.confirm("Are you sure?!", function(result) {
-//            if(result) {
-//                var id = $(evt.target).data('goal-id');
-//                window.location = "/student/" + id + "/delete";
-//            }
-//        });
-//    });
-//
-//});
+$(function() {
+
+    $('.delete-goal').click(function(evt) {
+        bootbox.confirm("Are you sure you want to delete this goal? This is permanent and can not be undone,", function(result) {
+            if(result) {
+                var goalId = $(evt.target).data('goal-id');
+                var studentId= $(evt.target).data('student-id')
+                window.location = "/student/" + studentId + "/goal/" + goalId + "/delete";
+            }
+        });
+    });
+
+});
