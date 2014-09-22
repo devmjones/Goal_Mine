@@ -172,19 +172,27 @@ def add_marker(student_id):
     pmodel.session.commit()
 
     flash("Marker added.", "success")
-    return redirect("/markers/%d" % student_id)
+    return redirect("student/%d/markers/" % student_id)
 
 
-@app.route("/markers/<int:student_id>", methods=["GET"])
+@app.route("/student/<int:student_id>/markers", methods=["GET"])
 @login_required
 def view_marker(student_id):
     markers = pmodel.Marker.query.filter_by(student_id=student_id).all()
     student = pmodel.Student.query.filter_by(id=student_id).one()
     return render_template("markers.html", student=student, markers=markers, time=time.time())
 
-# @app.route("/markers/<int:student_id>/delete", methods=["GET"])
-# @login_required
-# def delete_marker()
+@app.route("/student/<int:student_id>/markers/<int:marker_id>/delete", methods=["GET"])
+@login_required
+def delete_marker(student_id, marker_id):
+    markers = pmodel.Marker.query.filter_by(id= marker_id).one()
+    student = pmodel.Student.query.filter_by(id=student_id, teacher_id=session["id"]).one()
+    if not student:
+        flash("Invalid student")
+    db_session.delete(markers)
+    db_session.commit()
+    flash("You have successfully deleted this marker", "success")
+    return redirect("/student/%d/markers" % student_id)
 
 
 #TODO- fix flow of app routes starting here.
@@ -225,7 +233,7 @@ def create_goal(student_id):
 @login_required
 def delete_goal(student_id, goal_id):
     goal = pmodel.Goal.query.filter_by(id=goal_id).one()
-    student = pmodel.Student.query.filter_by(id=goal_id, teacher_id=session["id"]).one()
+    student = pmodel.Student.query.filter_by(id=student_id, teacher_id=session["id"]).one()
     if not student:
         flash("Invalid student")
     db_session.delete(goal)

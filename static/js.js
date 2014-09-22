@@ -82,3 +82,17 @@ $(function() {
     });
 
 });
+
+$(function() {
+
+    $('.delete-marker').click(function(evt) {
+        bootbox.confirm("Are you sure you want to delete this marker? This is permanent and can not be undone,", function(result) {
+            if(result) {
+                var markerId = $(evt.target).data('marker-id');
+                var studentId= $(evt.target).data('student-id')
+                window.location = "/student/" + studentId + "/markers/" + markerId + "/delete";
+            }
+        });
+    });
+
+});
