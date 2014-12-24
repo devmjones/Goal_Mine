@@ -103,7 +103,7 @@ def process_login():
 def logout():
     logout_user()
     session.clear()
-    return redirect("/login")
+    return redirect("/")
 
 
 @app.route("/class", methods=["GET"])
@@ -228,6 +228,14 @@ def create_goal(student_id):
         pmodel.session.commit()
 
     return redirect("/student/%d" % student_id)
+
+@app.route("/student/<int:student_id>/goal/<int:goal_id>/edit", methods=["GET"])
+@login_required
+def edit_goal(student_id, goal_id):
+    student = pmodel.Student.query.filter_by(id=student_id).one()
+    goal = pmodel.Goal.query.filter_by(id=goal_id, student_id=student_id).one()
+    return render_template("goal/edit.html", goal=goal, student=student)
+
 
 @app.route("/student/<int:student_id>/goal/<int:goal_id>/delete", methods=["GET"])
 @login_required

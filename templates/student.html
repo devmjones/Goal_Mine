@@ -46,9 +46,10 @@
                             <button type= button class="delete-goal btn btn-danger" data-goal-id= "{{ goal.id }}" data-student-id="{{ student.id }}"> <span class="glyphicon glyphicon-remove"></span>
                                 Delete Goal
                             </button>
-                            <button type="button" class="btn btn-primary"><span
+                            <a href="/student/{{ student.id }}/goal/{{ goal.id }}/edit">
+                            <button type="button" class="btn btn-primary" data-goal-id= "{{ goal.id }}" data-student-id="{{ student.id }}"><span
                                     class="glyphicon glyphicon-wrench"></span> Edit Goal
-                            </button>
+                            </button></a>
                             <a href="/goal/report/{{ student.id }}/{{ goal.id }}">
                                 <button type="button" class="btn btn-primary"><span
                                         class="glyphicon glyphicon-folder-close"></span> View Report

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Goal - {{ student.first_name }} {{ student.last_name }}{% endblock %}
+
+{% macro selected(subgoal, type)-%}
+    {% if subgoal.sub_goal_type == type %}selected{% endif %}
+{%- endmacro %}
+
+{% macro subgoal_line (subgoal)-%}
+    <li class="myinput">
+        name
+        <input name="text_{{ subgoal.id }}" class="goal-text" type="text"
+               placeholder="Example: 'Washed Hands'" required value="{{ subgoal.sub_goal_name }}">
+        type
+        <select name="type_{{ subgoal.id }}">
+            <option value="tally" {{ selected(subgoal, "tally") }}>Tally</option>
+            <option value="t/f" {{ selected(subgoal, "t/f") }}>True/False</option>
+            <option value="narrative" {{ selected(subgoal, "narrative") }}>Narrative</option>
+            <option value="range" {{ selected(subgoal, "range") }}>Range 1-6</option>
+            <option value="stopwatch" {{ selected(subgoal, "stopwatch") }}>Stopwatch</option>
+        </select>
+        <!--a href="#">delete</a-->
+    </li>
+{%- endmacro %}
+
+{% block content %}
+
+    {% if student.nickname %}
+        <h1>IEP Goal Generation for {{ student.first_name }} "{{ student.nickname }}" {{ student.last_name }}</h1>
+    {% else %}
+        <h1>IEP Goal Generation for {{ student.first_name }} {{ student.last_name }}</h1>
+    {% endif %}
+
+
+    <div class="info-bullets">
+        <h3 class="text-center">Which Data Collection Method Should I Use?</h3>
+        <ul>
+            <li><span class="bold">Tally Method:</span> If you need to count how many times something occurs, such as
+                prompts or specific behaviors
+            </li>
+            <li><span class="bold">True/False:</span> If you need to indicate whether or not something has occurred,
+                such as whether a prompt was given or if a step was completed
+            </li>
+            <li><span class="bold">Narrative:</span> If you need to describe an incident or event, such as a behavioral
+                episode
+            </li>
+            <li><span class="bold">Range 1-6: </span>If a goal is being tracked in terms of degrees, such as 1 being
+                very poor and 6 being excellent
+            </li>
+            <li><span class="bold">Stopwatch: </span>For goals that are dependent on a length of time, such as doing
+                something for or within X amount of seconds
+            </li>
+        </ul>
+
+    </div>
+
+    <div class="panel panel-success goal">
+        <div class="panel-heading"><h3>Goal Wizard </h3></div>
+        <div class="panel-body">
+            <form method="POST" action="/student/{{ student.id }}/goal/{{ goal.id }}/update">
+                <h3>Goal Nickname: </h3> <input class="goal-text" type="text" name="goal_name"
+                                                               placeholder="Example: 'Bathroom Independence'" autofocus
+                                                               required value="{{ goal.goal_name }}"><br>
+
+                <br>
+
+
+                <h3>Enter the items being tracked for this goal. Add fields as needed</h3>
+
+                <ol>
+                    {% for subgoal in goal.sub_goals %}
+                        {{ subgoal_line(subgoal) }}
+                    {% endfor %}
+                </ol>
+
+                <!--button type="button" class="btn btn-primary add">
+                    <span class="glyphicon glyphicon-plus"></span> More
+                </button-->
+
+                <button type="submit" class="btn btn-success">
+                    <span class="glyphicon glyphicon-ok"></span> Submit
+                </button>
+
+                <input type="hidden" name="max_counter" value="0"/>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}
