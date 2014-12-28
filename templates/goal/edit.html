@@ -26,9 +26,9 @@
 {% block content %}
 
     {% if student.nickname %}
-        <h1>IEP Goal Generation for {{ student.first_name }} "{{ student.nickname }}" {{ student.last_name }}</h1>
+        <h1>IEP Goal Editing for {{ student.first_name }} "{{ student.nickname }}" {{ student.last_name }}</h1>
     {% else %}
-        <h1>IEP Goal Generation for {{ student.first_name }} {{ student.last_name }}</h1>
+        <h1>IEP Goal Editing for {{ student.first_name }} {{ student.last_name }}</h1>
     {% endif %}
 
 
@@ -65,7 +65,7 @@
                 <br>
 
 
-                <h3>Enter the items being tracked for this goal. Add fields as needed</h3>
+                <h3>Edit the items being tracked for this goal. <br><span id="warning">Note: Data for previous fields will be lost once fields are changed!</span> </h3>
 
                 <ol>
                     {% for subgoal in goal.sub_goals %}

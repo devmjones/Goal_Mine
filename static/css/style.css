@@ -174,3 +174,8 @@ table.table td.date {
 #goal-options, #student-options {
     float: right;
 }
+
+#warning {
+    font-weight: bold;
+    color: red;
+}

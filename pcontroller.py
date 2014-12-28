@@ -236,6 +236,17 @@ def edit_goal(student_id, goal_id):
     goal = pmodel.Goal.query.filter_by(id=goal_id, student_id=student_id).one()
     return render_template("goal/edit.html", goal=goal, student=student)
 
+# @app.route("/student/<int:student_id>/goal/<int:goal_id>/edit", methods=["POST"])
+# @login_required
+# def update_goal(student_id, goal_id):
+#     goal = pmodel.Goal.query.filter_by(id=goal_id, student_id=student_id).one()
+#
+#     for subgoals in goal.subgoals:
+#         id = subgoal.id
+
+
+
+
 
 @app.route("/student/<int:student_id>/goal/<int:goal_id>/delete", methods=["GET"])
 @login_required
